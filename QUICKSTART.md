@@ -1,14 +1,7 @@
 # API Framework - Quick Start Guide
 
 ## Overview
-You have successfully set up a comprehensive API automation framework built with Robot Framework and Python. This framework supports:
-
-✅ Universal API keywords for GET, POST, PUT, DELETE operations
-✅ JSON and XML payload support
-✅ PostgreSQL database integration
-✅ Excel-based test data management
-✅ Separate reports directory
-✅ Fully reusable components
+API automation framework with robotframework with taking payloads from Excel and sending as JSON or XML
 
 ## Framework Structure
 
@@ -49,14 +42,14 @@ Edit `tests/common.robot` and update your database credentials:
 ```robot
 ${DB_HOST}        localhost          # Your DB host
 ${DB_NAME}        greencycles        # Your DB name
-${DB_USER}        postgres           # Your DB user
-${DB_PASSWORD}    pgadmin            # Your DB password
+${DB_USER}        ******           # Your DB user
+${DB_PASSWORD}    ******            # Your DB password
 ${DB_PORT}        5432               # Your DB port
 ```
 
 ### Step 3: Verify API Server
 Ensure your API server is running:
-
+ 
 ```bash
 # Test connection
 curl http://127.0.0.1:8000/tables
@@ -270,53 +263,6 @@ start reports\report.html
 open reports/report.html
 ```
 
-## Troubleshooting
-
-### Database Connection Error
-```bash
-# Test PostgreSQL connection
-psql -h localhost -U postgres -d greencycles -W
-```
-
-### API Connection Error
-```bash
-# Test API endpoint
-curl http://127.0.0.1:8000/tables
-```
-
-### Import Errors
-Ensure you're in the correct directory and Python path includes the framework:
-```bash
-cd C:\driver\PythonProject\PythonProject\api-framework
-```
-
-### Missing Excel Files
-The sample Excel files are auto-generated. If missing:
-```bash
-python create_sample_test_data.py
-```
-
-## Extending the Framework
-
-### Add New API Keywords
-Edit `keywords/APIKeywords.py`:
-```python
-@keyword
-def my_custom_api_operation(self, endpoint, parameter):
-    """Custom API operation"""
-    # Implementation
-    pass
-```
-
-### Add New Database Keywords
-Edit `keywords/DatabaseKeywords.py`:
-```python
-@keyword
-def verify_custom_condition(self, table, condition):
-    """Custom database verification"""
-    # Implementation
-    pass
-```
 
 ### Add New Test Cases
 Create a new file in `tests/` directory or add cases to existing files following Robot Framework syntax.
@@ -367,9 +313,6 @@ robot --help
 robot --variable DB_HOST:remote_host --outputdir reports tests/
 ```
 
----
 
-**Framework Status:** ✅ Ready to use
-**Last Updated:** December 23, 2025
 **Version:** 1.0
 
