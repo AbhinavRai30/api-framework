@@ -111,7 +111,7 @@ class UtilityKeywords:
             JSON string of the payload
         """
         if exclude_columns is None:
-            exclude_columns = ['expected_response', 'expected_response', 'description']
+            exclude_columns = ['expected_response', 'expected_response']
 
         payload = {}
         for key, value in test_data_row.items():
@@ -132,7 +132,7 @@ class UtilityKeywords:
             Dictionary of the payload
         """
         if exclude_columns is None:
-            exclude_columns = ['expected_response', 'description']
+            exclude_columns = ['expected_response']
 
         payload = {}
         for key, value in test_data_row.items():

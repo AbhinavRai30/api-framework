@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation    API Automation Tests - POST, GET, PUT, DELETE with XML Payload
-Library          keywords.APIKeywords
-Library          keywords.DatabaseKeywords
-Library          keywords.UtilityKeywords
+Library          ../keywords/APIKeywords.py
+Library          ../keywords/DatabaseKeywords.py
+Library          ../keywords/UtilityKeywords.py
 
 Suite Setup      Suite Setup Steps
 Suite Teardown   Suite Teardown Steps

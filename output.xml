@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-24T10:16:05.790022" rpa="false" schemaversion="5">
+<suite id="s1" name="Api Xml Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_xml_tests.robot">
+<kw name="Suite Setup Steps" type="SETUP">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-24T10:16:06.088295" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-24T10:16:06.088295" elapsed="0.000999"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-24T10:16:06.089294" level="INFO">XML API Automation Tests Started</msg>
+<arg>XML API Automation Tests Started</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-24T10:16:06.089294" elapsed="0.000000"/>
+</kw>
+<doc>Setup before test suite</doc>
+<status status="PASS" start="2025-12-24T10:16:06.088295" elapsed="0.000999"/>
+</kw>
+<test id="s1-t1" name="Test POST Film with XML Payload" line="21">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-24T10:16:06.089294" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-24T10:16:06.089294" elapsed="0.000000"/>
+</kw>
+<kw name="Create Film XML Payload">
+<kw name="Catenate" owner="BuiltIn">
+<msg time="2025-12-24T10:16:06.090294" level="INFO">${xml} = &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;film&gt;
+&lt;title&gt;Test Film&lt;/title&gt;
+&lt;release_year&gt;2023&lt;/release_year&gt;
+&lt;language_id&gt;1&lt;/language_id&gt;
+&lt;rental_duration&gt;4&lt;/rental_duration&gt;
+&lt;rental_rate&gt;5.99&lt;/rental_rat...</msg>
+<var>${xml}</var>
+<arg>SEPARATOR=\n</arg>
+<arg>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</arg>
+<arg>&lt;film&gt;</arg>
+<arg>&lt;title&gt;${title}&lt;/title&gt;</arg>
+<arg>&lt;release_year&gt;${year}&lt;/release_year&gt;</arg>
+<arg>&lt;language_id&gt;${language_id}&lt;/language_id&gt;</arg>
+<arg>&lt;rental_duration&gt;${duration}&lt;/rental_duration&gt;</arg>
+<arg>&lt;rental_rate&gt;${rate}&lt;/rental_rate&gt;</arg>
+<arg>&lt;length&gt;${length}&lt;/length&gt;</arg>
+<arg>&lt;replacement_cost&gt;${replacement_cost}&lt;/replacement_cost&gt;</arg>
+<arg>&lt;/film&gt;</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${xml}</value>
+<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
+</return>
+<msg time="2025-12-24T10:16:06.090294" level="INFO">${xml_payload} = &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;film&gt;
+&lt;title&gt;Test Film&lt;/title&gt;
+&lt;release_year&gt;2023&lt;/release_year&gt;
+&lt;language_id&gt;1&lt;/language_id&gt;
+&lt;rental_duration&gt;4&lt;/rental_duration&gt;
+&lt;rental_rate&gt;5.99&lt;/rental_rat...</msg>
+<var>${xml_payload}</var>
+<arg>Test Film</arg>
+<arg>2023</arg>
+<arg>1</arg>
+<arg>4</arg>
+<arg>5.99</arg>
+<arg>120</arg>
+<arg>25.99</arg>
+<doc>Create XML payload for film</doc>
+<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-24T10:16:06.115202" level="INFO">POST request to http://127.0.0.1:8000/table/films</msg>
+<msg time="2025-12-24T10:16:06.115202" level="INFO">Payload Type: xml</msg>
+<msg time="2025-12-24T10:16:06.115202" level="INFO">Status Code: 422</msg>
+<msg time="2025-12-24T10:16:06.115202" level="INFO">Response Time: 0.022641s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${xml_payload}</arg>
+<arg>payload_type=xml</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-24T10:16:06.091391" elapsed="0.023811"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-24T10:16:06.116292" level="FAIL">Expected status code 201, but got 422</msg>
+<arg>201</arg>
+<doc>Verify response status code</doc>
+<status status="FAIL" start="2025-12-24T10:16:06.116292" elapsed="0.028664">Expected status code 201, but got 422</status>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="NOT RUN" start="2025-12-24T10:16:06.145955" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<var>${response}</var>
+<doc>Get the last response body</doc>
+<status status="NOT RUN" start="2025-12-24T10:16:06.145955" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<arg>films</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<doc>Disconnect from database</doc>
+<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+</kw>
+<doc>Create a new film record via POST with XML payload</doc>
+<tag>Database</tag>
+<tag>POST</tag>
+<tag>XML</tag>
+<status status="FAIL" start="2025-12-24T10:16:06.089294" elapsed="0.057675">Expected status code 201, but got 422</status>
+</test>
+<kw name="Suite Teardown Steps" type="TEARDOWN">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-24T10:16:06.148363" level="INFO">XML Test Suite Completed</msg>
+<arg>XML Test Suite Completed</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-24T10:16:06.148363" elapsed="0.000000"/>
+</kw>
+<doc>Cleanup after test suite</doc>
+<status status="PASS" start="2025-12-24T10:16:06.148363" elapsed="0.000000"/>
+</kw>
+<doc>API Automation Tests - POST, GET, PUT, DELETE with XML Payload</doc>
+<status status="FAIL" start="2025-12-24T10:16:05.791021" elapsed="0.357342"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Database</stat>
+<stat pass="0" fail="1" skip="0">POST</stat>
+<stat pass="0" fail="1" skip="0">XML</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Api Xml Tests">Api Xml Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-12-24T10:16:05.786188" level="WARN">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_xml_tests.robot' on line 79: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>
