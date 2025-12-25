@@ -167,29 +167,53 @@ class UtilityKeywords:
 
     @keyword
     def should_contain_expected_keys(self, actual_response, expected_response):
-        """Verify that actual response contains all keys from expected response
-        
-        The actual response can have additional fields not in expected response.
-        This only checks that expected keys exist in actual response.
+        """Verify that actual response contains all keys and values from expected response
     
+            The actual response can have additional fields not in expected response.
+            This checks that expected keys exist in actual response AND their values match.
+
         Args:
             actual_response: Actual response dictionary
             expected_response: Expected response dictionary (can be subset of actual)
         """
         if isinstance(expected_response, str):
             expected_response = json.loads(expected_response)
-        
+    
         if isinstance(actual_response, str):
             actual_response = json.loads(actual_response)
-    
         missing_keys = []
+        mismatched_values = []
+    
         for key in expected_response.keys():
             if key not in actual_response:
                 missing_keys.append(key)
-    
+            else:
+                expected_value = expected_response[key]
+                actual_value = actual_response[key]
+            
+            # Compare values (convert to string for comparison to handle type differences)
+                if str(actual_value) != str(expected_value):
+                    mismatched_values.append({
+                        'key': key,
+                        'expected': expected_value,
+                        'actual': actual_value
+                    })
+
+        # Build error message if there are issues
+        errors = []
         if missing_keys:
-            BuiltIn().fail(f"Missing keys in response: {missing_keys}")
+            errors.append(f"Missing keys in response: {missing_keys}")
     
-        BuiltIn().log(f"All expected keys found in actual response")
-        BuiltIn().log(f"Expected keys: {list(expected_response.keys())}")
-        BuiltIn().log(f"Actual response has {len(actual_response)} total keys")
+        if mismatched_values:
+            mismatch_details = []
+            for mismatch in mismatched_values:
+                mismatch_details.append(
+                    f"  - Key '{mismatch['key']}': expected '{mismatch['expected']}', got '{mismatch['actual']}'"
+                )
+            errors.append("Value mismatches:\n" + "\n".join(mismatch_details))
+    
+        if errors:
+            BuiltIn().fail("\n".join(errors))
+
+        BuiltIn().log(f"All expected keys and values match in actual response")
+        BuiltIn().log(f"Verified {len(expected_response)} fields successfully")
