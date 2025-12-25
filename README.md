@@ -132,7 +132,7 @@ Response Status Code Should Be    204
 
 **Connection:**
 ```robot
-Connect To Database    localhost    greencycles    postgres    pgadmin
+Connect To Database    localhost    greencycles    {username}    {password}
 # ... perform database operations ...
 Disconnect From Database
 ```
@@ -194,7 +194,7 @@ Test Complete Film Workflow
     
     # Setup
     Set Base URL    http://127.0.0.1:8000
-    Connect To Database    localhost    greencycles    postgres    pgadmin
+    Connect To Database    localhost    greencycles    {username}    {password}
     
     # Create new film via API
     ${payload}=    Create Dictionary
@@ -230,22 +230,6 @@ Test Complete Film Workflow
     Disconnect From Database
 ```
 
-## Test Data Format
-
-### Excel File Structure for JSON Tests
-Create `test_data/film_test_data.xlsx` with columns:
-- **title** - Film title
-- **description** - Film description
-- **release_year** - Year released
-- **language_id** - Language ID
-- **rental_duration** - Rental duration days
-- **rental_rate** - Price per rental
-- **length** - Film length minutes
-- **replacement_cost** - Replacement cost
-- **rating** - Content rating
-- **special_features** - Special features
-- **fulltext** - Full text search field
-- **expected_response** - Expected JSON response (for validation)
 
 ## Reports
 
@@ -276,13 +260,6 @@ Create a new file in `tests/` directory or add cases to existing files following
 5. **Database Cleanup** - Always disconnect and clean test data
 6. **Error Handling** - Verify both API and database responses
 7. **Test Data** - Keep test data in Excel for easy maintenance
-
-## File Permissions
-
-If you get permission errors on Windows, ensure you have write access to the framework directory:
-```bash
-# Run PowerShell as Administrator if needed
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ## Support & Documentation
