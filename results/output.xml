@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-25T09:23:37.603075" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-25T11:31:40.928153" rpa="false" schemaversion="5">
 <suite id="s1" name="Api-Framework" source="C:\driver\PythonProject\PythonProject\api-framework">
 <suite id="s1-s1" name="Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests">
 <suite id="s1-s1-s1" name="Api Json Film Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot">
 <kw name="Suite Setup Steps" type="SETUP">
 <kw name="set base url">
-<msg time="2025-12-25T09:23:37.762728" level="FAIL">No keyword with name 'set base url' found.</msg>
+<msg time="2025-12-25T11:31:41.010913" level="FAIL">No keyword with name 'set base url' found.</msg>
 <arg>${BASE_URL}</arg>
-<status status="FAIL" start="2025-12-25T09:23:37.761319" elapsed="0.006292">No keyword with name 'set base url' found.</status>
+<status status="FAIL" start="2025-12-25T11:31:41.010277" elapsed="0.007122">No keyword with name 'set base url' found.</status>
 </kw>
 <kw name="Log" owner="BuiltIn">
 <arg>API Automation Framework Started</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" start="2025-12-25T09:23:37.769433" elapsed="0.000828"/>
+<status status="NOT RUN" start="2025-12-25T11:31:41.018362" elapsed="0.000268"/>
 </kw>
 <doc>Setup before test suite</doc>
-<status status="FAIL" start="2025-12-25T09:23:37.759758" elapsed="0.010967">No keyword with name 'set base url' found.</status>
+<status status="FAIL" start="2025-12-25T11:31:41.009047" elapsed="0.009784">No keyword with name 'set base url' found.</status>
 </kw>
 <test id="s1-s1-s1-t1" name="Test POST New Film with JSON Payload" line="22">
 <doc>Create new film records via POST request and validate in database</doc>
 <tag>Database</tag>
 <tag>JSON</tag>
 <tag>POST</tag>
-<status status="FAIL" start="2025-12-25T09:23:37.771062" elapsed="0.067770">Parent suite setup failed:
+<status status="FAIL" start="2025-12-25T11:31:41.018957" elapsed="0.005649">Parent suite setup failed:
 No keyword with name 'set base url' found.</status>
 </test>
 <kw name="Suite Teardown Steps" type="TEARDOWN">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T09:23:37.846468" level="INFO">Test Suite Completed</msg>
+<msg time="2025-12-25T11:31:41.029383" level="INFO">Test Suite Completed</msg>
 <arg>Test Suite Completed</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T09:23:37.846134" elapsed="0.000653"/>
+<status status="PASS" start="2025-12-25T11:31:41.029086" elapsed="0.000490"/>
 </kw>
 <doc>Cleanup after test suite</doc>
-<status status="PASS" start="2025-12-25T09:23:37.845576" elapsed="0.001371"/>
+<status status="PASS" start="2025-12-25T11:31:41.028706" elapsed="0.000990"/>
 </kw>
 <doc>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload</doc>
-<status status="FAIL" start="2025-12-25T09:23:37.695268" elapsed="0.151756">Suite setup failed:
+<status status="FAIL" start="2025-12-25T11:31:40.969594" elapsed="0.060163">Suite setup failed:
 No keyword with name 'set base url' found.</status>
 </suite>
-<status status="FAIL" start="2025-12-25T09:23:37.688279" elapsed="0.164363"/>
+<status status="FAIL" start="2025-12-25T11:31:40.961081" elapsed="0.073000"/>
 </suite>
-<status status="FAIL" start="2025-12-25T09:23:37.644236" elapsed="0.214790"/>
+<status status="FAIL" start="2025-12-25T11:31:40.933676" elapsed="0.103303"/>
 </suite>
 <statistics>
 <total>
@@ -59,7 +59,7 @@ No keyword with name 'set base url' found.</status>
 </suite>
 </statistics>
 <errors>
-<msg time="2025-12-25T09:23:37.702794" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 3: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\APIKeywords.py' failed: ModuleNotFoundError: No module named 'requests'
+<msg time="2025-12-25T11:31:40.974161" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 3: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\APIKeywords.py' failed: ModuleNotFoundError: No module named 'requests'
 Traceback (most recent call last):
   File "C:\driver\PythonProject\PythonProject\api-framework\keywords\APIKeywords.py", line 6, in &lt;module&gt;
     import requests
@@ -74,7 +74,7 @@ PYTHONPATH:
   C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib
   C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64
   C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages</msg>
-<msg time="2025-12-25T09:23:37.748045" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 5: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\UtilityKeywords.py' failed: ModuleNotFoundError: No module named 'openpyxl'
+<msg time="2025-12-25T11:31:41.001964" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 5: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\UtilityKeywords.py' failed: ModuleNotFoundError: No module named 'openpyxl'
 Traceback (most recent call last):
   File "C:\driver\PythonProject\PythonProject\api-framework\keywords\UtilityKeywords.py", line 6, in &lt;module&gt;
     import openpyxl

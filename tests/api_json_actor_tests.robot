@@ -43,7 +43,7 @@ Test POST New Actor with JSON Payload
         ${expected_response}=    Get Expected Response    ${actor_data}
         
         # Compare actual response with expected response for this row
-        should contain expected keys    ${actual_response}    ${expected_response}
+        Should Contain Expected Keys    ${actual_response}    ${expected_response}
 
         # Verify response contains expected fields
         Response JSON Should Contain Key    actor_id
@@ -86,6 +86,12 @@ Test GET Single Actor
     Response Status Code Should Be    200
     ${response}=        Get Response Body
     Log    ${response}    console=True
+
+    ${expected_resonse}=    Create Dictionary
+    ...    actor_id=100
+    ...    first_name=Steve
+    ...    last_name=Rogers
+    Should Contain Expected Keys     ${response}    ${expected_resonse}
     
 
     # Verify we got a film
