@@ -1,155 +1,1189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-24T10:16:05.790022" rpa="false" schemaversion="5">
-<suite id="s1" name="Api Xml Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_xml_tests.robot">
+<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-25T09:50:18.873182" rpa="false" schemaversion="5">
+<suite id="s1" name="Api Json Actor Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_actor_tests.robot">
 <kw name="Suite Setup Steps" type="SETUP">
 <kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-24T10:16:06.088295" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<msg time="2025-12-25T09:50:19.420158" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
 <arg>${BASE_URL}</arg>
 <doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-24T10:16:06.088295" elapsed="0.000999"/>
+<status status="PASS" start="2025-12-25T09:50:19.420158" elapsed="0.000000"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-24T10:16:06.089294" level="INFO">XML API Automation Tests Started</msg>
-<arg>XML API Automation Tests Started</arg>
+<msg time="2025-12-25T09:50:19.421159" level="INFO">API Automation Framework Started</msg>
+<arg>API Automation Framework Started</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-24T10:16:06.089294" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:19.421159" elapsed="0.000000"/>
 </kw>
 <doc>Setup before test suite</doc>
-<status status="PASS" start="2025-12-24T10:16:06.088295" elapsed="0.000999"/>
+<status status="PASS" start="2025-12-25T09:50:19.419154" elapsed="0.002005"/>
 </kw>
-<test id="s1-t1" name="Test POST Film with XML Payload" line="21">
-<kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-24T10:16:06.089294" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
-<arg>${BASE_URL}</arg>
-<doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-24T10:16:06.089294" elapsed="0.000000"/>
+<test id="s1-t1" name="Test POST New Actor with JSON Payload" line="22">
+<kw name="Read Test Data From Excel" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.429180" level="INFO">Read 10 rows from Actors</msg>
+<msg time="2025-12-25T09:50:19.429180" level="INFO">${test_data_list} = [{'first_name': 'Dilip', 'last_name': ' Kumar', 'expected_response': '  {\n    "first_name": "Dilip",\n    "last_name": "Kumar"\n}'}, {'first_name': 'Amir ', 'last_name': 'Khan', 'expected_response': ...</msg>
+<var>${test_data_list}</var>
+<arg>${TEST_DATA_FILE}</arg>
+<arg>${SHEET_NAME}</arg>
+<doc>Read test data from Excel file</doc>
+<status status="PASS" start="2025-12-25T09:50:19.422180" elapsed="0.007000"/>
 </kw>
-<kw name="Create Film XML Payload">
-<kw name="Catenate" owner="BuiltIn">
-<msg time="2025-12-24T10:16:06.090294" level="INFO">${xml} = &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;film&gt;
-&lt;title&gt;Test Film&lt;/title&gt;
-&lt;release_year&gt;2023&lt;/release_year&gt;
-&lt;language_id&gt;1&lt;/language_id&gt;
-&lt;rental_duration&gt;4&lt;/rental_duration&gt;
-&lt;rental_rate&gt;5.99&lt;/rental_rat...</msg>
-<var>${xml}</var>
-<arg>SEPARATOR=\n</arg>
-<arg>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</arg>
-<arg>&lt;film&gt;</arg>
-<arg>&lt;title&gt;${title}&lt;/title&gt;</arg>
-<arg>&lt;release_year&gt;${year}&lt;/release_year&gt;</arg>
-<arg>&lt;language_id&gt;${language_id}&lt;/language_id&gt;</arg>
-<arg>&lt;rental_duration&gt;${duration}&lt;/rental_duration&gt;</arg>
-<arg>&lt;rental_rate&gt;${rate}&lt;/rental_rate&gt;</arg>
-<arg>&lt;length&gt;${length}&lt;/length&gt;</arg>
-<arg>&lt;replacement_cost&gt;${replacement_cost}&lt;/replacement_cost&gt;</arg>
-<arg>&lt;/film&gt;</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
+<for flavor="IN">
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.429180" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.429180" elapsed="0.000000"/>
 </kw>
-<return>
-<value>${xml}</value>
-<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
-</return>
-<msg time="2025-12-24T10:16:06.090294" level="INFO">${xml_payload} = &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;film&gt;
-&lt;title&gt;Test Film&lt;/title&gt;
-&lt;release_year&gt;2023&lt;/release_year&gt;
-&lt;language_id&gt;1&lt;/language_id&gt;
-&lt;rental_duration&gt;4&lt;/rental_duration&gt;
-&lt;rental_rate&gt;5.99&lt;/rental_rat...</msg>
-<var>${xml_payload}</var>
-<arg>Test Film</arg>
-<arg>2023</arg>
-<arg>1</arg>
-<arg>4</arg>
-<arg>5.99</arg>
-<arg>120</arg>
-<arg>25.99</arg>
-<doc>Create XML payload for film</doc>
-<status status="PASS" start="2025-12-24T10:16:06.090294" elapsed="0.000000"/>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.430581" level="INFO">${payload} = {'first_name': 'Dilip', 'last_name': ' Kumar'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.429180" elapsed="0.001401"/>
 </kw>
 <kw name="Perform Post Request" owner="APIKeywords">
-<msg time="2025-12-24T10:16:06.115202" level="INFO">POST request to http://127.0.0.1:8000/table/films</msg>
-<msg time="2025-12-24T10:16:06.115202" level="INFO">Payload Type: xml</msg>
-<msg time="2025-12-24T10:16:06.115202" level="INFO">Status Code: 422</msg>
-<msg time="2025-12-24T10:16:06.115202" level="INFO">Response Time: 0.022641s</msg>
+<msg time="2025-12-25T09:50:19.443954" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.443954" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.443954" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.443954" level="INFO">Response Time: 0.010297s</msg>
 <arg>${TABLE_ENDPOINT}</arg>
-<arg>${xml_payload}</arg>
-<arg>payload_type=xml</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
 <doc>Perform POST request</doc>
-<status status="PASS" start="2025-12-24T10:16:06.091391" elapsed="0.023811"/>
+<status status="PASS" start="2025-12-25T09:50:19.430581" elapsed="0.013373"/>
 </kw>
 <kw name="Response Status Code Should Be" owner="APIKeywords">
-<msg time="2025-12-24T10:16:06.116292" level="FAIL">Expected status code 201, but got 422</msg>
-<arg>201</arg>
+<msg time="2025-12-25T09:50:19.444709" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
 <doc>Verify response status code</doc>
-<status status="FAIL" start="2025-12-24T10:16:06.116292" elapsed="0.028664">Expected status code 201, but got 422</status>
+<status status="PASS" start="2025-12-25T09:50:19.443954" elapsed="0.000755"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.444709" level="INFO">${actual_response} = {'actor_id': 228, 'first_name': 'Dilip', 'last_name': ' Kumar', 'last_update': '2025-12-25T09:50:19.436632+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.444709" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.445722" level="INFO">${expected_response} = {'first_name': 'Dilip', 'last_name': 'Kumar'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.445722" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.445722" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.445722" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.445722" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.445722" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.445722" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.445722" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.447271" level="INFO">${actor_id} = 228</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.447271" elapsed="0.000000"/>
 </kw>
 <kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.514690" level="INFO">Connected to database: greencycles on localhost:5432</msg>
 <arg>${DB_HOST}</arg>
 <arg>${DB_NAME}</arg>
 <arg>${DB_USER}</arg>
 <arg>${DB_PASSWORD}</arg>
 <doc>Connect to PostgreSQL database</doc>
-<status status="NOT RUN" start="2025-12-24T10:16:06.145955" elapsed="0.000000"/>
-</kw>
-<kw name="Get Response Body" owner="APIKeywords">
-<var>${response}</var>
-<doc>Get the last response body</doc>
-<status status="NOT RUN" start="2025-12-24T10:16:06.145955" elapsed="0.000000"/>
-</kw>
-<kw name="Get Response Json Value" owner="APIKeywords">
-<var>${film_id}</var>
-<arg>film_id</arg>
-<doc>Get value from response JSON by key</doc>
-<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:19.447271" elapsed="0.067419"/>
 </kw>
 <kw name="Verify Record Created" owner="DatabaseKeywords">
-<arg>films</arg>
-<arg>film_id</arg>
-<arg>${film_id}</arg>
+<msg time="2025-12-25T09:50:19.518104" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 228</msg>
+<msg time="2025-12-25T09:50:19.518104" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.518104" level="INFO">Record created in actor with actor_id=228</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
 <doc>Verify that a new record was created</doc>
-<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:19.514690" elapsed="0.003414"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.519505" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 228</msg>
+<msg time="2025-12-25T09:50:19.519505" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.519505" level="INFO">Column first_name = Dilip</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.518104" elapsed="0.001401"/>
 </kw>
 <kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.519505" level="INFO">Disconnected from database</msg>
 <doc>Disconnect from database</doc>
-<status status="NOT RUN" start="2025-12-24T10:16:06.146969" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:19.519505" elapsed="0.000000"/>
 </kw>
-<doc>Create a new film record via POST with XML payload</doc>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.519505" level="INFO">Successfully created actor with ID: 228</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.519505" elapsed="0.001000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Dilip', 'last_name': ' Kumar', 'expected_response': '  {\n    "first_name": "Dilip",\n    "last_name": "Kumar"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.429180" elapsed="0.091325"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.520505" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.520505" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.521504" level="INFO">${payload} = {'first_name': 'Amir ', 'last_name': 'Khan'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.520505" elapsed="0.000999"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.529519" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.529519" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.529519" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.529519" level="INFO">Response Time: 0.006593s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.521504" elapsed="0.008015"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.529519" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.529519" elapsed="0.000991"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.530510" level="INFO">${actual_response} = {'actor_id': 229, 'first_name': 'Amir ', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.525024+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.530510" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.530510" level="INFO">${expected_response} = {'first_name': 'Amir', 'last_name': 'Khan'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.530510" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.530510" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.530510" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.531510" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.530510" elapsed="0.001000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.531510" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.531510" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.531510" level="INFO">${actor_id} = 229</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.531510" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.584448" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.531510" elapsed="0.052938"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.588812" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 229</msg>
+<msg time="2025-12-25T09:50:19.588812" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.589814" level="INFO">Record created in actor with actor_id=229</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.584448" elapsed="0.005366"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.589814" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 229</msg>
+<msg time="2025-12-25T09:50:19.589814" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.590812" level="INFO">Column first_name = Amir </msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.589814" elapsed="0.000998"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.590812" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.590812" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.590812" level="INFO">Successfully created actor with ID: 229</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.590812" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Amir ', 'last_name': 'Khan', 'expected_response': '  {\n    "first_name": "Amir",\n    "last_name": "Khan"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.520505" elapsed="0.070307"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.591810" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.591810" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.591810" level="INFO">${payload} = {'first_name': 'Shahrukh', 'last_name': 'Khan'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.591810" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.600547" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.600547" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.600547" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.600547" level="INFO">Response Time: 0.007211s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.591810" elapsed="0.008737"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.601852" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.601852" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.601852" level="INFO">${actual_response} = {'actor_id': 230, 'first_name': 'Shahrukh', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.596034+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.601852" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.601852" level="INFO">${expected_response} = {'first_name': 'Shahrukh', 'last_name': 'Khan'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.601852" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.602880" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.602880" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.602880" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.602880" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.602880" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.602880" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.603880" level="INFO">${actor_id} = 230</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.602880" elapsed="0.001000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.665484" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.603880" elapsed="0.061604"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.668675" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 230</msg>
+<msg time="2025-12-25T09:50:19.668675" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.668675" level="INFO">Record created in actor with actor_id=230</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.665484" elapsed="0.003191"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.669698" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 230</msg>
+<msg time="2025-12-25T09:50:19.669698" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.669698" level="INFO">Column first_name = Shahrukh</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.669698" elapsed="0.000000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.670773" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.669698" elapsed="0.001075"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.670773" level="INFO">Successfully created actor with ID: 230</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.670773" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Shahrukh', 'last_name': 'Khan', 'expected_response': '  {\n    "first_name": "Shahrukh",\n    "last_name": "Khan"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.591810" elapsed="0.078963"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.671760" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.670773" elapsed="0.000987"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.671760" level="INFO">${payload} = {'first_name': 'Salman', 'last_name': 'Khan'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.671760" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.681760" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.681760" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.681760" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.681760" level="INFO">Response Time: 0.007095s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.671760" elapsed="0.010000"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.681760" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.681760" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.683275" level="INFO">${actual_response} = {'actor_id': 231, 'first_name': 'Salman', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.677173+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.681760" elapsed="0.001515"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.683275" level="INFO">${expected_response} = {'first_name': 'Salman', 'last_name': 'Khan'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.683275" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.683275" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.683275" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.683275" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.683275" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.684292" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.683275" elapsed="0.001017"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.684292" level="INFO">${actor_id} = 231</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.684292" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.740990" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.684292" elapsed="0.056698"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.744177" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 231</msg>
+<msg time="2025-12-25T09:50:19.744177" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.744177" level="INFO">Record created in actor with actor_id=231</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.740990" elapsed="0.003187"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.746330" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 231</msg>
+<msg time="2025-12-25T09:50:19.746330" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.746330" level="INFO">Column first_name = Salman</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.745303" elapsed="0.001027"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.746330" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.746330" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.746330" level="INFO">Successfully created actor with ID: 231</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.746330" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Salman', 'last_name': 'Khan', 'expected_response': '  {\n    "first_name": "Salman",\n    "last_name": "Khan"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.670773" elapsed="0.075557"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.747315" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.747315" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.748314" level="INFO">${payload} = {'first_name': 'Amitabh', 'last_name': 'Bachchan'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.747315" elapsed="0.000999"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.756711" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.756711" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.756711" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.756711" level="INFO">Response Time: 0.007209s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.748314" elapsed="0.008397"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.756711" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.756711" elapsed="0.001012"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.757723" level="INFO">${actual_response} = {'actor_id': 232, 'first_name': 'Amitabh', 'last_name': 'Bachchan', 'last_update': '2025-12-25T09:50:19.751988+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.757723" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.757723" level="INFO">${expected_response} = {'first_name': 'Amitabh', 'last_name': 'Bachchan'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.757723" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.757723" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.757723" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.758723" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.757723" elapsed="0.001000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.758723" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.758723" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.758723" level="INFO">${actor_id} = 232</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.758723" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.812428" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.758723" elapsed="0.053705"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.815898" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 232</msg>
+<msg time="2025-12-25T09:50:19.817183" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.817183" level="INFO">Record created in actor with actor_id=232</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.813452" elapsed="0.003731"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.817183" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 232</msg>
+<msg time="2025-12-25T09:50:19.817183" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.818187" level="INFO">Column first_name = Amitabh</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.817183" elapsed="0.001004"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.818187" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.818187" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.818187" level="INFO">Successfully created actor with ID: 232</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.818187" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Amitabh', 'last_name': 'Bachchan', 'expected_response': '  {\n    "first_name": "Amitabh",\n    "last_name": "Bachchan"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.747315" elapsed="0.070872"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.819169" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.819169" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.820183" level="INFO">${payload} = {'first_name': 'Akshay', 'last_name': 'Kumar'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.819169" elapsed="0.001014"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.828841" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.828841" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.828841" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.828841" level="INFO">Response Time: 0.007301s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.820183" elapsed="0.008658"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.828841" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.828841" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.828841" level="INFO">${actual_response} = {'actor_id': 233, 'first_name': 'Akshay', 'last_name': 'Kumar', 'last_update': '2025-12-25T09:50:19.823559+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.828841" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.829994" level="INFO">${expected_response} = {'first_name': 'Akshay', 'last_name': 'Kumar'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.829994" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.829994" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.829994" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.829994" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.829994" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.829994" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.829994" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.830993" level="INFO">${actor_id} = 233</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.830993" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.887879" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.830993" elapsed="0.056886"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.891983" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 233</msg>
+<msg time="2025-12-25T09:50:19.891983" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.891983" level="INFO">Record created in actor with actor_id=233</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.887879" elapsed="0.004104"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.893071" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 233</msg>
+<msg time="2025-12-25T09:50:19.893071" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.893071" level="INFO">Column first_name = Akshay</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.891983" elapsed="0.001088"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.893071" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.893071" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.894062" level="INFO">Successfully created actor with ID: 233</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.893071" elapsed="0.000991"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Akshay', 'last_name': 'Kumar', 'expected_response': '  {\n    "first_name": "Akshay",\n    "last_name": "Kumar"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.819169" elapsed="0.074893"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.894062" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.894062" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.895064" level="INFO">${payload} = {'first_name': 'Varun', 'last_name': 'Dhawan'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.895064" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.904108" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.904108" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.904108" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.904108" level="INFO">Response Time: 0.007416s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.895064" elapsed="0.009044"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.904108" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.904108" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.904108" level="INFO">${actual_response} = {'actor_id': 234, 'first_name': 'Varun', 'last_name': 'Dhawan', 'last_update': '2025-12-25T09:50:19.898968+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.904108" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.905204" level="INFO">${expected_response} = {'first_name': 'Varun', 'last_name': 'Dhawan'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.905204" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.905204" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.905204" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.905204" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.905204" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.906242" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.905204" elapsed="0.001038"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.906242" level="INFO">${actor_id} = 234</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.906242" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.959920" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.906242" elapsed="0.053678"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.963520" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 234</msg>
+<msg time="2025-12-25T09:50:19.963520" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.963520" level="INFO">Record created in actor with actor_id=234</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:19.959920" elapsed="0.003600"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.964518" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 234</msg>
+<msg time="2025-12-25T09:50:19.964518" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:19.964518" level="INFO">Column first_name = Varun</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:19.964518" elapsed="0.000000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:19.965518" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.964518" elapsed="0.001000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.965518" level="INFO">Successfully created actor with ID: 234</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.965518" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Varun', 'last_name': 'Dhawan', 'expected_response': '  {\n    "first_name": "Varun",\n    "last_name": "Dhawan"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.894062" elapsed="0.071456"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:19.966502" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:19.966502" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.966502" level="INFO">${payload} = {'first_name': 'Ranbir', 'last_name': 'Kapoor'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:19.966502" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.975717" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:19.975717" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:19.975717" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:19.975717" level="INFO">Response Time: 0.007167s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:19.966502" elapsed="0.009215"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.975717" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:19.975717" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.975717" level="INFO">${actual_response} = {'actor_id': 235, 'first_name': 'Ranbir', 'last_name': 'Kapoor', 'last_update': '2025-12-25T09:50:19.970540+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:19.975717" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.976802" level="INFO">${expected_response} = {'first_name': 'Ranbir', 'last_name': 'Kapoor'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:19.976802" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:19.976802" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:19.976802" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:19.976802" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:19.976802" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.976802" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.976802" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:19.977840" level="INFO">${actor_id} = 235</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:19.977840" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.031655" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:19.977840" elapsed="0.054816"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.035657" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 235</msg>
+<msg time="2025-12-25T09:50:20.035657" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.035657" level="INFO">Record created in actor with actor_id=235</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:20.032656" elapsed="0.004000"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.037656" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 235</msg>
+<msg time="2025-12-25T09:50:20.037656" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.037656" level="INFO">Column first_name = Ranbir</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:20.036656" elapsed="0.001000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.037656" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:20.037656" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:20.037656" level="INFO">Successfully created actor with ID: 235</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:20.037656" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Ranbir', 'last_name': 'Kapoor', 'expected_response': '  {\n    "first_name": "Ranbir",\n    "last_name": "Kapoor"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:19.965518" elapsed="0.073137"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:20.038655" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:20.038655" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.039652" level="INFO">${payload} = {'first_name': 'Ranvir', 'last_name': 'Singh'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:20.039652" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.048335" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:20.048335" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:20.048335" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:20.048335" level="INFO">Response Time: 0.007204s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:20.039652" elapsed="0.008683"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.048335" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:20.048335" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.049469" level="INFO">${actual_response} = {'actor_id': 236, 'first_name': 'Ranvir', 'last_name': 'Singh', 'last_update': '2025-12-25T09:50:20.043430+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:20.048335" elapsed="0.001134"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.049469" level="INFO">${expected_response} = {'first_name': 'Ranvir', 'last_name': 'Singh'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:20.049469" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.049469" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:20.049469" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:20.049469" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:20.049469" elapsed="0.000000"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.050466" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:20.049469" elapsed="0.000997"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.050466" level="INFO">${actor_id} = 236</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:20.050466" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.211544" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:20.050466" elapsed="0.162077"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.215543" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 236</msg>
+<msg time="2025-12-25T09:50:20.215543" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.215543" level="INFO">Record created in actor with actor_id=236</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:20.212543" elapsed="0.003000"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.216543" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 236</msg>
+<msg time="2025-12-25T09:50:20.216543" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.216543" level="INFO">Column first_name = Ranvir</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:20.215543" elapsed="0.001000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.217545" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:20.216543" elapsed="0.001002"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:20.217545" level="INFO">Successfully created actor with ID: 236</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:20.217545" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Ranvir', 'last_name': 'Singh', 'expected_response': '  {\n    "first_name": "Ranvir",\n    "last_name": "Singh"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:20.038655" elapsed="0.178890"/>
+</iter>
+<iter>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-25T09:50:20.218546" level="INFO">${exclude_cols} = ['expected_response']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-25T09:50:20.218546" elapsed="0.000000"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.219545" level="INFO">${payload} = {'first_name': 'Rishi ', 'last_name': 'Kapoor'}</msg>
+<var>${payload}</var>
+<arg>${actor_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-25T09:50:20.219545" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.228544" level="INFO">POST request to http://127.0.0.1:8000/table/actor</msg>
+<msg time="2025-12-25T09:50:20.229546" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-25T09:50:20.229546" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T09:50:20.229546" level="INFO">Response Time: 0.0074s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-25T09:50:20.219545" elapsed="0.010001"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.229546" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-25T09:50:20.229546" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.230545" level="INFO">${actual_response} = {'actor_id': 237, 'first_name': 'Rishi ', 'last_name': 'Kapoor', 'last_update': '2025-12-25T09:50:20.224337+05:30'}</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-25T09:50:20.230545" elapsed="0.000000"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.230545" level="INFO">${expected_response} = {'first_name': 'Rishi', 'last_name': 'Kapoor'}</msg>
+<var>${expected_response}</var>
+<arg>${actor_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-25T09:50:20.230545" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-25T09:50:20.232110" level="INFO">All expected keys found in actual response</msg>
+<msg time="2025-12-25T09:50:20.232110" level="INFO">Expected keys: ['first_name', 'last_name']</msg>
+<msg time="2025-12-25T09:50:20.232110" level="INFO">Actual response has 4 total keys</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys from expected response</doc>
+<status status="PASS" start="2025-12-25T09:50:20.230545" elapsed="0.001565"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.232110" level="INFO">Response JSON contains key: actor_id</msg>
+<arg>actor_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-25T09:50:20.232110" elapsed="0.000000"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-25T09:50:20.232110" level="INFO">${actor_id} = 237</msg>
+<var>${actor_id}</var>
+<arg>actor_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-25T09:50:20.232110" elapsed="0.000000"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.295860" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T09:50:20.232110" elapsed="0.064752"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.299862" level="INFO">Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 237</msg>
+<msg time="2025-12-25T09:50:20.299862" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.299862" level="INFO">Record created in actor with actor_id=237</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-25T09:50:20.296862" elapsed="0.003000"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.300861" level="INFO">Query executed: SELECT first_name FROM actor WHERE actor_id = 237</msg>
+<msg time="2025-12-25T09:50:20.300861" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T09:50:20.300861" level="INFO">Column first_name = Rishi </msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>first_name</arg>
+<arg>${actor_data}[first_name]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T09:50:20.299862" elapsed="0.000999"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T09:50:20.301861" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T09:50:20.300861" elapsed="0.001000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-25T09:50:20.301861" level="INFO">Successfully created actor with ID: 237</msg>
+<arg>Successfully created actor with ID: ${actor_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-25T09:50:20.301861" elapsed="0.000000"/>
+</kw>
+<var name="${actor_data}">{'first_name': 'Rishi ', 'last_name': 'Kapoor', 'expected_response': '  {\n    "first_name": "Rishi",\n    "last_name": "Kapoor"\n}'}</var>
+<status status="PASS" start="2025-12-25T09:50:20.218546" elapsed="0.083315"/>
+</iter>
+<var>${actor_data}</var>
+<value>@{test_data_list}</value>
+<status status="PASS" start="2025-12-25T09:50:19.429180" elapsed="0.872681"/>
+</for>
+<doc>Create new actor records via POST request and validate in database</doc>
 <tag>Database</tag>
+<tag>JSON</tag>
 <tag>POST</tag>
-<tag>XML</tag>
-<status status="FAIL" start="2025-12-24T10:16:06.089294" elapsed="0.057675">Expected status code 201, but got 422</status>
+<status status="PASS" start="2025-12-25T09:50:19.421159" elapsed="0.881699"/>
 </test>
 <kw name="Suite Teardown Steps" type="TEARDOWN">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-24T10:16:06.148363" level="INFO">XML Test Suite Completed</msg>
-<arg>XML Test Suite Completed</arg>
+<msg time="2025-12-25T09:50:20.304999" level="INFO">Test Suite Completed</msg>
+<arg>Test Suite Completed</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-24T10:16:06.148363" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:20.304999" elapsed="0.000000"/>
 </kw>
 <doc>Cleanup after test suite</doc>
-<status status="PASS" start="2025-12-24T10:16:06.148363" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T09:50:20.303993" elapsed="0.001006"/>
 </kw>
-<doc>API Automation Tests - POST, GET, PUT, DELETE with XML Payload</doc>
-<status status="FAIL" start="2025-12-24T10:16:05.791021" elapsed="0.357342"/>
+<doc>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload</doc>
+<status status="PASS" start="2025-12-25T09:50:18.876182" elapsed="1.428817"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1" skip="0">Database</stat>
-<stat pass="0" fail="1" skip="0">POST</stat>
-<stat pass="0" fail="1" skip="0">XML</stat>
+<stat pass="1" fail="0" skip="0">Database</stat>
+<stat pass="1" fail="0" skip="0">JSON</stat>
+<stat pass="1" fail="0" skip="0">POST</stat>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Api Xml Tests">Api Xml Tests</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Api Json Actor Tests">Api Json Actor Tests</stat>
 </suite>
 </statistics>
 <errors>
-<msg time="2025-12-24T10:16:05.786188" level="WARN">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_xml_tests.robot' on line 79: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
 </errors>
 </robot>

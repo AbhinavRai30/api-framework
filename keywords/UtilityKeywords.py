@@ -168,21 +168,28 @@ class UtilityKeywords:
     @keyword
     def should_contain_expected_keys(self, actual_response, expected_response):
         """Verify that actual response contains all keys from expected response
-
+        
+        The actual response can have additional fields not in expected response.
+        This only checks that expected keys exist in actual response.
+    
         Args:
             actual_response: Actual response dictionary
-            expected_response: Expected response dictionary
+            expected_response: Expected response dictionary (can be subset of actual)
         """
         if isinstance(expected_response, str):
             expected_response = json.loads(expected_response)
-
+        
+        if isinstance(actual_response, str):
+            actual_response = json.loads(actual_response)
+    
         missing_keys = []
         for key in expected_response.keys():
             if key not in actual_response:
                 missing_keys.append(key)
-
+    
         if missing_keys:
             BuiltIn().fail(f"Missing keys in response: {missing_keys}")
-
-        BuiltIn().log("All expected keys found in response")
-
+    
+        BuiltIn().log(f"All expected keys found in actual response")
+        BuiltIn().log(f"Expected keys: {list(expected_response.keys())}")
+        BuiltIn().log(f"Actual response has {len(actual_response)} total keys")

@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 7.0.1 (Python 3.10.11 on win32)" name="Generator">
+<meta content="Robot Framework 7.3.2 (Python 3.14.0 on win32)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all">
 :root {
@@ -724,10 +724,13 @@ function toggleSuite(suiteId) {
     toggleElement(suiteId, ['keyword', 'suite', 'test']);
 }
 function toggleTest(testId) {
-    toggleElement(testId, ['keyword']);
     var test = window.testdata.findLoaded(testId);
-    if (test.status == "FAIL" || test.status == "SKIP")
+    var autoExpand = test.status == "FAIL" || test.status == "SKIP";
+    var closed = $('#' + testId).children('.element-header').hasClass('closed');
+    if (autoExpand && closed)
         expandFailed(test);
+    else
+        toggleElement(testId, ['keyword']);
 }
 function toggleKeyword(kwId) {
     toggleElement(kwId, ['keyword']);
@@ -1252,58 +1255,48 @@ window.stats = (function () {
             });
     }
     function calculatePercents(total, passed, failed, skipped) {
-        if (total == 0) {
+        if (total == 0)
             return [0.0, 0.0, 0.0];
-        }
         var pass = 100.0 * passed / total;
         var skip = 100.0 * skipped / total;
         var fail = 100.0 * failed / total;
         if (pass > 0 && pass < 0.1)
-            pass = 0.1
+            pass = 0.1;
         if (fail > 0 && fail < 0.1)
-            fail = 0.1
+            fail = 0.1;
         if (skip > 0 && skip < 0.1)
-            skip = 0.1
+            skip = 0.1;
         if (pass > 99.95 && pass < 100)
-            pass = 99.9
+            pass = 99.9;
         if (fail > 99.95 && fail < 100)
-            fail = 99.9
+            fail = 99.9;
         if (skip > 99.95 && skip < 100)
-            skip = 99.9
-        return [Math.round(pass*10)/10, Math.round(skip*10)/10, Math.round(fail*10)/10];
+            skip = 99.9;
+        return [round1(pass), round1(skip), round1(fail)];
     }
     function calculateWidths(num1, num2, num3) {
         if (num1 + num2 + num3 === 0)
             return [0.0, 0.0, 0.0];
         // Make small percentages better visible
         if (num1 > 0 && num1 < 1)
-            num1 = 1
+            num1 = 1.0;
         if (num2 > 0 && num2 < 1)
-            num2 = 1
+            num2 = 1.0;
         if (num3 > 0 && num3 < 1)
-            num3 = 1
+            num3 = 1.0;
         // Handle situation where some are rounded up
         while (num1 + num2 + num3 > 100) {
-            if (num1 > num2 && num1 > num3)
-                num1 -= 0.1;
-            else if (num2 > num1 && num2 > num3)
-                num2 -= 0.1;
-            else if (num3 > num1 && num3 > num2)
-                num3 -= 0.1;
-            else if (num1 > num3 && num1 == num2) {
-                num1 -= 0.1;
-                num2 -= 0.1;
-            }
-            else if (num1 > num2 && num1 == num3) {
-                num1 -= 0.1;
-                num3 -= 0.1;
-            }
-            else if (num2 > num1 && num2 == num3) {
-                num2 -= 0.1;
-                num3 -= 0.1;
-            }
+            if (num1 >= num2 && num1 >= num3)
+                num1 = round1(num1 - 0.1);
+            else if (num2 >= num1 && num2 >= num3)
+                num2 = round1(num2 - 0.1);
+            else
+                num3 = round1(num3 - 0.1);
         }
-        return [Math.ceil(num1*10)/10, Math.ceil(num2*10)/10, Math.ceil(num3*10)/10];
+        return [num1, num2, num3];
+    }
+    function round1(num) {
+        return Math.round(num*10) / 10;
     }
     return {
         Statistics: Statistics
@@ -1522,7 +1515,7 @@ window.testdata = function () {
     var STATUSES = ['FAIL', 'PASS', 'SKIP', 'NOT RUN'];
     var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'ITERATION', 'IF',
                          'ELSE IF', 'ELSE', 'RETURN', 'VAR', 'TRY', 'EXCEPT', 'FINALLY',
-                         'WHILE', 'CONTINUE', 'BREAK', 'ERROR'];
+                         'WHILE', 'GROUP', 'CONTINUE', 'BREAK', 'ERROR'];
     function addElement(elem) {
         if (!elem.id)
             elem.id = uniqueId();
@@ -2081,25 +2074,25 @@ storage = function () {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,4,[],[1,0,1429],[],[[5,0,6,[7,8,9],[1,545,882],[[0,10,11,0,12,13,14,0,[1,546,7],[[553,2,15],[553,2,16]]],[3,17,0,0,0,0,0,0,[1,553,873],[[4,18,0,0,0,0,0,0,[1,553,91],[[0,19,20,0,21,22,23,0,[1,553,0],[[553,2,24]]],[0,25,11,0,26,27,28,0,[1,553,1],[[555,2,29]]],[0,30,31,0,32,33,0,0,[1,555,13],[[568,2,34],[568,2,35],[568,2,36],[568,2,37]]],[0,38,31,0,39,40,0,0,[1,568,1],[[569,2,41]]],[0,42,31,0,43,0,44,0,[1,569,0],[[569,2,45]]],[0,46,11,0,47,48,49,0,[1,570,0],[[570,2,50]]],[0,51,11,0,52,53,0,0,[1,570,0],[[570,2,54],[570,2,55],[570,2,56]]],[0,57,31,0,58,59,0,0,[1,570,0],[[570,2,60]]],[0,61,31,0,62,59,63,0,[1,571,0],[[571,2,64]]],[0,65,66,0,67,68,0,0,[1,571,67],[[639,2,69]]],[0,70,66,0,71,72,0,0,[1,639,3],[[642,2,73],[642,2,74],[642,2,75]]],[0,76,66,0,77,78,0,0,[1,642,1],[[644,2,79],[644,2,74],[644,2,80]]],[0,81,66,0,82,0,0,0,[1,644,0],[[644,2,83]]],[0,84,20,0,85,86,0,0,[1,644,1],[[644,2,87]]]]],[4,88,0,0,0,0,0,0,[1,645,70],[[0,19,20,0,21,22,23,0,[1,645,0],[[645,2,24]]],[0,25,11,0,26,27,28,0,[1,645,1],[[646,2,89]]],[0,30,31,0,32,33,0,0,[1,646,8],[[654,2,34],[654,2,35],[654,2,36],[654,2,90]]],[0,38,31,0,39,40,0,0,[1,654,1],[[654,2,41]]],[0,42,31,0,43,0,44,0,[1,655,0],[[655,2,91]]],[0,46,11,0,47,48,49,0,[1,655,0],[[655,2,92]]],[0,51,11,0,52,53,0,0,[1,655,1],[[655,2,54],[655,2,55],[656,2,56]]],[0,57,31,0,58,59,0,0,[1,656,0],[[656,2,60]]],[0,61,31,0,62,59,63,0,[1,656,0],[[656,2,93]]],[0,65,66,0,67,68,0,0,[1,656,53],[[708,2,69]]],[0,70,66,0,71,72,0,0,[1,708,5],[[713,2,94],[713,2,74],[714,2,95]]],[0,76,66,0,77,78,0,0,[1,714,1],[[714,2,96],[714,2,74],[715,2,97]]],[0,81,66,0,82,0,0,0,[1,715,0],[[715,2,83]]],[0,84,20,0,85,86,0,0,[1,715,0],[[715,2,98]]]]],[4,99,0,0,0,0,0,0,[1,716,79],[[0,19,20,0,21,22,23,0,[1,716,0],[[716,2,24]]],[0,25,11,0,26,27,28,0,[1,716,0],[[716,2,100]]],[0,30,31,0,32,33,0,0,[1,716,9],[[725,2,34],[725,2,35],[725,2,36],[725,2,101]]],[0,38,31,0,39,40,0,0,[1,726,0],[[726,2,41]]],[0,42,31,0,43,0,44,0,[1,726,0],[[726,2,102]]],[0,46,11,0,47,48,49,0,[1,726,0],[[726,2,103]]],[0,51,11,0,52,53,0,0,[1,727,0],[[727,2,54],[727,2,55],[727,2,56]]],[0,57,31,0,58,59,0,0,[1,727,0],[[727,2,60]]],[0,61,31,0,62,59,63,0,[1,727,1],[[728,2,104]]],[0,65,66,0,67,68,0,0,[1,728,62],[[789,2,69]]],[0,70,66,0,71,72,0,0,[1,789,3],[[793,2,105],[793,2,74],[793,2,106]]],[0,76,66,0,77,78,0,0,[1,794,0],[[794,2,107],[794,2,74],[794,2,108]]],[0,81,66,0,82,0,0,0,[1,794,1],[[795,2,83]]],[0,84,20,0,85,86,0,0,[1,795,0],[[795,2,109]]]]],[4,110,0,0,0,0,0,0,[1,795,76],[[0,19,20,0,21,22,23,0,[1,795,1],[[796,2,24]]],[0,25,11,0,26,27,28,0,[1,796,0],[[796,2,111]]],[0,30,31,0,32,33,0,0,[1,796,10],[[806,2,34],[806,2,35],[806,2,36],[806,2,112]]],[0,38,31,0,39,40,0,0,[1,806,0],[[806,2,41]]],[0,42,31,0,43,0,44,0,[1,806,2],[[807,2,113]]],[0,46,11,0,47,48,49,0,[1,807,0],[[807,2,114]]],[0,51,11,0,52,53,0,0,[1,807,0],[[807,2,54],[807,2,55],[807,2,56]]],[0,57,31,0,58,59,0,0,[1,807,1],[[808,2,60]]],[0,61,31,0,62,59,63,0,[1,808,0],[[808,2,115]]],[0,65,66,0,67,68,0,0,[1,808,57],[[865,2,69]]],[0,70,66,0,71,72,0,0,[1,865,3],[[868,2,116],[868,2,74],[868,2,117]]],[0,76,66,0,77,78,0,0,[1,869,1],[[870,2,118],[870,2,74],[870,2,119]]],[0,81,66,0,82,0,0,0,[1,870,0],[[870,2,83]]],[0,84,20,0,85,86,0,0,[1,870,0],[[870,2,120]]]]],[4,121,0,0,0,0,0,0,[1,871,71],[[0,19,20,0,21,22,23,0,[1,871,0],[[871,2,24]]],[0,25,11,0,26,27,28,0,[1,871,1],[[872,2,122]]],[0,30,31,0,32,33,0,0,[1,872,8],[[881,2,34],[881,2,35],[881,2,36],[881,2,123]]],[0,38,31,0,39,40,0,0,[1,881,1],[[881,2,41]]],[0,42,31,0,43,0,44,0,[1,882,0],[[882,2,124]]],[0,46,11,0,47,48,49,0,[1,882,0],[[882,2,125]]],[0,51,11,0,52,53,0,0,[1,882,1],[[882,2,54],[882,2,55],[883,2,56]]],[0,57,31,0,58,59,0,0,[1,883,0],[[883,2,60]]],[0,61,31,0,62,59,63,0,[1,883,0],[[883,2,126]]],[0,65,66,0,67,68,0,0,[1,883,54],[[936,2,69]]],[0,70,66,0,71,72,0,0,[1,937,4],[[940,2,127],[941,2,74],[941,2,128]]],[0,76,66,0,77,78,0,0,[1,941,1],[[941,2,129],[941,2,74],[942,2,130]]],[0,81,66,0,82,0,0,0,[1,942,0],[[942,2,83]]],[0,84,20,0,85,86,0,0,[1,942,0],[[942,2,131]]]]],[4,132,0,0,0,0,0,0,[1,943,75],[[0,19,20,0,21,22,23,0,[1,943,0],[[943,2,24]]],[0,25,11,0,26,27,28,0,[1,943,1],[[944,2,133]]],[0,30,31,0,32,33,0,0,[1,944,9],[[953,2,34],[953,2,35],[953,2,36],[953,2,134]]],[0,38,31,0,39,40,0,0,[1,953,0],[[953,2,41]]],[0,42,31,0,43,0,44,0,[1,953,0],[[953,2,135]]],[0,46,11,0,47,48,49,0,[1,954,0],[[954,2,136]]],[0,51,11,0,52,53,0,0,[1,954,0],[[954,2,54],[954,2,55],[954,2,56]]],[0,57,31,0,58,59,0,0,[1,954,0],[[954,2,60]]],[0,61,31,0,62,59,63,0,[1,955,0],[[955,2,137]]],[0,65,66,0,67,68,0,0,[1,955,57],[[1012,2,69]]],[0,70,66,0,71,72,0,0,[1,1012,4],[[1016,2,138],[1016,2,74],[1016,2,139]]],[0,76,66,0,77,78,0,0,[1,1016,1],[[1017,2,140],[1017,2,74],[1017,2,141]]],[0,81,66,0,82,0,0,0,[1,1017,0],[[1017,2,83]]],[0,84,20,0,85,86,0,0,[1,1017,1],[[1018,2,142]]]]],[4,143,0,0,0,0,0,0,[1,1018,71],[[0,19,20,0,21,22,23,0,[1,1018,0],[[1018,2,24]]],[0,25,11,0,26,27,28,0,[1,1019,0],[[1019,2,144]]],[0,30,31,0,32,33,0,0,[1,1019,9],[[1028,2,34],[1028,2,35],[1028,2,36],[1028,2,145]]],[0,38,31,0,39,40,0,0,[1,1028,0],[[1028,2,41]]],[0,42,31,0,43,0,44,0,[1,1028,0],[[1028,2,146]]],[0,46,11,0,47,48,49,0,[1,1029,0],[[1029,2,147]]],[0,51,11,0,52,53,0,0,[1,1029,0],[[1029,2,54],[1029,2,55],[1029,2,56]]],[0,57,31,0,58,59,0,0,[1,1029,1],[[1030,2,60]]],[0,61,31,0,62,59,63,0,[1,1030,0],[[1030,2,148]]],[0,65,66,0,67,68,0,0,[1,1030,54],[[1084,2,69]]],[0,70,66,0,71,72,0,0,[1,1084,4],[[1088,2,149],[1088,2,74],[1088,2,150]]],[0,76,66,0,77,78,0,0,[1,1089,0],[[1089,2,151],[1089,2,74],[1089,2,152]]],[0,81,66,0,82,0,0,0,[1,1089,1],[[1090,2,83]]],[0,84,20,0,85,86,0,0,[1,1090,0],[[1090,2,153]]]]],[4,154,0,0,0,0,0,0,[1,1090,73],[[0,19,20,0,21,22,23,0,[1,1091,0],[[1091,2,24]]],[0,25,11,0,26,27,28,0,[1,1091,0],[[1091,2,155]]],[0,30,31,0,32,33,0,0,[1,1091,9],[[1100,2,34],[1100,2,35],[1100,2,36],[1100,2,156]]],[0,38,31,0,39,40,0,0,[1,1100,0],[[1100,2,41]]],[0,42,31,0,43,0,44,0,[1,1100,0],[[1100,2,157]]],[0,46,11,0,47,48,49,0,[1,1101,0],[[1101,2,158]]],[0,51,11,0,52,53,0,0,[1,1101,0],[[1101,2,54],[1101,2,55],[1101,2,56]]],[0,57,31,0,58,59,0,0,[1,1101,0],[[1101,2,60]]],[0,61,31,0,62,59,63,0,[1,1102,0],[[1102,2,159]]],[0,65,66,0,67,68,0,0,[1,1102,55],[[1156,2,69]]],[0,70,66,0,71,72,0,0,[1,1157,4],[[1160,2,160],[1160,2,74],[1160,2,161]]],[0,76,66,0,77,78,0,0,[1,1161,1],[[1162,2,162],[1162,2,74],[1162,2,163]]],[0,81,66,0,82,0,0,0,[1,1162,0],[[1162,2,83]]],[0,84,20,0,85,86,0,0,[1,1162,0],[[1162,2,164]]]]],[4,165,0,0,0,0,0,0,[1,1163,179],[[0,19,20,0,21,22,23,0,[1,1163,0],[[1163,2,24]]],[0,25,11,0,26,27,28,0,[1,1164,0],[[1164,2,166]]],[0,30,31,0,32,33,0,0,[1,1164,9],[[1172,2,34],[1172,2,35],[1172,2,36],[1172,2,167]]],[0,38,31,0,39,40,0,0,[1,1172,0],[[1172,2,41]]],[0,42,31,0,43,0,44,0,[1,1172,1],[[1173,2,168]]],[0,46,11,0,47,48,49,0,[1,1173,0],[[1173,2,169]]],[0,51,11,0,52,53,0,0,[1,1173,0],[[1173,2,54],[1173,2,55],[1173,2,56]]],[0,57,31,0,58,59,0,0,[1,1173,1],[[1174,2,60]]],[0,61,31,0,62,59,63,0,[1,1174,0],[[1174,2,170]]],[0,65,66,0,67,68,0,0,[1,1174,162],[[1336,2,69]]],[0,70,66,0,71,72,0,0,[1,1337,3],[[1340,2,171],[1340,2,74],[1340,2,172]]],[0,76,66,0,77,78,0,0,[1,1340,1],[[1341,2,173],[1341,2,74],[1341,2,174]]],[0,81,66,0,82,0,0,0,[1,1341,1],[[1342,2,83]]],[0,84,20,0,85,86,0,0,[1,1342,0],[[1342,2,175]]]]],[4,176,0,0,0,0,0,0,[1,1343,83],[[0,19,20,0,21,22,23,0,[1,1343,0],[[1343,2,24]]],[0,25,11,0,26,27,28,0,[1,1344,0],[[1344,2,177]]],[0,30,31,0,32,33,0,0,[1,1344,10],[[1353,2,34],[1354,2,35],[1354,2,36],[1354,2,178]]],[0,38,31,0,39,40,0,0,[1,1354,0],[[1354,2,41]]],[0,42,31,0,43,0,44,0,[1,1355,0],[[1355,2,179]]],[0,46,11,0,47,48,49,0,[1,1355,0],[[1355,2,180]]],[0,51,11,0,52,53,0,0,[1,1355,2],[[1356,2,54],[1356,2,55],[1356,2,56]]],[0,57,31,0,58,59,0,0,[1,1356,0],[[1356,2,60]]],[0,61,31,0,62,59,63,0,[1,1356,0],[[1356,2,181]]],[0,65,66,0,67,68,0,0,[1,1356,65],[[1420,2,69]]],[0,70,66,0,71,72,0,0,[1,1421,3],[[1424,2,182],[1424,2,74],[1424,2,183]]],[0,76,66,0,77,78,0,0,[1,1424,1],[[1425,2,184],[1425,2,74],[1425,2,185]]],[0,81,66,0,82,0,0,0,[1,1425,1],[[1426,2,83]]],[0,84,20,0,85,86,0,0,[1,1426,0],[[1426,2,186]]]]]]]]]],[[1,187,0,0,188,0,0,0,[1,543,2],[[0,189,31,0,190,191,0,0,[1,544,0],[[544,2,192]]],[0,84,20,0,85,193,0,0,[1,545,0],[[545,2,193]]]]],[2,194,0,0,195,0,0,0,[1,1428,1],[[0,84,20,0,85,196,0,0,[1,1429,0],[[1429,2,196]]]]]],[1,1,0,0]];
+window.output["suite"] = [1,2,3,0,[],[0,0,215],[[4,5,6,0,[],[0,44,164],[[7,8,9,10,[],[0,51,152,11],[],[[12,0,13,[14,15,16],[0,127,68,17],[]]],[[1,18,0,0,19,0,0,0,[0,116,11],[[0,20,0,0,0,21,0,0,[0,117,6],[[119,5,22]]],[0,23,24,0,25,26,0,0,[3,125,1],[]]]],[2,27,0,0,28,0,0,0,[1,202,1],[[0,23,24,0,25,29,0,0,[1,202,1],[[202,2,29]]]]]],[1,0,1,0]]],[],[],[1,0,1,0]]],[],[],[1,0,1,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Api Json Actor Tests","*C:\\driver\\PythonProject\\PythonProject\\api-framework\\tests\\api_json_actor_tests.robot","*tests/api_json_actor_tests.robot","*<p>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload\x3c/p>","*Test POST New Actor with JSON Payload","*<p>Create new actor records via POST request and validate in database\x3c/p>","*Database","*JSON","*POST","*Read Test Data From Excel","*UtilityKeywords","*<p>Read test data from Excel file\x3c/p>","*${TEST_DATA_FILE}    ${SHEET_NAME}","*${test_data_list}","*Read 10 rows from Actors","eNp1jkEKwjAQRa8yBGE2IQcouBDc9QgWwmCnGEjGkEQQQu5uW4uK4l++B4+/q4VzsSMVst7l0mAPp4qTSzMVCowd4NF5F1EDevqg0N8CpQXzPfK58GgT53iV/NRQB4F56h1THag1pvTmXsVFrUE1SMOm4fvEIbgEPyf6C8m/C8aYBzWfSEE=","*${actor_data}    IN    @{test_data_list}","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUHfJzMksUNdRUM9JRBJV8C7NTSwCCadWFKQml6SmxBelFhfk5xVDpBWqY/IUgECtsDS/xBphIoRvBRUHmw1h6iCrh1uFqhxsJ4QZk1erXgsAH7k/wA==","*Create List","*BuiltIn","*<p>Returns a list containing given items.\x3c/p>","*expected_response","*${exclude_cols}","*${exclude_cols} = ['expected_response']","*Convert Test Data To Dict","*<p>Convert test data row to dictionary payload\x3c/p>","*${actor_data}    ${exclude_cols}","*${payload}","*${payload} = {'first_name': 'Dilip', 'last_name': ' Kumar'}","*Perform Post Request","*APIKeywords","*<p>Perform POST request\x3c/p>","*${TABLE_ENDPOINT}    ${payload}    payload_type=json","*POST request to <a href=\"http://127.0.0.1:8000/table/actor\">http://127.0.0.1:8000/table/actor\x3c/a>","*Payload Type: json","*Status Code: 200","*Response Time: 0.010297s","*Response Status Code Should Be","*<p>Verify response status code\x3c/p>","*200","*Status code 200 matches expected 200","*Get Response Body","*<p>Get the last response body\x3c/p>","*${actual_response}","*${actual_response} = {'actor_id': 228, 'first_name': 'Dilip', 'last_name': ' Kumar', 'last_update': '2025-12-25T09:50:19.436632+05:30'}","*Get Expected Response","*<p>Get expected response from test data\x3c/p>","*${actor_data}","*${expected_response}","*${expected_response} = {'first_name': 'Dilip', 'last_name': 'Kumar'}","*Should Contain Expected Keys","*<p>Verify that actual response contains all keys from expected response\x3c/p>","*${actual_response}    ${expected_response}","*All expected keys found in actual response","*Expected keys: ['first_name', 'last_name']","*Actual response has 4 total keys","*Response Json Should Contain Key","*<p>Verify response JSON contains a specific key\x3c/p>","*actor_id","*Response JSON contains key: actor_id","*Get Response Json Value","*<p>Get value from response JSON by key\x3c/p>","*${actor_id}","*${actor_id} = 228","*Connect To Database","*DatabaseKeywords","*<p>Connect to PostgreSQL database\x3c/p>","*${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}","*Connected to database: greencycles on localhost:5432","*Verify Record Created","*<p>Verify that a new record was created\x3c/p>","*actor    actor_id    ${actor_id}","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 228","*Rows returned: 1","*Record created in actor with actor_id=228","*Table Row Column Value Should Be","*<p>Verify specific column value in a row\x3c/p>","*actor    actor_id = ${actor_id}    first_name    ${actor_data}[first_name]","*Query executed: SELECT first_name FROM actor WHERE actor_id = 228","*Column first_name = Dilip","*Disconnect From Database","*<p>Disconnect from database\x3c/p>","*Disconnected from database","*Log","*<p>Logs the given message with the given level.\x3c/p>","*Successfully created actor with ID: ${actor_id}","*Successfully created actor with ID: 228","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUHfMzSxSUNdRUM9JRBL1zkjMAwmmVhSkJpekpsQXpRYX5OcVgyUVFKpj8hSAQK2wNL/EGmEehG8FFQeZDGHpICuH24OqGmQjhBWTV6teCwD9az3y","*${payload} = {'first_name': 'Amir ', 'last_name': 'Khan'}","*Response Time: 0.006593s","*${actual_response} = {'actor_id': 229, 'first_name': 'Amir ', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.525024+05:30'}","*${expected_response} = {'first_name': 'Amir', 'last_name': 'Khan'}","*${actor_id} = 229","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 229","*Record created in actor with actor_id=229","*Query executed: SELECT first_name FROM actor WHERE actor_id = 229","*Column first_name = Amir ","*Successfully created actor with ID: 229","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA/OSMwoKs3OUNdRUM9JRJLwzkjMAwmmVhSkJpekpsQXpRYX5OcVgyUVFKpj8hSAQK2wNL/EGmEkhG8FFYcZDuHpIGuB24WqA2QrhBWTV6teCwAjpEE8","*${payload} = {'first_name': 'Shahrukh', 'last_name': 'Khan'}","*Response Time: 0.007211s","*${actual_response} = {'actor_id': 230, 'first_name': 'Shahrukh', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.596034+05:30'}","*${expected_response} = {'first_name': 'Shahrukh', 'last_name': 'Khan'}","*${actor_id} = 230","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 230","*Record created in actor with actor_id=230","*Query executed: SELECT first_name FROM actor WHERE actor_id = 230","*Column first_name = Shahrukh","*Successfully created actor with ID: 230","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA9OzMlNzFPXUVDPSUQS9s6ACKZWFKQml6SmxBelFhfk5xWDJRUUqmPyFIBArbA0v8QaYSCEbwUVhxgNYesga4DbhKoeZCeEFZNXq14LAPeQP3g=","*${payload} = {'first_name': 'Salman', 'last_name': 'Khan'}","*Response Time: 0.007095s","*${actual_response} = {'actor_id': 231, 'first_name': 'Salman', 'last_name': 'Khan', 'last_update': '2025-12-25T09:50:19.677173+05:30'}","*${expected_response} = {'first_name': 'Salman', 'last_name': 'Khan'}","*${actor_id} = 231","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 231","*Record created in actor with actor_id=231","*Query executed: SELECT first_name FROM actor WHERE actor_id = 231","*Column first_name = Salman","*Successfully created actor with ID: 231","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUHfMzSxJTMpQ11FQz0lEEndKTM5IzkjMA0mkVhSkJpekpsQXpRYX5OcVgxUoKFTH5CkAgVphaX6JNcJUCN8KKg41H8LRQdYBtw5VA8xiCC8mr1a9FgCb3kM4","*${payload} = {'first_name': 'Amitabh', 'last_name': 'Bachchan'}","*Response Time: 0.007209s","*${actual_response} = {'actor_id': 232, 'first_name': 'Amitabh', 'last_name': 'Bachchan', 'last_update': '2025-12-25T09:50:19.751988+05:30'}","*${expected_response} = {'first_name': 'Amitabh', 'last_name': 'Bachchan'}","*${actor_id} = 232","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 232","*Record created in actor with actor_id=232","*Query executed: SELECT first_name FROM actor WHERE actor_id = 232","*Column first_name = Amitabh","*Successfully created actor with ID: 232","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUHfMLs5IrFTXUVDPSUQS9i7NTSwCiaZWFKQml6SmxBelFhfk5xWDZRUUqmPyFIBArbA0v8QaYSKEbwUVh5gNYesga4BbhaoebCmEGZNXq14LAJCKQH4=","*${payload} = {'first_name': 'Akshay', 'last_name': 'Kumar'}","*Response Time: 0.007301s","*${actual_response} = {'actor_id': 233, 'first_name': 'Akshay', 'last_name': 'Kumar', 'last_update': '2025-12-25T09:50:19.823559+05:30'}","*${expected_response} = {'first_name': 'Akshay', 'last_name': 'Kumar'}","*${actor_id} = 233","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 233","*Record created in actor with actor_id=233","*Query executed: SELECT first_name FROM actor WHERE actor_id = 233","*Column first_name = Akshay","*Successfully created actor with ID: 233","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA9LLCrNU9dRUM9JRBJ1yUgsTwQLp1YUpCaXpKbEF6UWF+TnFYOlFRSqY/IUgECtsDS/xBphIoRvBRUHmw1h6iCrh1uFqhxiKYQdk1erXgsAj7NAeg==","*${payload} = {'first_name': 'Varun', 'last_name': 'Dhawan'}","*Response Time: 0.007416s","*${actual_response} = {'actor_id': 234, 'first_name': 'Varun', 'last_name': 'Dhawan', 'last_update': '2025-12-25T09:50:19.898968+05:30'}","*${expected_response} = {'first_name': 'Varun', 'last_name': 'Dhawan'}","*${actor_id} = 234","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 234","*Record created in actor with actor_id=234","*Query executed: SELECT first_name FROM actor WHERE actor_id = 234","*Column first_name = Varun","*Successfully created actor with ID: 234","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA9KzEvKLFLXUVDPSUQS9k4syM8HC6dWFKQml6SmxBelFhfk5xWDpRUUqmPyFIBArbA0v8QaYSSEbwUVhxgOYesga4DbhaoeYiuEHZNXq14LABq4QVA=","*${payload} = {'first_name': 'Ranbir', 'last_name': 'Kapoor'}","*Response Time: 0.007167s","*${actual_response} = {'actor_id': 235, 'first_name': 'Ranbir', 'last_name': 'Kapoor', 'last_update': '2025-12-25T09:50:19.970540+05:30'}","*${expected_response} = {'first_name': 'Ranbir', 'last_name': 'Kapoor'}","*${actor_id} = 235","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 235","*Record created in actor with actor_id=235","*Query executed: SELECT first_name FROM actor WHERE actor_id = 235","*Column first_name = Ranbir","*Successfully created actor with ID: 235","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA9KzCvLLFLXUVDPSUQSDs7MS88AiaZWFKQml6SmxBelFhfk5xWDZRUUqmPyFIBArbA0v8QaYSKEbwUVh5gNYesga4BbhaoebCmEGZNXq14LAJstQJI=","*${payload} = {'first_name': 'Ranvir', 'last_name': 'Singh'}","*Response Time: 0.007204s","*${actual_response} = {'actor_id': 236, 'first_name': 'Ranvir', 'last_name': 'Singh', 'last_update': '2025-12-25T09:50:20.043430+05:30'}","*${expected_response} = {'first_name': 'Ranvir', 'last_name': 'Singh'}","*${actor_id} = 236","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 236","*Record created in actor with actor_id=236","*Query executed: SELECT first_name FROM actor WHERE actor_id = 236","*Column first_name = Ranvir","*Successfully created actor with ID: 236","eNpTqU5MLskvik9JLEmsVbBVqFZPyywqLonPS8xNVbdSUA/KLM7IVFDXUVDPSUQS9k4syM8vAgmnVhSkJpekpsQXpRYX5OcVg6UVFKpj8hSAQK2wNL/EGmEkhG8FFQcbDmHqIKuHW4WqHGIphB2TV6teCwCzL0Cy","*${payload} = {'first_name': 'Rishi ', 'last_name': 'Kapoor'}","*Response Time: 0.0074s","*${actual_response} = {'actor_id': 237, 'first_name': 'Rishi ', 'last_name': 'Kapoor', 'last_update': '2025-12-25T09:50:20.224337+05:30'}","*${expected_response} = {'first_name': 'Rishi', 'last_name': 'Kapoor'}","*${actor_id} = 237","*Query executed: SELECT COUNT(*) as count FROM actor WHERE actor_id = 237","*Record created in actor with actor_id=237","*Query executed: SELECT first_name FROM actor WHERE actor_id = 237","*Column first_name = Rishi ","*Successfully created actor with ID: 237","*Suite Setup Steps","*<p>Setup before test suite\x3c/p>","*Set Base Url","*<p>Set the base URL for API requests\x3c/p>","*${BASE_URL}","*Base URL set to: <a href=\"http://127.0.0.1:8000\">http://127.0.0.1:8000\x3c/a>","*API Automation Framework Started","*Suite Teardown Steps","*<p>Cleanup after test suite\x3c/p>","*Test Suite Completed"]);
+window.output["strings"] = window.output["strings"].concat(["*","*Api-Framework","*C:\\driver\\PythonProject\\PythonProject\\api-framework","*..","*Tests","*C:\\driver\\PythonProject\\PythonProject\\api-framework\\tests","*../tests","*Api Json Film Tests","*C:\\driver\\PythonProject\\PythonProject\\api-framework\\tests\\api_json_film_tests.robot","*../tests/api_json_film_tests.robot","*<p>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload\x3c/p>","*Suite setup failed:\nNo keyword with name 'set base url' found.","*Test POST New Film with JSON Payload","*<p>Create new film records via POST request and validate in database\x3c/p>","*Database","*JSON","*POST","*Parent suite setup failed:\nNo keyword with name 'set base url' found.","*Suite Setup Steps","*<p>Setup before test suite\x3c/p>","*set base url","*${BASE_URL}","*No keyword with name 'set base url' found.","*Log","*BuiltIn","*<p>Logs the given message with the given level.\x3c/p>","*API Automation Framework Started","*Suite Teardown Steps","*<p>Cleanup after test suite\x3c/p>","*Test Suite Completed","eNqtU01PAjEQvfMrJh5cTdyNCOGwnogf0Yi4MXgwaUK63QEq3c46LSj+eltAD3oDTtO+ybx5M6+9YSYGbWGiDUJylYuK9RJZFCs/I1swvaHyf26y0emEZY0fxHPh0XkXsfGbIzsORPV4jWVMJfkEyILRFqGTw33dEHttpwEpWfJqt5ZzXIVYOdEv7h+256xZJTCRYYwqh0eqFgaH5G9pYaubOGQOQ4J6jYMNRBUkjO+LKDRpjVgqLKWaw0lNzgOjQutBSWPASOdP8xbAbVzR0QH1Hp1tFtM7iw4cG3+50Xc89ZehH4Berwt+dLaK19Hd07Doj+6inn2U7FgeXNuxktHRghXGzioXLw45rKOcaSuX8Cy1yJZOUYUCPz1ap8k6UaWlxpnZvKOYTC+ydnYuyuBpsDmqOSSdJzLiN7mZ8z9xv2mupZdiQOF1bEcWzTooYkw7Wbub9rpbqNPuZl+62ZfsejBw+3IMfrzbmeIACoTTHtMm/DQ5RfcN/Imjtg==","eNqtU8FuGkEMvfMVVg7ZVsquSkNy2JxQkyhVKUUVOVQaCc3OGpgwOx55DMnm6zsLJIfkBpxGfpafn/08d8zEYD3MrUPIfpSqZrtBVpNWluQnTE9o5EOkg83nrBt8Jl4pwSixw2ZPkfwsETWzLVYwVSQZkAdnPcJVCT+bQCzWLxJSseb2sJYrbNNbR/Uo1llpf+3jIrQZzHUapS7hN9Vrh2OSe1r7+q4btIQxQbPFwSeyGjIK6EP74rLelLXBSpsVfGkoCjAa9AJGOwdOR/la9gDuuzWdnVjz2cVuQdcXnRPnTm52Gs8XcpN6Atjt2uBNa2/yb/rwZzwZTh86TceoObA8uXdgJWOkNRvsOptSPUbkqIbV0nq9gb/aqmITDdWo8EXQR0s+qjqvLC7d7p66ZP696BffVJV8TVZ3ak5JJ0ROvSd3c34mHoZwq0WrEaUL2Y+swvYxxJhfFv1Bfj3YQ5f9QfFqw7Fkt6NRPJZj9ObdwRQnUKCiFcxD+m16gfE/xXOn8g=="]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:00:01","fail":0,"label":"All Tests","pass":1,"skip":0}],[{"elapsed":"00:00:01","fail":0,"label":"Database","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"JSON","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"POST","pass":1,"skip":0}],[{"elapsed":"00:00:01","fail":0,"id":"s1","label":"Api Json Actor Tests","name":"Api Json Actor Tests","pass":1,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:00:00","fail":1,"label":"All Tests","pass":0,"skip":0}],[{"elapsed":"00:00:00","fail":1,"label":"Database","pass":0,"skip":0},{"elapsed":"00:00:00","fail":1,"label":"JSON","pass":0,"skip":0},{"elapsed":"00:00:00","fail":1,"label":"POST","pass":0,"skip":0}],[{"elapsed":"00:00:00","fail":1,"id":"s1","label":"Api-Framework","name":"Api-Framework","pass":0,"skip":0},{"elapsed":"00:00:00","fail":1,"id":"s1-s1","label":"Api-Framework.Tests","name":"Tests","pass":0,"skip":0},{"elapsed":"00:00:00","fail":1,"id":"s1-s1-s1","label":"Api-Framework.Tests.Api Json Film Tests","name":"Api Json Film Tests","pass":0,"skip":0}]];
 </script>
 <script type="text/javascript">
-window.output["errors"] = [];
+window.output["errors"] = [[59,4,30],[104,4,31]];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1766636418876;
+window.output["baseMillis"] = 1766634817644;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 1467;
+window.output["generated"] = 244;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2214,7 +2207,7 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="tagStatisticsRowTemplate">
   <tr class="row-${$item.index}">
-    <td class="stats-col-name" title="{{html doc}}">
+    <td class="stats-col-name" title="${doc}">
       <div class="stat-name">
         <span>{{html label}}</span>
         {{if info}}(${info}){{/if}}

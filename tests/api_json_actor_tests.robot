@@ -36,6 +36,15 @@ Test POST New Actor with JSON Payload
         Perform POST Request    ${TABLE_ENDPOINT}    ${payload}    payload_type=json
         Response Status Code Should Be    200
 
+        # Get the actual response from the POST request
+        ${actual_response}=    Get Response Body
+
+        # Get expected response from this specific row's excel data
+        ${expected_response}=    Get Expected Response    ${actor_data}
+        
+        # Compare actual response with expected response for this row
+        should contain expected keys    ${actual_response}    ${expected_response}
+
         # Verify response contains expected fields
         Response JSON Should Contain Key    actor_id
         ${actor_id}=    Get Response JSON Value    actor_id

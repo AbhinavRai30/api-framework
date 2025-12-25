@@ -29,12 +29,21 @@ Test POST New Film with JSON Payload
     # Loop through each row and create a film record
     FOR    ${film_data}    IN    @{test_data_list}
         # Prepare payload for this row
-        ${exclude_cols}=    Create List    expected_response      special_features    fulltext    
+        ${exclude_cols}=    Create List    expected_response    special_features    fulltext    
         ${payload}=    Convert Test Data To Dict    ${film_data}    ${exclude_cols}
 
         # Make POST request
         Perform POST Request    ${TABLE_ENDPOINT}    ${payload}    payload_type=json
         Response Status Code Should Be    200
+
+        # Get the actual response from the POST request
+        ${actual_response}=    Get Response Body
+
+        # Get expected response from this specific row's excel data
+        ${expected_response}=    Get Expected Response    ${film_data}
+        
+        # Compare actual response with expected response for this row
+        should contain expected keys    ${actual_response}    ${expected_response}
 
         # Verify response contains expected fields
         Response JSON Should Contain Key    film_id
@@ -49,9 +58,8 @@ Test POST New Film with JSON Payload
 
         Disconnect From Database
 
-        Log    Successfully created film with ID: ${film_id}
+        Log    Successfully created and validated film with ID: ${film_id}
     END
-
 
 Test GET All Films
     [Documentation]    Retrieve all films via GET request
