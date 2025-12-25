@@ -105,13 +105,14 @@ Test PUT Update Actor with JSON
     Set Base URL    ${BASE_URL}
 
     # First, get actor data
-    ${actor_id}=    Set Variable    100
+    ${actor_id}=    Set Variable    101
 
     # Prepare update payload
     ${update_payload}=    Create Dictionary
-    ...    first_name=Steve
-    ...    last_name=Rogers
- 
+    ...    first_name=SUSAN
+    ...    last_name=DAVIS Jr
+
+
            
     # Make PUT request
     Perform PUT Request    ${TABLE_ENDPOINT}/${actor_id}    ${update_payload}    payload_type=json
@@ -119,10 +120,18 @@ Test PUT Update Actor with JSON
     ${response}=        Get Response Body
     Log    ${response}    console=True
 
+    ${expected_resonse} =    Create Dictionary
+    ...    actor_id=101
+    ...    first_name=SUSAN
+    ...    last_name=DAVIS Jr
+
+    Should Contain Expected Keys     ${response}    ${expected_resonse} 
+
     # Verify in database - record was updated
     Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
-    Verify Record Change    actor    actor_id    ${actor_id}    first_name    (any)    Steve
-    Table Row Column Value Should Be    actor    actor_id = ${actor_id}    last_name    Rogers
+    Verify Record Change    actor    actor_id    ${actor_id}    first_name    (any)    SUSAN
+    Table Row Column Value Should Be    actor    actor_id = ${actor_id}    last_name    DAVIS Jr
+    
 
     Disconnect From Database
 

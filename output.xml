@@ -1,112 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-25T11:36:32.311042" rpa="false" schemaversion="5">
-<suite id="s1" name="Api Json Film Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot">
+<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-25T11:53:04.811632" rpa="false" schemaversion="5">
+<suite id="s1" name="Api Json Actor Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_actor_tests.robot">
 <kw name="Suite Setup Steps" type="SETUP">
 <kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.581516" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<msg time="2025-12-25T11:53:05.108757" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
 <arg>${BASE_URL}</arg>
 <doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-25T11:36:32.581516" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.107334" elapsed="0.001423"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:36:32.581516" level="INFO">API Automation Framework Started</msg>
+<msg time="2025-12-25T11:53:05.108757" level="INFO">API Automation Framework Started</msg>
 <arg>API Automation Framework Started</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:36:32.581516" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.000000"/>
 </kw>
 <doc>Setup before test suite</doc>
-<status status="PASS" start="2025-12-25T11:36:32.581516" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.107334" elapsed="0.001423"/>
 </kw>
-<test id="s1-t1" name="Test GET Single Film" line="79">
+<test id="s1-t1" name="Test PUT Update Actor with JSON" line="101">
 <kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.582516" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<msg time="2025-12-25T11:53:05.109783" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
 <arg>${BASE_URL}</arg>
 <doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-25T11:36:32.582516" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.001026"/>
 </kw>
-<kw name="Perform Get Request" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.613026" level="INFO">GET request to http://127.0.0.1:8000/table/film/1001</msg>
-<msg time="2025-12-25T11:36:32.613026" level="INFO">Status Code: 200</msg>
-<msg time="2025-12-25T11:36:32.613026" level="INFO">Response Time: 0.028852s</msg>
-<arg>${TABLE_ENDPOINT}/1001</arg>
-<doc>Perform GET request</doc>
-<status status="PASS" start="2025-12-25T11:36:32.582516" elapsed="0.030510"/>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-25T11:53:05.109783" level="INFO">${actor_id} = 101</msg>
+<var>${actor_id}</var>
+<arg>101</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-25T11:53:05.109783" level="INFO">${update_payload} = {'first_name': 'SUSAN', 'last_name': 'DAVIS Jr'}</msg>
+<var>${update_payload}</var>
+<arg>first_name=SUSAN</arg>
+<arg>last_name=DAVIS Jr</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.000000"/>
+</kw>
+<kw name="Perform Put Request" owner="APIKeywords">
+<msg time="2025-12-25T11:53:05.141695" level="INFO">PUT request to http://127.0.0.1:8000/table/actor/101</msg>
+<msg time="2025-12-25T11:53:05.141695" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-25T11:53:05.141695" level="INFO">Response Time: 0.029643s</msg>
+<arg>${TABLE_ENDPOINT}/${actor_id}</arg>
+<arg>${update_payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform PUT request</doc>
+<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.031912"/>
 </kw>
 <kw name="Response Status Code Should Be" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.614033" level="INFO">Status code 200 matches expected 200</msg>
+<msg time="2025-12-25T11:53:05.142696" level="INFO">Status code 200 matches expected 200</msg>
 <arg>200</arg>
 <doc>Verify response status code</doc>
-<status status="PASS" start="2025-12-25T11:36:32.613026" elapsed="0.001007"/>
+<status status="PASS" start="2025-12-25T11:53:05.141695" elapsed="0.001001"/>
 </kw>
 <kw name="Get Response Body" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.614033" level="INFO">${response} = {'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2025, 'language_id': 1, 'original_language_id': None, 'rental_duration'...</msg>
+<msg time="2025-12-25T11:53:05.142696" level="INFO">${response} = {'actor_id': 101, 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr', 'last_update': '2025-12-25T11:53:05.139690+05:30'}</msg>
 <var>${response}</var>
 <doc>Get the last response body</doc>
-<status status="PASS" start="2025-12-25T11:36:32.614033" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:36:32.614033" level="INFO">{'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2025, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 5.99, 'length': 200, 'replacement_cost': 19.99, 'rating': 'PG-13', 'last_update': '2025-12-24T11:16:56.388407+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'america':2,8 'captain':1,7 'descript':5 'movi':9 'updat':4"}</msg>
+<msg time="2025-12-25T11:53:05.142696" level="INFO">{'actor_id': 101, 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr', 'last_update': '2025-12-25T11:53:05.139690+05:30'}</msg>
 <arg>${response}</arg>
 <arg>console=True</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:36:32.614033" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
 </kw>
 <kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-25T11:36:32.615032" level="INFO">${expected_resonse} = {'film_id': '1001', 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': '2025', 'rental_duration': '5', 'rental_rate': '5.99', 'replacement_c...</msg>
+<msg time="2025-12-25T11:53:05.142696" level="INFO">${expected_resonse} = {'actor_id': '101', 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr'}</msg>
 <var>${expected_resonse}</var>
-<arg>film_id=1001</arg>
-<arg>title=Captain America</arg>
-<arg>description=An updated description for Captain America movie</arg>
-<arg>release_year=2025</arg>
-<arg>rental_duration=5</arg>
-<arg>rental_rate=5.99</arg>
-<arg>replacement_cost=19.99</arg>
-<arg>rating=PG-13</arg>
+<arg>actor_id=101</arg>
+<arg>first_name=SUSAN</arg>
+<arg>last_name=DAVIS Jr</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-25T11:36:32.615032" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
 </kw>
 <kw name="Should Contain Expected Keys" owner="UtilityKeywords">
-<msg time="2025-12-25T11:36:32.615032" level="INFO">All expected keys and values match in actual response</msg>
-<msg time="2025-12-25T11:36:32.615032" level="INFO">Verified 8 fields successfully</msg>
+<msg time="2025-12-25T11:53:05.144440" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-25T11:53:05.144440" level="INFO">Verified 3 fields successfully</msg>
 <arg>${response}</arg>
 <arg>${expected_resonse}</arg>
 <doc>Verify that actual response contains all keys and values from expected response</doc>
-<status status="PASS" start="2025-12-25T11:36:32.615032" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.001744"/>
 </kw>
-<kw name="Response Json Should Contain Key" owner="APIKeywords">
-<msg time="2025-12-25T11:36:32.616032" level="INFO">Response JSON contains key: film_id</msg>
-<arg>film_id</arg>
-<doc>Verify response JSON contains a specific key</doc>
-<status status="PASS" start="2025-12-25T11:36:32.616032" elapsed="0.000000"/>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T11:53:05.185382" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-25T11:53:05.144440" elapsed="0.040942"/>
 </kw>
-<doc>Retrieve a specific film via GET request</doc>
-<tag>GET</tag>
+<kw name="Verify Record Change" owner="DatabaseKeywords">
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Query executed: SELECT * FROM actor WHERE actor_id = 101</msg>
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Record actor_id=101 updated: first_name changed from (any) to SUSAN</msg>
+<arg>actor</arg>
+<arg>actor_id</arg>
+<arg>${actor_id}</arg>
+<arg>first_name</arg>
+<arg>(any)</arg>
+<arg>SUSAN</arg>
+<doc>Verify that a record was changed</doc>
+<status status="PASS" start="2025-12-25T11:53:05.185382" elapsed="0.003022"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Query executed: SELECT last_name FROM actor WHERE actor_id = 101</msg>
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-25T11:53:05.188404" level="INFO">Column last_name = DAVIS Jr</msg>
+<arg>actor</arg>
+<arg>actor_id = ${actor_id}</arg>
+<arg>last_name</arg>
+<arg>DAVIS Jr</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-25T11:53:05.188404" elapsed="0.001000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-25T11:53:05.189404" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-25T11:53:05.189404" elapsed="0.000000"/>
+</kw>
+<doc>Update an existing actor and validate changes in database</doc>
+<tag>Database</tag>
 <tag>JSON</tag>
-<status status="PASS" start="2025-12-25T11:36:32.581516" elapsed="0.034516"/>
+<tag>PUT</tag>
+<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.080647"/>
 </test>
 <kw name="Suite Teardown Steps" type="TEARDOWN">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:36:32.617032" level="INFO">Test Suite Completed</msg>
+<msg time="2025-12-25T11:53:05.190405" level="INFO">Test Suite Completed</msg>
 <arg>Test Suite Completed</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:36:32.617032" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.190405" elapsed="0.000000"/>
 </kw>
 <doc>Cleanup after test suite</doc>
-<status status="PASS" start="2025-12-25T11:36:32.617032" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-25T11:53:05.190405" elapsed="0.000999"/>
 </kw>
 <doc>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload</doc>
-<status status="PASS" start="2025-12-25T11:36:32.313074" elapsed="0.303958"/>
+<status status="PASS" start="2025-12-25T11:53:04.813710" elapsed="0.377694"/>
 </suite>
 <statistics>
 <total>
 <stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0" skip="0">GET</stat>
+<stat pass="1" fail="0" skip="0">Database</stat>
 <stat pass="1" fail="0" skip="0">JSON</stat>
+<stat pass="1" fail="0" skip="0">PUT</stat>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="Api Json Film Tests">Api Json Film Tests</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Api Json Actor Tests">Api Json Actor Tests</stat>
 </suite>
 </statistics>
 <errors>
