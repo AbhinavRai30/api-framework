@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 class DatabaseKeywords:
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self):
         self.connection = None
@@ -46,10 +46,12 @@ class DatabaseKeywords:
                 database=self.db_name,
                 user=self.db_user,
                 password=self.db_password,
-                port=self.db_port
+                port=self.db_port,
             )
             self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
-            BuiltIn().log(f"Connected to database: {self.db_name} on {self.db_host}:{self.db_port}")
+            BuiltIn().log(
+                f"Connected to database: {self.db_name} on {self.db_host}:{self.db_port}"
+            )
         except Exception as e:
             BuiltIn().fail(f"Failed to connect to database: {str(e)}")
 
@@ -122,7 +124,7 @@ class DatabaseKeywords:
         query = f"SELECT COUNT(*) as count FROM {table_name} WHERE {where_clause}"
         result = self.execute_query(query)
 
-        if result and result[0]['count'] > 0:
+        if result and result[0]["count"] > 0:
             BuiltIn().log(f"Row exists in {table_name} where {where_clause}")
         else:
             BuiltIn().fail(f"No row found in {table_name} where {where_clause}")
@@ -138,7 +140,7 @@ class DatabaseKeywords:
         query = f"SELECT COUNT(*) as count FROM {table_name} WHERE {where_clause}"
         result = self.execute_query(query)
 
-        if result and result[0]['count'] == 0:
+        if result and result[0]["count"] == 0:
             BuiltIn().log(f"Row does not exist in {table_name} where {where_clause}")
         else:
             BuiltIn().fail(f"Row found in {table_name} where {where_clause}")
@@ -158,7 +160,7 @@ class DatabaseKeywords:
             query = f"SELECT COUNT(*) as count FROM {table_name}"
 
         result = self.execute_query(query)
-        actual_count = result[0]['count'] if result else 0
+        actual_count = result[0]["count"] if result else 0
 
         if actual_count == int(expected_count):
             BuiltIn().log(f"Row count {actual_count} matches expected {expected_count}")
@@ -166,7 +168,9 @@ class DatabaseKeywords:
             BuiltIn().fail(f"Expected {expected_count} rows, but found {actual_count}")
 
     @keyword
-    def table_row_column_value_should_be(self, table_name, where_clause, column_name, expected_value):
+    def table_row_column_value_should_be(
+        self, table_name, where_clause, column_name, expected_value
+    ):
         """Verify specific column value in a row
 
         Args:
@@ -185,7 +189,9 @@ class DatabaseKeywords:
         if str(actual_value) == str(expected_value):
             BuiltIn().log(f"Column {column_name} = {expected_value}")
         else:
-            BuiltIn().fail(f"Expected {column_name} = {expected_value}, but got {actual_value}")
+            BuiltIn().fail(
+                f"Expected {column_name} = {expected_value}, but got {actual_value}"
+            )
 
     @keyword
     def get_table_row_by_id(self, table_name, id_column, id_value):
@@ -203,7 +209,9 @@ class DatabaseKeywords:
         result = self.execute_query(query)
 
         if not result:
-            BuiltIn().fail(f"No row found in {table_name} where {id_column} = {id_value}")
+            BuiltIn().fail(
+                f"No row found in {table_name} where {id_column} = {id_value}"
+            )
 
         return dict(result[0])
 
@@ -255,7 +263,9 @@ class DatabaseKeywords:
             BuiltIn().fail(f"Failed to truncate table: {str(e)}")
 
     @keyword
-    def verify_record_change(self, table_name, id_column, id_value, column_name, old_value, new_value):
+    def verify_record_change(
+        self, table_name, id_column, id_value, column_name, old_value, new_value
+    ):
         """Verify that a record was changed
 
         Args:
@@ -270,9 +280,13 @@ class DatabaseKeywords:
         current_value = row[column_name]
 
         if str(current_value) == str(new_value):
-            BuiltIn().log(f"Record {id_column}={id_value} updated: {column_name} changed from {old_value} to {new_value}")
+            BuiltIn().log(
+                f"Record {id_column}={id_value} updated: {column_name} changed from {old_value} to {new_value}"
+            )
         else:
-            BuiltIn().fail(f"Expected {column_name} = {new_value}, but got {current_value}")
+            BuiltIn().fail(
+                f"Expected {column_name} = {new_value}, but got {current_value}"
+            )
 
     @keyword
     def verify_record_created(self, table_name, id_column, id_value):
@@ -283,13 +297,17 @@ class DatabaseKeywords:
             id_column: Name of the ID column
             id_value: Value of the ID
         """
-        query = f"SELECT COUNT(*) as count FROM {table_name} WHERE {id_column} = {id_value}"
+        query = (
+            f"SELECT COUNT(*) as count FROM {table_name} WHERE {id_column} = {id_value}"
+        )
         result = self.execute_query(query)
 
-        if result and result[0]['count'] > 0:
+        if result and result[0]["count"] > 0:
             BuiltIn().log(f"Record created in {table_name} with {id_column}={id_value}")
         else:
-            BuiltIn().fail(f"Record not found in {table_name} with {id_column}={id_value}")
+            BuiltIn().fail(
+                f"Record not found in {table_name} with {id_column}={id_value}"
+            )
 
     @keyword
     def verify_record_deleted(self, table_name, id_column, id_value):
@@ -300,11 +318,61 @@ class DatabaseKeywords:
             id_column: Name of the ID column
             id_value: Value of the ID
         """
-        query = f"SELECT COUNT(*) as count FROM {table_name} WHERE {id_column} = {id_value}"
+        query = (
+            f"SELECT COUNT(*) as count FROM {table_name} WHERE {id_column} = {id_value}"
+        )
         result = self.execute_query(query)
 
-        if result and result[0]['count'] == 0:
-            BuiltIn().log(f"Record deleted from {table_name} with {id_column}={id_value}")
+        if result and result[0]["count"] == 0:
+            BuiltIn().log(
+                f"Record deleted from {table_name} with {id_column}={id_value}"
+            )
         else:
-            BuiltIn().fail(f"Record still exists in {table_name} with {id_column}={id_value}")
+            BuiltIn().fail(
+                f"Record still exists in {table_name} with {id_column}={id_value}"
+            )
 
+    @keyword
+    def verify_table_row_matches_expected_data(
+        self, table_name, where_clause, expected_data
+    ):
+        """Verify that all key-value pairs in expected_data match the database record
+
+        Args:
+            table_name: Name of the table
+            where_clause: WHERE clause to identify the row (e.g., 'film_id = 1001')
+            expected_data: Dictionary with expected column-value pairs
+        """
+        query = f"SELECT * FROM {table_name} WHERE {where_clause}"
+        result = self.execute_query(query)
+
+        if not result:
+            BuiltIn().fail(f"No row found in {table_name} where {where_clause}")
+
+        actual_row = dict(result[0])
+        mismatches = []
+
+        # Compare each expected key-value pair
+        for column, expected_value in expected_data.items():
+            if column not in actual_row:
+                mismatches.append(f"Column '{column}' not found in database row")
+                continue
+
+            actual_value = actual_row[column]
+
+            # Convert both to string for comparison (handles different data types)
+            if str(actual_value) != str(expected_value):
+                mismatches.append(
+                    f"Column '{column}': Expected '{expected_value}', but got '{actual_value}'"
+                )
+
+        if mismatches:
+            error_msg = (
+                f"Database validation failed for {table_name} where {where_clause}:\n"
+            )
+            error_msg += "\n".join(mismatches)
+            BuiltIn().fail(error_msg)
+        else:
+            BuiltIn().log(
+                f"All {len(expected_data)} expected values match in {table_name} where {where_clause}"
+            )

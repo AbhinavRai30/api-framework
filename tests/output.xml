@@ -1,77 +1,741 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-25T11:34:42.052763" rpa="false" schemaversion="5">
-<suite id="s1" name="Api Json Film Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot">
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-26T12:01:42.960281" rpa="false" schemaversion="5">
+<suite id="s1" name="Api Json Film Tests" source="C:\driver\api-framework\tests\api_json_film_tests.robot">
 <kw name="Suite Setup Steps" type="SETUP">
-<kw name="set base url">
-<msg time="2025-12-25T11:34:42.102052" level="FAIL">No keyword with name 'set base url' found.</msg>
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.257369" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
 <arg>${BASE_URL}</arg>
-<status status="FAIL" start="2025-12-25T11:34:42.102021" elapsed="0.000079">No keyword with name 'set base url' found.</status>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T12:01:43.257239" elapsed="0.000185"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.257595" level="INFO">API Automation Framework Started</msg>
 <arg>API Automation Framework Started</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" start="2025-12-25T11:34:42.102222" elapsed="0.000020"/>
+<status status="PASS" start="2025-12-26T12:01:43.257521" elapsed="0.000108"/>
 </kw>
 <doc>Setup before test suite</doc>
-<status status="FAIL" start="2025-12-25T11:34:42.101121" elapsed="0.001216">No keyword with name 'set base url' found.</status>
+<status status="PASS" start="2025-12-26T12:01:43.256677" elapsed="0.001000"/>
 </kw>
-<test id="s1-t1" name="Test GET Single Film" line="79">
-<doc>Retrieve a specific film via GET request</doc>
-<tag>GET</tag>
-<tag>JSON</tag>
-<status status="FAIL" start="2025-12-25T11:34:42.102396" elapsed="0.000337">Parent suite setup failed:
-No keyword with name 'set base url' found.</status>
+<test id="s1-t1" name="Test POST New Film with JSON Payload" line="24">
+<kw name="Read Test Data From Excel" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.262546" level="INFO">Read 4 rows from Films</msg>
+<msg time="2025-12-26T12:01:43.262657" level="INFO">${test_data_list} = [{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'renta...</msg>
+<var>${test_data_list}</var>
+<arg>${TEST_DATA_FILE}</arg>
+<arg>${SHEET_NAME}</arg>
+<doc>Read test data from Excel file</doc>
+<status status="PASS" start="2025-12-26T12:01:43.258104" elapsed="0.004574"/>
+</kw>
+<kw name="Read Test Data From Excel" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.266272" level="INFO">Read 4 rows from expected_film_db</msg>
+<msg time="2025-12-26T12:01:43.266361" level="INFO">${expected_db_data_list} = [{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'renta...</msg>
+<var>${expected_db_data_list}</var>
+<arg>${TEST_DATA_FILE}</arg>
+<arg>${DB_EXPECTEDSHEET_NAME}</arg>
+<doc>Read test data from Excel file</doc>
+<status status="PASS" start="2025-12-26T12:01:43.262825" elapsed="0.003556"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.266626" level="INFO">Length is 4.</msg>
+<msg time="2025-12-26T12:01:43.266680" level="INFO">${test_data_count} = 4</msg>
+<var>${test_data_count}</var>
+<arg>${test_data_list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.266544" elapsed="0.000152"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.266891" level="INFO">Length is 4.</msg>
+<msg time="2025-12-26T12:01:43.266937" level="INFO">${expected_data_count} = 4</msg>
+<var>${expected_data_count}</var>
+<arg>${expected_db_data_list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.266818" elapsed="0.000134"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${test_data_count}</arg>
+<arg>${expected_data_count}</arg>
+<arg>msg=Test data and expected data counts don't match</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.267099" elapsed="0.000181"/>
+</kw>
+<for flavor="IN RANGE">
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.267747" level="INFO">${film_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.267627" elapsed="0.000139"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.267945" level="INFO">${expected_db_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.267831" elapsed="0.000131"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.268109" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.268029" elapsed="0.000095"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.268315" level="INFO">${payload} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.268184" elapsed="0.000148"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.268486" level="INFO">${expected_db_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.268391" elapsed="0.000111"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.292181" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T12:01:43.292234" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T12:01:43.292253" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T12:01:43.292271" level="INFO">Response Time: 0.021515s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T12:01:43.268557" elapsed="0.023754"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.292535" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T12:01:43.292439" elapsed="0.000125"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.292737" level="INFO">${actual_response} = {'film_id': 1084, 'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'languag...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T12:01:43.292639" elapsed="0.000117"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.292961" level="INFO">{'film_id': 1084, 'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'original_language_id': None, 'rental_duration': 1, 'rental_rate': 2.99, 'length': 204, 'replacement_cost': 2.99, 'rating': 'PG-13', 'last_update': '2025-12-26T12:01:43.288275+05:30', 'special_features': None, 'fulltext': "'1984':16 '2029':14 'angel':18 'assassin':4 'back':7 'connor':22 'cyborg':3 'dystopian':12 'futur':13 'kill':20 'los':17 'sarah':21 'sent':6 'termin':1 'time':9"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.292821" elapsed="0.000416"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.293497" level="INFO">${expected_response} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T12:01:43.293340" elapsed="0.000181"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.293731" level="INFO">{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental_duration': 1, 'rental_rate': 2.99, 'length': 204, 'replacement_cost': 2.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.293604" elapsed="0.000276"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.294142" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T12:01:43.294169" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T12:01:43.293980" elapsed="0.000219"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.294335" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.294278" elapsed="0.000087"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.294509" level="INFO">${film_id} = 1084</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.294425" elapsed="0.000101"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.339831" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.294585" elapsed="0.045357"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.342764" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1084</msg>
+<msg time="2025-12-26T12:01:43.342797" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.342818" level="INFO">Record created in film with film_id=1084</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T12:01:43.340093" elapsed="0.002757"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.343534" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1084</msg>
+<msg time="2025-12-26T12:01:43.343563" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.343598" level="INFO">All 9 expected values match in film where film_id = 1084</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T12:01:43.342944" elapsed="0.000685"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.344011" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1084</msg>
+<msg time="2025-12-26T12:01:43.344038" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.344060" level="INFO">Column title = Terminator</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T12:01:43.343706" elapsed="0.000381"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.344299" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.344166" elapsed="0.000181"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.344528" level="INFO">Successfully created and validated film with ID: 1084</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.344428" elapsed="0.000146"/>
+</kw>
+<var name="${index}">0</var>
+<status status="PASS" start="2025-12-26T12:01:43.267569" elapsed="0.077033"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.345113" level="INFO">${film_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.344923" elapsed="0.000214"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.345371" level="INFO">${expected_db_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.345250" elapsed="0.000138"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.345538" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.345455" elapsed="0.000100"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.345810" level="INFO">${payload} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.345625" elapsed="0.000213"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.346024" level="INFO">${expected_db_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.345908" elapsed="0.000134"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.352234" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T12:01:43.352323" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T12:01:43.352348" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T12:01:43.352370" level="INFO">Response Time: 0.00516s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T12:01:43.346115" elapsed="0.006301"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.352683" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T12:01:43.352554" elapsed="0.000167"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.352920" level="INFO">${actual_response} = {'film_id': 1085, 'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murderi...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T12:01:43.352806" elapsed="0.000135"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.353144" level="INFO">{'film_id': 1085, 'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', 'release_year': 1957, 'language_id': 1, 'original_language_id': None, 'rental_duration': 2, 'rental_rate': 1.99, 'length': 197, 'replacement_cost': 1.99, 'rating': 'PG-13', 'last_update': '2025-12-26T12:01:43.348500+05:30', 'special_features': None, 'fulltext': "'12':1 'accus':30 'angri':2 'citi':8,28 'courthous':9 'day':14 'decid':21 'fate':23 'father':34 'hot':13 'inner':27 'inner-c':26 'juri':16 'man':3 'men':19 'murder':32 'must':20 'new':6 'swelter':12 'teenag':29 'twelv':18 'york':7"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.353011" elapsed="0.000325"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.353557" level="INFO">${expected_response} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T12:01:43.353425" elapsed="0.000153"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.353756" level="INFO">{'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', 'release_year': 1957, 'language_id': 1, 'rental_duration': 2, 'rental_rate': 1.99, 'length': 197, 'replacement_cost': 1.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.353651" elapsed="0.000227"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.354114" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T12:01:43.354141" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T12:01:43.353977" elapsed="0.000198"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.354346" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.354260" elapsed="0.000138"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.354569" level="INFO">${film_id} = 1085</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.354476" elapsed="0.000113"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.387530" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.354656" elapsed="0.032976"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.390228" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1085</msg>
+<msg time="2025-12-26T12:01:43.390261" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.390282" level="INFO">Record created in film with film_id=1085</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T12:01:43.387783" elapsed="0.002530"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.390912" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1085</msg>
+<msg time="2025-12-26T12:01:43.390940" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.390971" level="INFO">All 9 expected values match in film where film_id = 1085</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T12:01:43.390398" elapsed="0.000601"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.391363" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1085</msg>
+<msg time="2025-12-26T12:01:43.391389" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.391410" level="INFO">Column title = 12 angry man</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T12:01:43.391072" elapsed="0.000365"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.391620" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.391509" elapsed="0.000146"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.391818" level="INFO">Successfully created and validated film with ID: 1085</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.391721" elapsed="0.000124"/>
+</kw>
+<var name="${index}">1</var>
+<status status="PASS" start="2025-12-26T12:01:43.344814" elapsed="0.047058"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.392738" level="INFO">${film_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.392604" elapsed="0.000163"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.392955" level="INFO">${expected_db_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.392844" elapsed="0.000142"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.393121" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.393047" elapsed="0.000089"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.393348" level="INFO">${payload} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.393197" elapsed="0.000169"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.393525" level="INFO">${expected_db_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.393429" elapsed="0.000112"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.400006" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T12:01:43.400060" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T12:01:43.400079" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T12:01:43.400096" level="INFO">Response Time: 0.005755s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T12:01:43.393598" elapsed="0.006539"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.400360" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T12:01:43.400267" elapsed="0.000123"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.400574" level="INFO">${actual_response} = {'film_id': 1086, 'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the b...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T12:01:43.400467" elapsed="0.000127"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.400790" level="INFO">{'film_id': 1086, 'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank State Penitentiary. ', 'release_year': 1994, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 125, 'replacement_cost': 0.99, 'rating': 'PG-13', 'last_update': '2025-12-26T12:01:43.395732+05:30', 'special_features': None, 'fulltext': "'andi':5 'banker':4 'brutal':26 'convict':9 'dufresn':6 'imprison':23 'life':22 'lover':18 'murder':12 'penitentiari':29 'redempt':3 'sentenc':20 'shawshank':2,27 'state':28 'wife':15 'wrong':8"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.400662" elapsed="0.000315"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.401268" level="INFO">${expected_response} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T12:01:43.401090" elapsed="0.000212"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.401551" level="INFO">{'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank State Penitentiary. ', 'release_year': 1994, 'language_id': 1, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 125, 'replacement_cost': 0.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.401403" elapsed="0.000276"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.401898" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T12:01:43.401922" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T12:01:43.401776" elapsed="0.000177"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.402115" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.402032" elapsed="0.000130"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.402397" level="INFO">${film_id} = 1086</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.402243" elapsed="0.000178"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.435814" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.402505" elapsed="0.033415"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.438567" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1086</msg>
+<msg time="2025-12-26T12:01:43.438600" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.438620" level="INFO">Record created in film with film_id=1086</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T12:01:43.436079" elapsed="0.002572"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.439278" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1086</msg>
+<msg time="2025-12-26T12:01:43.439306" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.439336" level="INFO">All 9 expected values match in film where film_id = 1086</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T12:01:43.438738" elapsed="0.000626"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.439729" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1086</msg>
+<msg time="2025-12-26T12:01:43.439756" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.439774" level="INFO">Column title = The Shawshank redemption</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T12:01:43.439458" elapsed="0.000343"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.439981" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.439871" elapsed="0.000145"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.440168" level="INFO">Successfully created and validated film with ID: 1086</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.440081" elapsed="0.000116"/>
+</kw>
+<var name="${index}">2</var>
+<status status="PASS" start="2025-12-26T12:01:43.392536" elapsed="0.047685"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.440598" level="INFO">${film_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.440423" elapsed="0.000194"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T12:01:43.440797" level="INFO">${expected_db_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.440683" elapsed="0.000131"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.440955" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.440877" elapsed="0.000094"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.441175" level="INFO">${payload} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.441033" elapsed="0.000161"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.441352" level="INFO">${expected_db_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T12:01:43.441255" elapsed="0.000114"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.447784" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T12:01:43.447840" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T12:01:43.447859" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T12:01:43.447878" level="INFO">Response Time: 0.005551s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T12:01:43.441428" elapsed="0.006496"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.448165" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T12:01:43.448070" elapsed="0.000125"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.448369" level="INFO">${actual_response} = {'film_id': 1087, 'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holida...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T12:01:43.448265" elapsed="0.000124"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.448589" level="INFO">{'film_id': 1087, 'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'release_year': 1988, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 2.99, 'rating': 'PG-13', 'last_update': '2025-12-26T12:01:43.443518+05:30', 'special_features': None, 'fulltext': "'angel':13 'arriv':10 'christma':15 'citi':5 'compani':25 'detect':7 'die':1 'estrang':21 'eve':16 'hard':2 'holiday':27 'john':8 'los':12 'mcclane':9 'new':3 'parti':28 'polic':6 'reconcil':18 'wife':22 'york':4"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.448457" elapsed="0.000339"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.449077" level="INFO">${expected_response} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T12:01:43.448914" elapsed="0.000189"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.449331" level="INFO">{'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'release_year': 1988, 'language_id': 1, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 2.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.449198" elapsed="0.000254"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T12:01:43.449719" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T12:01:43.449747" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T12:01:43.449563" elapsed="0.000219"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.449995" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.449872" elapsed="0.000161"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T12:01:43.450208" level="INFO">${film_id} = 1087</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T12:01:43.450111" elapsed="0.000116"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.483858" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.450298" elapsed="0.033675"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.486718" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1087</msg>
+<msg time="2025-12-26T12:01:43.486750" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.486774" level="INFO">Record created in film with film_id=1087</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T12:01:43.484144" elapsed="0.002662"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.487469" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1087</msg>
+<msg time="2025-12-26T12:01:43.487500" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.487536" level="INFO">All 9 expected values match in film where film_id = 1087</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T12:01:43.486895" elapsed="0.000691"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.488105" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1087</msg>
+<msg time="2025-12-26T12:01:43.488146" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T12:01:43.488175" level="INFO">Column title = Die Hard</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T12:01:43.487667" elapsed="0.000553"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T12:01:43.488498" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T12:01:43.488325" elapsed="0.000219"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T12:01:43.488762" level="INFO">Successfully created and validated film with ID: 1087</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T12:01:43.488645" elapsed="0.000160"/>
+</kw>
+<var name="${index}">3</var>
+<status status="PASS" start="2025-12-26T12:01:43.440367" elapsed="0.048500"/>
+</iter>
+<var>${index}</var>
+<value>${test_data_count}</value>
+<status status="PASS" start="2025-12-26T12:01:43.267389" elapsed="0.221530"/>
+</for>
+<doc>Create new film records via POST request and validate in database</doc>
+<tag>database</tag>
+<tag>json</tag>
+<tag>post</tag>
+<status status="PASS" start="2025-12-26T12:01:43.257725" elapsed="0.231509"/>
 </test>
 <kw name="Suite Teardown Steps" type="TEARDOWN">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:34:42.103982" level="INFO">Test Suite Completed</msg>
+<msg time="2025-12-26T12:01:43.490442" level="INFO">Test Suite Completed</msg>
 <arg>Test Suite Completed</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:34:42.103845" elapsed="0.000201"/>
+<status status="PASS" start="2025-12-26T12:01:43.490338" elapsed="0.000162"/>
 </kw>
 <doc>Cleanup after test suite</doc>
-<status status="PASS" start="2025-12-25T11:34:42.103617" elapsed="0.000501"/>
+<status status="PASS" start="2025-12-26T12:01:43.490095" elapsed="0.000470"/>
 </kw>
 <doc>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload</doc>
-<status status="FAIL" start="2025-12-25T11:34:42.054033" elapsed="0.050123">Suite setup failed:
-No keyword with name 'set base url' found.</status>
+<status status="PASS" start="2025-12-26T12:01:42.961555" elapsed="0.529044"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1" skip="0">GET</stat>
-<stat pass="0" fail="1" skip="0">JSON</stat>
+<stat pass="1" fail="0" skip="0">database</stat>
+<stat pass="1" fail="0" skip="0">json</stat>
+<stat pass="1" fail="0" skip="0">post</stat>
 </tag>
 <suite>
-<stat name="Api Json Film Tests" id="s1" pass="0" fail="1" skip="0">Api Json Film Tests</stat>
+<stat name="Api Json Film Tests" id="s1" pass="1" fail="0" skip="0">Api Json Film Tests</stat>
 </suite>
 </statistics>
 <errors>
-<msg time="2025-12-25T11:34:42.080206" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 3: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\APIKeywords.py' failed: ModuleNotFoundError: No module named 'requests'
-Traceback (most recent call last):
-  File "C:\driver\PythonProject\PythonProject\api-framework\keywords\APIKeywords.py", line 6, in &lt;module&gt;
-    import requests
-PYTHONPATH:
-  C:\driver\PythonProject\PythonProject\api-framework\keywords
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Scripts\robot.exe
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\python314.zip
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\DLLs
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages</msg>
-<msg time="2025-12-25T11:34:42.099476" level="ERROR">Error in file 'C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_film_tests.robot' on line 5: Importing library 'C:\driver\PythonProject\PythonProject\api-framework\keywords\UtilityKeywords.py' failed: ModuleNotFoundError: No module named 'openpyxl'
-Traceback (most recent call last):
-  File "C:\driver\PythonProject\PythonProject\api-framework\keywords\UtilityKeywords.py", line 6, in &lt;module&gt;
-    import openpyxl
-PYTHONPATH:
-  C:\driver\PythonProject\PythonProject\api-framework\keywords
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Scripts\robot.exe
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\python314.zip
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\DLLs
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64
-  C:\Users\Abhinav Rai\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages</msg>
 </errors>
 </robot>

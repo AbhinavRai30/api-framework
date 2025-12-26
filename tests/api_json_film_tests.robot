@@ -3,6 +3,8 @@ Documentation    API Automation Tests - POST, GET, PUT, DELETE with JSON Payload
 Library          ../keywords/APIKeywords.py
 Library          ../keywords/DatabaseKeywords.py
 Library          ../keywords/UtilityKeywords.py
+Library          Collections
+Library          OperatingSystem
 
 Suite Setup      Suite Setup Steps
 Suite Teardown   Suite Teardown Steps
@@ -16,21 +18,32 @@ ${DB_USER}            postgres
 ${DB_PASSWORD}        pgadmin
 ${TEST_DATA_FILE}     ${CURDIR}${/}..${/}test_data${/}film_test_data.xlsx
 ${SHEET_NAME}         Films
-
+${DB_EXPECTEDSHEET_NAME}    expected_film_db
 
 *** Test Cases ***
 Test POST New Film with JSON Payload
     [Documentation]    Create new film records via POST request and validate in database
-    [Tags]    POST    JSON    Database
+    [Tags]    post    json    database
 
     # Read all test data rows
     ${test_data_list}=    Read Test Data From Excel    ${TEST_DATA_FILE}    ${SHEET_NAME}
+    ${expected_db_data_list}=    Read Test Data From Excel    ${TEST_DATA_FILE}    ${DB_EXPECTEDSHEET_NAME}
 
-    # Loop through each row and create a film record
-    FOR    ${film_data}    IN    @{test_data_list}
+    # Get the length to ensure both lists have same count
+    ${test_data_count}=    Get Length    ${test_data_list}
+    ${expected_data_count}=    Get Length    ${expected_db_data_list}
+    Should Be Equal As Numbers    ${test_data_count}    ${expected_data_count}    
+    ...    msg=Test data and expected data counts don't match
+
+    # Loop through each row using index
+    FOR    ${index}    IN RANGE    ${test_data_count}
+        ${film_data}=    Get From List    ${test_data_list}    ${index}
+        ${expected_db_data}=    Get From List    ${expected_db_data_list}    ${index}
+        
         # Prepare payload for this row
-        ${exclude_cols}=    Create List    expected_response    special_features    fulltext    
+        ${exclude_cols}=    Create List    expected_response    special_features    fulltext
         ${payload}=    Convert Test Data To Dict    ${film_data}    ${exclude_cols}
+        ${expected_db_data}=    Convert Test Data To Dict    ${expected_db_data}
 
         # Make POST request
         Perform POST Request    ${TABLE_ENDPOINT}    ${payload}    payload_type=json
@@ -38,12 +51,14 @@ Test POST New Film with JSON Payload
 
         # Get the actual response from the POST request
         ${actual_response}=    Get Response Body
-
+        Log    ${actual_response}    console=True
+        
         # Get expected response from this specific row's excel data
         ${expected_response}=    Get Expected Response    ${film_data}
-        
+        Log    ${expected_response}    console=True
+
         # Compare actual response with expected response for this row
-        should contain expected keys    ${actual_response}    ${expected_response}
+        Should Contain Expected Keys    ${actual_response}    ${expected_response}
 
         # Verify response contains expected fields
         Response JSON Should Contain Key    film_id
@@ -53,13 +68,18 @@ Test POST New Film with JSON Payload
         Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
         Verify Record Created    film    film_id    ${film_id}
 
-        # Verify specific data
-        Table Row Column Value Should Be    film    film_id = ${film_id}    title    ${film_data}[title]
+        # Verify expected data with database record
+
+        Verify Table Row Matches Expected Data    film    film_id = ${film_id}    ${expected_db_data}
+
+        # Verify specific data using the matching expected_db_data for this iteration
+        Table Row Column Value Should Be    film    film_id = ${film_id}    title    ${expected_db_data}[title]
 
         Disconnect From Database
 
         Log    Successfully created and validated film with ID: ${film_id}
     END
+
 
 Test GET All Films
     [Documentation]    Retrieve all films via GET request
