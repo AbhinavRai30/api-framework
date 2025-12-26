@@ -1,158 +1,1228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0.1 (Python 3.10.11 on win32)" generated="2025-12-25T11:53:04.811632" rpa="false" schemaversion="5">
-<suite id="s1" name="Api Json Actor Tests" source="C:\driver\PythonProject\PythonProject\api-framework\tests\api_json_actor_tests.robot">
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-26T13:21:17.399946" rpa="false" schemaversion="5">
+<suite id="s1" name="Api Json Film Tests" source="C:\driver\api-framework\tests\api_json_film_tests.robot">
 <kw name="Suite Setup Steps" type="SETUP">
 <kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-25T11:53:05.108757" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<msg time="2025-12-26T13:21:17.694681" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
 <arg>${BASE_URL}</arg>
 <doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-25T11:53:05.107334" elapsed="0.001423"/>
+<status status="PASS" start="2025-12-26T13:21:17.694562" elapsed="0.000173"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.108757" level="INFO">API Automation Framework Started</msg>
+<msg time="2025-12-26T13:21:17.694906" level="INFO">API Automation Framework Started</msg>
 <arg>API Automation Framework Started</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-26T13:21:17.694834" elapsed="0.000105"/>
 </kw>
 <doc>Setup before test suite</doc>
-<status status="PASS" start="2025-12-25T11:53:05.107334" elapsed="0.001423"/>
+<status status="PASS" start="2025-12-26T13:21:17.693840" elapsed="0.001147"/>
 </kw>
-<test id="s1-t1" name="Test PUT Update Actor with JSON" line="101">
-<kw name="Set Base Url" owner="APIKeywords">
-<msg time="2025-12-25T11:53:05.109783" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
-<arg>${BASE_URL}</arg>
-<doc>Set the base URL for API requests</doc>
-<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.001026"/>
+<test id="s1-t1" name="Test POST New Film with JSON Payload" line="28">
+<kw name="Read Test Data From Excel" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.699885" level="INFO">Read 4 rows from Films</msg>
+<msg time="2025-12-26T13:21:17.699992" level="INFO">${test_data_list} = [{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'renta...</msg>
+<var>${test_data_list}</var>
+<arg>${TEST_DATA_FILE}</arg>
+<arg>${SHEET_NAME}</arg>
+<doc>Read test data from Excel file</doc>
+<status status="PASS" start="2025-12-26T13:21:17.695404" elapsed="0.004609"/>
 </kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.109783" level="INFO">${actor_id} = 101</msg>
-<var>${actor_id}</var>
-<arg>101</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.000000"/>
+<kw name="Read Test Data From Excel" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.703712" level="INFO">Read 4 rows from expected_film_db</msg>
+<msg time="2025-12-26T13:21:17.703800" level="INFO">${expected_db_data_list} = [{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'renta...</msg>
+<var>${expected_db_data_list}</var>
+<arg>${TEST_DATA_FILE}</arg>
+<arg>${DB_EXPECTEDSHEET_NAME}</arg>
+<doc>Read test data from Excel file</doc>
+<status status="PASS" start="2025-12-26T13:21:17.700170" elapsed="0.003658"/>
 </kw>
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.109783" level="INFO">${update_payload} = {'first_name': 'SUSAN', 'last_name': 'DAVIS Jr'}</msg>
-<var>${update_payload}</var>
-<arg>first_name=SUSAN</arg>
-<arg>last_name=DAVIS Jr</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.000000"/>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.704058" level="INFO">Length is 4.</msg>
+<msg time="2025-12-26T13:21:17.704108" level="INFO">${test_data_count} = 4</msg>
+<var>${test_data_count}</var>
+<arg>${test_data_list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.703976" elapsed="0.000148"/>
 </kw>
-<kw name="Perform Put Request" owner="APIKeywords">
-<msg time="2025-12-25T11:53:05.141695" level="INFO">PUT request to http://127.0.0.1:8000/table/actor/101</msg>
-<msg time="2025-12-25T11:53:05.141695" level="INFO">Status Code: 200</msg>
-<msg time="2025-12-25T11:53:05.141695" level="INFO">Response Time: 0.029643s</msg>
-<arg>${TABLE_ENDPOINT}/${actor_id}</arg>
-<arg>${update_payload}</arg>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.704322" level="INFO">Length is 4.</msg>
+<msg time="2025-12-26T13:21:17.704371" level="INFO">${expected_data_count} = 4</msg>
+<var>${expected_data_count}</var>
+<arg>${expected_db_data_list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.704248" elapsed="0.000139"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${test_data_count}</arg>
+<arg>${expected_data_count}</arg>
+<arg>msg=Test data and expected data counts don't match</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.704506" elapsed="0.000184"/>
+</kw>
+<for flavor="IN RANGE">
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.705172" level="INFO">${film_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.705046" elapsed="0.000145"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.705371" level="INFO">${expected_db_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.705258" elapsed="0.000131"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.705531" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.705453" elapsed="0.000094"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.705765" level="INFO">${payload} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.705611" elapsed="0.000172"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.705956" level="INFO">${expected_db_data} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.705852" elapsed="0.000121"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.715203" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:17.715261" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:17.715283" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:17.715303" level="INFO">Response Time: 0.006742s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
 <arg>payload_type=json</arg>
-<doc>Perform PUT request</doc>
-<status status="PASS" start="2025-12-25T11:53:05.109783" elapsed="0.031912"/>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:17.706037" elapsed="0.009311"/>
 </kw>
 <kw name="Response Status Code Should Be" owner="APIKeywords">
-<msg time="2025-12-25T11:53:05.142696" level="INFO">Status code 200 matches expected 200</msg>
+<msg time="2025-12-26T13:21:17.715590" level="INFO">Status code 200 matches expected 200</msg>
 <arg>200</arg>
 <doc>Verify response status code</doc>
-<status status="PASS" start="2025-12-25T11:53:05.141695" elapsed="0.001001"/>
+<status status="PASS" start="2025-12-26T13:21:17.715491" elapsed="0.000131"/>
 </kw>
 <kw name="Get Response Body" owner="APIKeywords">
-<msg time="2025-12-25T11:53:05.142696" level="INFO">${response} = {'actor_id': 101, 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr', 'last_update': '2025-12-25T11:53:05.139690+05:30'}</msg>
-<var>${response}</var>
+<msg time="2025-12-26T13:21:17.715802" level="INFO">${actual_response} = {'film_id': 1139, 'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'languag...</msg>
+<var>${actual_response}</var>
 <doc>Get the last response body</doc>
-<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-26T13:21:17.715698" elapsed="0.000125"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.142696" level="INFO">{'actor_id': 101, 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr', 'last_update': '2025-12-25T11:53:05.139690+05:30'}</msg>
-<arg>${response}</arg>
+<msg time="2025-12-26T13:21:17.716040" level="INFO">{'film_id': 1139, 'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'original_language_id': None, 'rental_duration': 1, 'rental_rate': 2.99, 'length': 204, 'replacement_cost': 2.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:21:17.710742+05:30', 'special_features': None, 'fulltext': "'1984':16 '2029':14 'angel':18 'assassin':4 'back':7 'connor':22 'cyborg':3 'dystopian':12 'futur':13 'kill':20 'los':17 'sarah':21 'sent':6 'termin':1 'time':9"}</msg>
+<arg>${actual_response}</arg>
 <arg>console=True</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-26T13:21:17.715899" elapsed="0.000294"/>
 </kw>
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.142696" level="INFO">${expected_resonse} = {'actor_id': '101', 'first_name': 'SUSAN', 'last_name': 'DAVIS Jr'}</msg>
-<var>${expected_resonse}</var>
-<arg>actor_id=101</arg>
-<arg>first_name=SUSAN</arg>
-<arg>last_name=DAVIS Jr</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.000000"/>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.716405" level="INFO">${expected_response} = {'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T13:21:17.716279" elapsed="0.000144"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.716584" level="INFO">{'title': 'Terminator', 'description': 'A cyborg assassin is sent back in time from a dystopian future (2029) to 1984 Los Angeles to kill Sarah Connor', 'release_year': 1984, 'language_id': 1, 'rental_duration': 1, 'rental_rate': 2.99, 'length': 204, 'replacement_cost': 2.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.716488" elapsed="0.000176"/>
 </kw>
 <kw name="Should Contain Expected Keys" owner="UtilityKeywords">
-<msg time="2025-12-25T11:53:05.144440" level="INFO">All expected keys and values match in actual response</msg>
-<msg time="2025-12-25T11:53:05.144440" level="INFO">Verified 3 fields successfully</msg>
-<arg>${response}</arg>
-<arg>${expected_resonse}</arg>
+<msg time="2025-12-26T13:21:17.716831" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:17.716851" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
 <doc>Verify that actual response contains all keys and values from expected response</doc>
-<status status="PASS" start="2025-12-25T11:53:05.142696" elapsed="0.001744"/>
+<status status="PASS" start="2025-12-26T13:21:17.716737" elapsed="0.000138"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.716983" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.716937" elapsed="0.000073"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.717137" level="INFO">${film_id} = 1139</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.717067" elapsed="0.000086"/>
 </kw>
 <kw name="Connect To Database" owner="DatabaseKeywords">
-<msg time="2025-12-25T11:53:05.185382" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<msg time="2025-12-26T13:21:17.765985" level="INFO">Connected to database: greencycles on localhost:5432</msg>
 <arg>${DB_HOST}</arg>
 <arg>${DB_NAME}</arg>
 <arg>${DB_USER}</arg>
 <arg>${DB_PASSWORD}</arg>
 <doc>Connect to PostgreSQL database</doc>
-<status status="PASS" start="2025-12-25T11:53:05.144440" elapsed="0.040942"/>
+<status status="PASS" start="2025-12-26T13:21:17.717227" elapsed="0.048895"/>
 </kw>
-<kw name="Verify Record Change" owner="DatabaseKeywords">
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Query executed: SELECT * FROM actor WHERE actor_id = 101</msg>
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Rows returned: 1</msg>
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Record actor_id=101 updated: first_name changed from (any) to SUSAN</msg>
-<arg>actor</arg>
-<arg>actor_id</arg>
-<arg>${actor_id}</arg>
-<arg>first_name</arg>
-<arg>(any)</arg>
-<arg>SUSAN</arg>
-<doc>Verify that a record was changed</doc>
-<status status="PASS" start="2025-12-25T11:53:05.185382" elapsed="0.003022"/>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.769928" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1139</msg>
+<msg time="2025-12-26T13:21:17.770004" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.770030" level="INFO">Record created in film with film_id=1139</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T13:21:17.766347" elapsed="0.003734"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.771083" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1139</msg>
+<msg time="2025-12-26T13:21:17.771137" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.771201" level="INFO">All 9 expected values match in film where film_id = 1139</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T13:21:17.770255" elapsed="0.001006"/>
 </kw>
 <kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Query executed: SELECT last_name FROM actor WHERE actor_id = 101</msg>
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Rows returned: 1</msg>
-<msg time="2025-12-25T11:53:05.188404" level="INFO">Column last_name = DAVIS Jr</msg>
-<arg>actor</arg>
-<arg>actor_id = ${actor_id}</arg>
-<arg>last_name</arg>
-<arg>DAVIS Jr</arg>
+<msg time="2025-12-26T13:21:17.772048" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1139</msg>
+<msg time="2025-12-26T13:21:17.772097" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.772133" level="INFO">Column title = Terminator</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
 <doc>Verify specific column value in a row</doc>
-<status status="PASS" start="2025-12-25T11:53:05.188404" elapsed="0.001000"/>
+<status status="PASS" start="2025-12-26T13:21:17.771458" elapsed="0.000729"/>
 </kw>
 <kw name="Disconnect From Database" owner="DatabaseKeywords">
-<msg time="2025-12-25T11:53:05.189404" level="INFO">Disconnected from database</msg>
+<msg time="2025-12-26T13:21:17.772599" level="INFO">Disconnected from database</msg>
 <doc>Disconnect from database</doc>
-<status status="PASS" start="2025-12-25T11:53:05.189404" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-26T13:21:17.772360" elapsed="0.000304"/>
 </kw>
-<doc>Update an existing actor and validate changes in database</doc>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.772974" level="INFO">Successfully created and validated film with ID: 1139</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.772797" elapsed="0.000230"/>
+</kw>
+<var name="${index}">0</var>
+<status status="PASS" start="2025-12-26T13:21:17.704974" elapsed="0.068095"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.773822" level="INFO">${film_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.773521" elapsed="0.000348"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.774227" level="INFO">${expected_db_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.774006" elapsed="0.000254"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.774548" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.774387" elapsed="0.000192"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.774966" level="INFO">${payload} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.774703" elapsed="0.000293"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.775303" level="INFO">${expected_db_data} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.775116" elapsed="0.000218"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.784313" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:17.784427" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:17.784456" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:17.784482" level="INFO">Response Time: 0.007399s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:17.775458" elapsed="0.009082"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.784843" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:17.784717" elapsed="0.000170"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.785128" level="INFO">${actual_response} = {'film_id': 1140, 'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murderi...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:17.784985" elapsed="0.000169"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.785431" level="INFO">{'film_id': 1140, 'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', 'release_year': 1957, 'language_id': 1, 'original_language_id': None, 'rental_duration': 2, 'rental_rate': 1.99, 'length': 197, 'replacement_cost': 1.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:21:17.779042+05:30', 'special_features': None, 'fulltext': "'12':1 'accus':30 'angri':2 'citi':8,28 'courthous':9 'day':14 'decid':21 'fate':23 'father':34 'hot':13 'inner':27 'inner-c':26 'juri':16 'man':3 'men':19 'murder':32 'must':20 'new':6 'swelter':12 'teenag':29 'twelv':18 'york':7"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.785245" elapsed="0.000486"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.786156" level="INFO">${expected_response} = {'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', ...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T13:21:17.785901" elapsed="0.000296"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.786556" level="INFO">{'title': '12 angry man', 'description': 'In a New York City courthouse on a sweltering hot day, a jury of twelve men must decide the fate of an inner-city teenager accused of murdering his father.', 'release_year': 1957, 'language_id': 1, 'rental_duration': 2, 'rental_rate': 1.99, 'length': 197, 'replacement_cost': 1.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.786339" elapsed="0.000426"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.787136" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:17.787179" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T13:21:17.786928" elapsed="0.000319"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.787492" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.787390" elapsed="0.000156"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.787821" level="INFO">${film_id} = 1140</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.787672" elapsed="0.000183"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.834181" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.787988" elapsed="0.046313"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.837514" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1140</msg>
+<msg time="2025-12-26T13:21:17.837555" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.837581" level="INFO">Record created in film with film_id=1140</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T13:21:17.834475" elapsed="0.003142"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.838330" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1140</msg>
+<msg time="2025-12-26T13:21:17.838364" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.838400" level="INFO">All 9 expected values match in film where film_id = 1140</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T13:21:17.837733" elapsed="0.000707"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.838907" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1140</msg>
+<msg time="2025-12-26T13:21:17.838939" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.838963" level="INFO">Column title = 12 angry man</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T13:21:17.838547" elapsed="0.000448"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.839231" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.839088" elapsed="0.000184"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.839475" level="INFO">Successfully created and validated film with ID: 1140</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.839361" elapsed="0.000147"/>
+</kw>
+<var name="${index}">1</var>
+<status status="PASS" start="2025-12-26T13:21:17.773378" elapsed="0.066157"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.839928" level="INFO">${film_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.839770" elapsed="0.000180"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.840210" level="INFO">${expected_db_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.840064" elapsed="0.000199"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.840433" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.840341" elapsed="0.000111"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.840693" level="INFO">${payload} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.840529" elapsed="0.000184"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.840902" level="INFO">${expected_db_data} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.840789" elapsed="0.000132"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.847092" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:17.847146" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:17.847172" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:17.847195" level="INFO">Response Time: 0.00533s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:17.840993" elapsed="0.006256"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.847496" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:17.847397" elapsed="0.000132"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.847716" level="INFO">${actual_response} = {'film_id': 1141, 'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the b...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:17.847607" elapsed="0.000131"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.847948" level="INFO">{'film_id': 1141, 'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank State Penitentiary. ', 'release_year': 1994, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 125, 'replacement_cost': 0.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:21:17.843149+05:30', 'special_features': None, 'fulltext': "'andi':5 'banker':4 'brutal':26 'convict':9 'dufresn':6 'imprison':23 'life':22 'lover':18 'murder':12 'penitentiari':29 'redempt':3 'sentenc':20 'shawshank':2,27 'state':28 'wife':15 'wrong':8"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.847814" elapsed="0.000326"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.848360" level="INFO">${expected_response} = {'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank S...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T13:21:17.848228" elapsed="0.000154"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.848566" level="INFO">{'title': 'The Shawshank redemption', 'description': 'Banker Andy Dufresne is wrongfully convicted of the murders of his wife and her lover and sentenced to life imprisonment at the brutal Shawshank State Penitentiary. ', 'release_year': 1994, 'language_id': 1, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 125, 'replacement_cost': 0.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.848457" elapsed="0.000247"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.848973" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:17.849009" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T13:21:17.848824" elapsed="0.000222"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.849213" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.849143" elapsed="0.000138"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.849504" level="INFO">${film_id} = 1141</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.849389" elapsed="0.000141"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.884537" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.849618" elapsed="0.035031"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.887570" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1141</msg>
+<msg time="2025-12-26T13:21:17.887610" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.887633" level="INFO">Record created in film with film_id=1141</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T13:21:17.884823" elapsed="0.002846"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.888357" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1141</msg>
+<msg time="2025-12-26T13:21:17.888394" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.888428" level="INFO">All 9 expected values match in film where film_id = 1141</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T13:21:17.887780" elapsed="0.000687"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.888973" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1141</msg>
+<msg time="2025-12-26T13:21:17.889017" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.889045" level="INFO">Column title = The Shawshank redemption</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T13:21:17.888606" elapsed="0.000480"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.889384" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.889203" elapsed="0.000244"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.889682" level="INFO">Successfully created and validated film with ID: 1141</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.889549" elapsed="0.000181"/>
+</kw>
+<var name="${index}">2</var>
+<status status="PASS" start="2025-12-26T13:21:17.839701" elapsed="0.050061"/>
+</iter>
+<iter>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.890206" level="INFO">${film_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${film_data}</var>
+<arg>${test_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.890010" elapsed="0.000220"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2025-12-26T13:21:17.890466" level="INFO">${expected_db_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data_list}</arg>
+<arg>${index}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.890330" elapsed="0.000155"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.890696" level="INFO">${exclude_cols} = ['expected_response', 'special_features', 'fulltext']</msg>
+<var>${exclude_cols}</var>
+<arg>expected_response</arg>
+<arg>special_features</arg>
+<arg>fulltext</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.890600" elapsed="0.000115"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.890967" level="INFO">${payload} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${payload}</var>
+<arg>${film_data}</arg>
+<arg>${exclude_cols}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.890795" elapsed="0.000193"/>
+</kw>
+<kw name="Convert Test Data To Dict" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.891184" level="INFO">${expected_db_data} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_db_data}</var>
+<arg>${expected_db_data}</arg>
+<doc>Convert test data row to dictionary payload</doc>
+<status status="PASS" start="2025-12-26T13:21:17.891062" elapsed="0.000141"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.897867" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:17.897928" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:17.897951" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:17.897972" level="INFO">Response Time: 0.005732s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:17.891276" elapsed="0.006741"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.898279" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:17.898167" elapsed="0.000148"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.898528" level="INFO">${actual_response} = {'film_id': 1142, 'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holida...</msg>
+<var>${actual_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:17.898396" elapsed="0.000155"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.898776" level="INFO">{'film_id': 1142, 'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'release_year': 1988, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 2.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:21:17.893567+05:30', 'special_features': None, 'fulltext': "'angel':13 'arriv':10 'christma':15 'citi':5 'compani':25 'detect':7 'die':1 'estrang':21 'eve':16 'hard':2 'holiday':27 'john':8 'los':12 'mcclane':9 'new':3 'parti':28 'polic':6 'reconcil':18 'wife':22 'york':4"}</msg>
+<arg>${actual_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.898630" elapsed="0.000352"/>
+</kw>
+<kw name="Get Expected Response" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.899235" level="INFO">${expected_response} = {'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'relea...</msg>
+<var>${expected_response}</var>
+<arg>${film_data}</arg>
+<doc>Get expected response from test data</doc>
+<status status="PASS" start="2025-12-26T13:21:17.899085" elapsed="0.000174"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.899459" level="INFO">{'title': 'Die Hard', 'description': "New York City Police detective John McClane  arrives in Los Angeles on Christmas Eve to reconcile with his estranged wife at her company's holiday party.", 'release_year': 1988, 'language_id': 1, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 2.99, 'rating': 'PG-13'}</msg>
+<arg>${expected_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.899338" elapsed="0.000253"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:17.899822" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:17.899858" level="INFO">Verified 9 fields successfully</msg>
+<arg>${actual_response}</arg>
+<arg>${expected_response}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T13:21:17.899694" elapsed="0.000194"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.900058" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.899974" elapsed="0.000120"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T13:21:17.900294" level="INFO">${film_id} = 1142</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T13:21:17.900192" elapsed="0.000123"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.938173" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.900395" elapsed="0.037902"/>
+</kw>
+<kw name="Verify Record Created" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.942759" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1142</msg>
+<msg time="2025-12-26T13:21:17.942832" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.942861" level="INFO">Record created in film with film_id=1142</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a new record was created</doc>
+<status status="PASS" start="2025-12-26T13:21:17.938510" elapsed="0.004405"/>
+</kw>
+<kw name="Verify Table Row Matches Expected Data" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.943770" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1142</msg>
+<msg time="2025-12-26T13:21:17.943824" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.943869" level="INFO">All 9 expected values match in film where film_id = 1142</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>${expected_db_data}</arg>
+<doc>Verify that all key-value pairs in expected_data match the database record</doc>
+<status status="PASS" start="2025-12-26T13:21:17.943077" elapsed="0.000840"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.944488" level="INFO">Query executed: SELECT title FROM film WHERE film_id = 1142</msg>
+<msg time="2025-12-26T13:21:17.944525" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:17.944549" level="INFO">Column title = Die Hard</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>title</arg>
+<arg>${expected_db_data}[title]</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T13:21:17.944051" elapsed="0.000536"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:17.944828" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T13:21:17.944688" elapsed="0.000182"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.945068" level="INFO">Successfully created and validated film with ID: 1142</msg>
+<arg>Successfully created and validated film with ID: ${film_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.944963" elapsed="0.000139"/>
+</kw>
+<var name="${index}">3</var>
+<status status="PASS" start="2025-12-26T13:21:17.889934" elapsed="0.055196"/>
+</iter>
+<var>${index}</var>
+<value>${test_data_count}</value>
+<status status="PASS" start="2025-12-26T13:21:17.704796" elapsed="0.240366"/>
+</for>
+<doc>Create new film records via POST request and validate in database</doc>
+<tag>database</tag>
+<tag>json</tag>
+<tag>post</tag>
+<status status="PASS" start="2025-12-26T13:21:17.695036" elapsed="0.250383"/>
+</test>
+<test id="s1-t2" name="Delete duplicate records before running other tests" line="87">
+<kw name="Read SQL file and Execute Delete Query" owner="common_keyword">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-12-26T13:21:17.946850" level="INFO" html="true">Getting file '&lt;a href="file://C:\driver\api-framework\test_data\deletedupquery.sql"&gt;C:\driver\api-framework\test_data\deletedupquery.sql&lt;/a&gt;'.</msg>
+<msg time="2025-12-26T13:21:17.947176" level="INFO">${sql_commands} = DELETE FROM film
+WHERE film_id IN (
+    WITH DuplicateCTE AS (
+        SELECT
+            film_id
+        FROM (
+            SELECT
+                film_id,
+                ROW_NUMBER() OVER (
+       ...</msg>
+<var>${sql_commands}</var>
+<arg>${file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.946739" elapsed="0.000465"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-12-26T13:21:17.947589" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-12-26T13:21:17.947665" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-12-26T13:21:17.947817" level="INFO">Connect to DB using : psycopg2.connect(database='greencycles', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.947307" elapsed="0.036768"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:17.984520" level="INFO">Database connection established</msg>
+<arg>Database connection established</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.984314" elapsed="0.000440"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-26T13:21:17.985112" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM film
+WHERE film_id IN (
+    WITH DuplicateCTE AS (
+        SELECT
+            film_id
+        FROM (
+            SELECT
+                film_id,
+                ROW_NUMBER() OVER (
+                    PARTITION BY title -- Columns that define a duplicate
+                    ORDER BY film_id -- Column to decide which one to keep
+                ) AS RowNumber
+            FROM
+                film
+        ) AS s
+        WHERE
+            RowNumber &gt; 1
+    )
+    SELECT film_id FROM DuplicateCTE
+);
+&lt;/code&gt;</msg>
+<msg time="2025-12-26T13:21:18.007863" level="INFO">Commit the transaction</msg>
+<msg time="2025-12-26T13:21:18.009017" level="INFO">${query_result} = None</msg>
+<var>${query_result}</var>
+<arg>${sql_commands}</arg>
+<doc>Executes the ``sql_string`` - as a single SQL command (default) or as separate statements.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.984916" elapsed="0.024135"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.009450" level="INFO">SQL commands executed successfully and result obtained : None</msg>
+<arg>SQL commands executed successfully and result obtained : ${query_result}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.009226" elapsed="0.000479"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.009928" elapsed="0.000330"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.010560" level="INFO">Database connection closed</msg>
+<arg>Database connection closed</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.010414" elapsed="0.000333"/>
+</kw>
+<return>
+<value>${sql_commands}</value>
+<status status="PASS" start="2025-12-26T13:21:18.010850" elapsed="0.000098"/>
+</return>
+<arg>${SQL_FILE_PATH}</arg>
+<doc>Read SQL commands from a file and return as a single string.</doc>
+<status status="PASS" start="2025-12-26T13:21:17.946444" elapsed="0.064783"/>
+</kw>
+<status status="PASS" start="2025-12-26T13:21:17.945887" elapsed="0.065558"/>
+</test>
+<test id="s1-t3" name="Test GET All Films" line="90">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.012369" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T13:21:18.012240" elapsed="0.000172"/>
+</kw>
+<kw name="Perform Get Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.021267" level="INFO">GET request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:18.021327" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:18.021351" level="INFO">Response Time: 0.00747s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<doc>Perform GET request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.012562" elapsed="0.008835"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.021825" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:18.021699" elapsed="0.000186"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.023179" level="INFO">${response} = [{'film_id': 2, 'title': 'ACE GOLDFINGER', 'description': 'A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China', 'release_year': 2006, 'language_id': 1...</msg>
+<var>${response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:18.022053" elapsed="0.001154"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.024064" level="INFO">[{'film_id': 2, 'title': 'ACE GOLDFINGER', 'description': 'A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 48, 'replacement_cost': 12.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'ace':1 'administr':9 'ancient':19 'astound':4 'car':17 'china':20 'databas':8 'epistl':5 'explor':12 'find':15 'goldfing':2 'must':14"}, {'film_id': 3, 'title': 'ADAPTATION HOLES', 'description': 'A Astounding Reflection of a Lumberjack And a Car who must Sink a Lumberjack in A Baloon Factory', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 2.99, 'length': 50, 'replacement_cost': 18.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'adapt':1 'astound':4 'baloon':19 'car':11 'factori':20 'hole':2 'lumberjack':8,16 'must':13 'reflect':5 'sink':14"}, {'film_id': 4, 'title': 'AFFAIR PREJUDICE', 'description': 'A Fanciful Documentary of a Frisbee And a Lumberjack who must Chase a Monkey in A Shark Tank', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 117, 'replacement_cost': 26.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'affair':1 'chase':14 'documentari':5 'fanci':4 'frisbe':8 'lumberjack':11 'monkey':16 'must':13 'prejudic':2 'shark':19 'tank':20"}, {'film_id': 5, 'title': 'AFRICAN EGG', 'description': 'A Fast-Paced Documentary of a Pastry Chef And a Dentist who must Pursue a Forensic Psychologist in The Gulf of Mexico', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 130, 'replacement_cost': 22.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'african':1 'chef':11 'dentist':14 'documentari':7 'egg':2 'fast':5 'fast-pac':4 'forens':19 'gulf':23 'mexico':25 'must':16 'pace':6 'pastri':10 'psychologist':20 'pursu':17"}, {'film_id': 6, 'title': 'AGENT TRUMAN', 'description': 'A Intrepid Panorama of a Robot And a Boy who must Escape a Sumo Wrestler in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 169, 'replacement_cost': 17.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'agent':1 'ancient':19 'boy':11 'china':20 'escap':14 'intrepid':4 'must':13 'panorama':5 'robot':8 'sumo':16 'truman':2 'wrestler':17"}, {'film_id': 7, 'title': 'AIRPLANE SIERRA', 'description': 'A Touching Saga of a Hunter And a Butler who must Discover a Butler in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 62, 'replacement_cost': 28.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'airplan':1 'boat':20 'butler':11,16 'discov':14 'hunter':8 'jet':19 'must':13 'saga':5 'sierra':2 'touch':4"}, {'film_id': 8, 'title': 'AIRPORT POLLOCK', 'description': 'A Epic Tale of a Moose And a Girl who must Confront a Monkey in Ancient India', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 54, 'replacement_cost': 15.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'airport':1 'ancient':18 'confront':14 'epic':4 'girl':11 'india':19 'monkey':16 'moos':8 'must':13 'pollock':2 'tale':5"}, {'film_id': 9, 'title': 'ALABAMA DEVIL', 'description': 'A Thoughtful Panorama of a Database Administrator And a Mad Scientist who must Outgun a Mad Scientist in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 114, 'replacement_cost': 21.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'administr':9 'alabama':1 'boat':23 'databas':8 'devil':2 'jet':22 'mad':12,18 'must':15 'outgun':16 'panorama':5 'scientist':13,19 'thought':4"}, {'film_id': 10, 'title': 'ALADDIN CALENDAR', 'description': 'A Action-Packed Tale of a Man And a Lumberjack who must Reach a Feminist in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 63, 'replacement_cost': 24.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'action':5 'action-pack':4 'aladdin':1 'ancient':20 'calendar':2 'china':21 'feminist':18 'lumberjack':13 'man':10 'must':15 'pack':6 'reach':16 'tale':7"}, {'film_id': 11, 'title': 'ALAMO VIDEOTAPE', 'description': 'A Boring Epistle of a Butler And a Cat who must Fight a Pastry Chef in A MySQL Convention', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 126, 'replacement_cost': 16.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'alamo':1 'bore':4 'butler':8 'cat':11 'chef':17 'convent':21 'epistl':5 'fight':14 'must':13 'mysql':20 'pastri':16 'videotap':2"}, {'film_id': 12, 'title': 'ALASKA PHANTOM', 'description': 'A Fanciful Saga of a Hunter And a Pastry Chef who must Vanquish a Boy in Australia', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 136, 'replacement_cost': 22.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'alaska':1 'australia':19 'boy':17 'chef':12 'fanci':4 'hunter':8 'must':14 'pastri':11 'phantom':2 'saga':5 'vanquish':15"}, {'film_id': 213, 'title': 'DATE SPEED', 'description': 'A Touching Saga of a Composer And a Moose who must Discover a Dentist in A MySQL Convention', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 0.99, 'length': 104, 'replacement_cost': 19.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries'], 'fulltext': "'compos':8 'convent':20 'date':1 'dentist':16 'discov':14 'moos':11 'must':13 'mysql':19 'saga':5 'speed':2 'touch':4"}, {'film_id': 13, 'title': 'ALI FOREVER', 'description': 'A Action-Packed Drama of a Dentist And a Crocodile who must Battle a Feminist in The Canadian Rockies', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 4.99, 'length': 150, 'replacement_cost': 21.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'action':5 'action-pack':4 'ali':1 'battl':16 'canadian':21 'crocodil':13 'dentist':10 'drama':7 'feminist':18 'forev':2 'must':15 'pack':6 'rocki':22"}, {'film_id': 14, 'title': 'ALICE FANTASIA', 'description': 'A Emotional Drama of a A Shark And a Database Administrator who must Vanquish a Pioneer in Soviet Georgia', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 94, 'replacement_cost': 23.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'administr':13 'alic':1 'databas':12 'drama':5 'emot':4 'fantasia':2 'georgia':21 'must':15 'pioneer':18 'shark':9 'soviet':20 'vanquish':16"}, {'film_id': 15, 'title': 'ALIEN CENTER', 'description': 'A Brilliant Drama of a Cat And a Mad Scientist who must Battle a Feminist in A MySQL Convention', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 46, 'replacement_cost': 10.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Behind the Scenes'], 'fulltext': "'alien':1 'battl':15 'brilliant':4 'cat':8 'center':2 'convent':21 'drama':5 'feminist':17 'mad':11 'must':14 'mysql':20 'scientist':12"}, {'film_id': 16, 'title': 'ALLEY EVOLUTION', 'description': 'A Fast-Paced Drama of a Robot And a Composer who must Battle a Astronaut in New Orleans', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 180, 'replacement_cost': 23.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'alley':1 'astronaut':18 'battl':16 'compos':13 'drama':7 'evolut':2 'fast':5 'fast-pac':4 'must':15 'new':20 'orlean':21 'pace':6 'robot':10"}, {'film_id': 17, 'title': 'ALONE TRIP', 'description': 'A Fast-Paced Character Study of a Composer And a Dog who must Outgun a Boat in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 82, 'replacement_cost': 14.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'abandon':22 'alon':1 'boat':19 'charact':7 'compos':11 'dog':14 'fast':5 'fast-pac':4 'fun':23 'hous':24 'must':16 'outgun':17 'pace':6 'studi':8 'trip':2"}, {'film_id': 1013, 'title': 'Dilwale Dulhania Le Jayenge ', 'description': 'The iconic romantic drama that redefined Bollywood.', 'release_year': 1995, 'language_id': 7, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 150, 'replacement_cost': 19.99, 'rating': 'G', 'last_update': '2025-12-24T09:22:36.199949+05:30', 'special_features': None, 'fulltext': "'bollywood':11 'dilwal':1 'drama':8 'dulhania':2 'icon':6 'jayeng':4 'le':3 'redefin':10 'romant':7"}, {'film_id': 18, 'title': 'ALTER VICTORY', 'description': 'A Thoughtful Drama of a Composer And a Feminist who must Meet a Secret Agent in The Canadian Rockies', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 57, 'replacement_cost': 27.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'agent':17 'alter':1 'canadian':20 'compos':8 'drama':5 'feminist':11 'meet':14 'must':13 'rocki':21 'secret':16 'thought':4 'victori':2"}, {'film_id': 19, 'title': 'AMADEUS HOLY', 'description': 'A Emotional Display of a Pioneer And a Technical Writer who must Battle a Man in A Baloon', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 113, 'replacement_cost': 20.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'amadeus':1 'baloon':20 'battl':15 'display':5 'emot':4 'holi':2 'man':17 'must':14 'pioneer':8 'technic':11 'writer':12"}, {'film_id': 20, 'title': 'AMELIE HELLFIGHTERS', 'description': 'A Boring Drama of a Woman And a Squirrel who must Conquer a Student in A Baloon', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 4.99, 'length': 79, 'replacement_cost': 23.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'ameli':1 'baloon':19 'bore':4 'conquer':14 'drama':5 'hellfight':2 'must':13 'squirrel':11 'student':16 'woman':8"}, {'film_id': 21, 'title': 'AMERICAN CIRCUS', 'description': 'A Insightful Drama of a Girl And a Astronaut who must Face a Database Administrator in A Shark Tank', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 129, 'replacement_cost': 17.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'administr':17 'american':1 'astronaut':11 'circus':2 'databas':16 'drama':5 'face':14 'girl':8 'insight':4 'must':13 'shark':20 'tank':21"}, {'film_id': 22, 'title': 'AMISTAD MIDSUMMER', 'description': 'A Emotional Character Study of a Dentist And a Crocodile who must Meet a Sumo Wrestler in California', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 85, 'replacement_cost': 10.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'amistad':1 'california':20 'charact':5 'crocodil':12 'dentist':9 'emot':4 'meet':15 'midsumm':2 'must':14 'studi':6 'sumo':17 'wrestler':18"}, {'film_id': 23, 'title': 'ANACONDA CONFESSIONS', 'description': 'A Lacklusture Display of a Dentist And a Dentist who must Fight a Girl in Australia', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 92, 'replacement_cost': 9.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'anaconda':1 'australia':18 'confess':2 'dentist':8,11 'display':5 'fight':14 'girl':16 'lacklustur':4 'must':13"}, {'film_id': 24, 'title': 'ANALYZE HOOSIERS', 'description': 'A Thoughtful Display of a Explorer And a Pastry Chef who must Overcome a Feminist in The Sahara Desert', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 181, 'replacement_cost': 19.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'analyz':1 'chef':12 'desert':21 'display':5 'explor':8 'feminist':17 'hoosier':2 'must':14 'overcom':15 'pastri':11 'sahara':20 'thought':4"}, {'film_id': 25, 'title': 'ANGELS LIFE', 'description': 'A Thoughtful Display of a Woman And a Astronaut who must Battle a Robot in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 74, 'replacement_cost': 15.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'angel':1 'astronaut':11 'battl':14 'berlin':18 'display':5 'life':2 'must':13 'robot':16 'thought':4 'woman':8"}, {'film_id': 26, 'title': 'ANNIE IDENTITY', 'description': 'A Amazing Panorama of a Pastry Chef And a Boat who must Escape a Woman in An Abandoned Amusement Park', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 86, 'replacement_cost': 15.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'abandon':20 'amaz':4 'amus':21 'anni':1 'boat':12 'chef':9 'escap':15 'ident':2 'must':14 'panorama':5 'park':22 'pastri':8 'woman':17"}, {'film_id': 27, 'title': 'ANONYMOUS HUMAN', 'description': 'A Amazing Reflection of a Database Administrator And a Astronaut who must Outrace a Database Administrator in A Shark Tank', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 0.99, 'length': 179, 'replacement_cost': 12.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'administr':9,18 'amaz':4 'anonym':1 'astronaut':12 'databas':8,17 'human':2 'must':14 'outrac':15 'reflect':5 'shark':21 'tank':22"}, {'film_id': 28, 'title': 'ANTHEM LUKE', 'description': 'A Touching Panorama of a Waitress And a Woman who must Outrace a Dog in An Abandoned Amusement Park', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 91, 'replacement_cost': 16.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':19 'amus':20 'anthem':1 'dog':16 'luke':2 'must':13 'outrac':14 'panorama':5 'park':21 'touch':4 'waitress':8 'woman':11"}, {'film_id': 29, 'title': 'ANTITRUST TOMATOES', 'description': 'A Fateful Yarn of a Womanizer And a Feminist who must Succumb a Database Administrator in Ancient India', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 168, 'replacement_cost': 11.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'administr':17 'ancient':19 'antitrust':1 'databas':16 'fate':4 'feminist':11 'india':20 'must':13 'succumb':14 'tomato':2 'woman':8 'yarn':5"}, {'film_id': 30, 'title': 'ANYTHING SAVANNAH', 'description': 'A Epic Story of a Pastry Chef And a Woman who must Chase a Feminist in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 82, 'replacement_cost': 27.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':20 'anyth':1 'chase':15 'chef':9 'epic':4 'feminist':17 'fun':21 'hous':22 'must':14 'pastri':8 'savannah':2 'stori':5 'woman':12"}, {'film_id': 31, 'title': 'APACHE DIVINE', 'description': 'A Awe-Inspiring Reflection of a Pastry Chef And a Teacher who must Overcome a Sumo Wrestler in A U-Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 92, 'replacement_cost': 16.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'apach':1 'awe':5 'awe-inspir':4 'boat':25 'chef':11 'divin':2 'inspir':6 'must':16 'overcom':17 'pastri':10 'reflect':7 'sumo':19 'teacher':14 'u':24 'u-boat':23 'wrestler':20"}, {'film_id': 32, 'title': 'APOCALYPSE FLAMINGOS', 'description': 'A Astounding Story of a Dog And a Squirrel who must Defeat a Woman in An Abandoned Amusement Park', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 119, 'replacement_cost': 11.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'abandon':19 'amus':20 'apocalyps':1 'astound':4 'defeat':14 'dog':8 'flamingo':2 'must':13 'park':21 'squirrel':11 'stori':5 'woman':16"}, {'film_id': 33, 'title': 'APOLLO TEEN', 'description': 'A Action-Packed Reflection of a Crocodile And a Explorer who must Find a Sumo Wrestler in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 153, 'replacement_cost': 15.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':22 'action':5 'action-pack':4 'apollo':1 'crocodil':10 'explor':13 'find':16 'mine':23 'must':15 'pack':6 'reflect':7 'shaft':24 'sumo':18 'teen':2 'wrestler':19"}, {'film_id': 34, 'title': 'ARABIA DOGMA', 'description': 'A Touching Epistle of a Madman And a Mad Cow who must Defeat a Student in Nigeria', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 62, 'replacement_cost': 29.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'arabia':1 'cow':12 'defeat':15 'dogma':2 'epistl':5 'mad':11 'madman':8 'must':14 'nigeria':19 'student':17 'touch':4"}, {'film_id': 35, 'title': 'ARACHNOPHOBIA ROLLERCOASTER', 'description': 'A Action-Packed Reflection of a Pastry Chef And a Composer who must Discover a Mad Scientist in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 147, 'replacement_cost': 24.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'action':5 'action-pack':4 'arachnophobia':1 'chef':11 'compos':14 'discov':17 'first':23 'mad':19 'man':24 'must':16 'pack':6 'pastri':10 'reflect':7 'rollercoast':2 'scientist':20 'space':25 'station':26"}, {'film_id': 36, 'title': 'ARGONAUTS TOWN', 'description': 'A Emotional Epistle of a Forensic Psychologist And a Butler who must Challenge a Waitress in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 0.99, 'length': 127, 'replacement_cost': 12.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'abandon':20 'argonaut':1 'butler':12 'challeng':15 'emot':4 'epistl':5 'forens':8 'mine':21 'must':14 'psychologist':9 'shaft':22 'town':2 'waitress':17"}, {'film_id': 37, 'title': 'ARIZONA BANG', 'description': 'A Brilliant Panorama of a Mad Scientist And a Mad Cow who must Meet a Pioneer in A Monastery', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 121, 'replacement_cost': 28.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'arizona':1 'bang':2 'brilliant':4 'cow':13 'mad':8,12 'meet':16 'monasteri':21 'must':15 'panorama':5 'pioneer':18 'scientist':9"}, {'film_id': 38, 'title': 'ARK RIDGEMONT', 'description': 'A Beautiful Yarn of a Pioneer And a Monkey who must Pursue a Explorer in The Sahara Desert', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 68, 'replacement_cost': 25.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'ark':1 'beauti':4 'desert':20 'explor':16 'monkey':11 'must':13 'pioneer':8 'pursu':14 'ridgemont':2 'sahara':19 'yarn':5"}, {'film_id': 39, 'title': 'ARMAGEDDON LOST', 'description': 'A Fast-Paced Tale of a Boat And a Teacher who must Succumb a Composer in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 0.99, 'length': 99, 'replacement_cost': 10.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'abandon':21 'armageddon':1 'boat':10 'compos':18 'fast':5 'fast-pac':4 'lost':2 'mine':22 'must':15 'pace':6 'shaft':23 'succumb':16 'tale':7 'teacher':13"}, {'film_id': 40, 'title': 'ARMY FLINTSTONES', 'description': 'A Boring Saga of a Database Administrator And a Womanizer who must Battle a Waitress in Nigeria', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 0.99, 'length': 148, 'replacement_cost': 22.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'administr':9 'armi':1 'battl':15 'bore':4 'databas':8 'flintston':2 'must':14 'nigeria':19 'saga':5 'waitress':17 'woman':12"}, {'film_id': 41, 'title': 'ARSENIC INDEPENDENCE', 'description': 'A Fanciful Documentary of a Mad Cow And a Womanizer who must Find a Dentist in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 0.99, 'length': 137, 'replacement_cost': 17.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'arsenic':1 'berlin':19 'cow':9 'dentist':17 'documentari':5 'fanci':4 'find':15 'independ':2 'mad':8 'must':14 'woman':12"}, {'film_id': 42, 'title': 'ARTIST COLDBLOODED', 'description': 'A Stunning Reflection of a Robot And a Moose who must Challenge a Woman in California', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 10.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'artist':1 'california':18 'challeng':14 'coldblood':2 'moos':11 'must':13 'reflect':5 'robot':8 'stun':4 'woman':16"}, {'film_id': 43, 'title': 'ATLANTIS CAUSE', 'description': 'A Thrilling Yarn of a Feminist And a Hunter who must Fight a Technical Writer in A Shark Tank', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 170, 'replacement_cost': 15.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Behind the Scenes'], 'fulltext': "'atlanti':1 'caus':2 'feminist':8 'fight':14 'hunter':11 'must':13 'shark':20 'tank':21 'technic':16 'thrill':4 'writer':17 'yarn':5"}, {'film_id': 44, 'title': 'ATTACKS HATE', 'description': 'A Fast-Paced Panorama of a Technical Writer And a Mad Scientist who must Find a Feminist in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 113, 'replacement_cost': 21.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'abandon':23 'attack':1 'fast':5 'fast-pac':4 'feminist':20 'find':18 'hate':2 'mad':14 'mine':24 'must':17 'pace':6 'panorama':7 'scientist':15 'shaft':25 'technic':10 'writer':11"}, {'film_id': 45, 'title': 'ATTRACTION NEWTON', 'description': 'A Astounding Panorama of a Composer And a Frisbee who must Reach a Husband in Ancient Japan', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 83, 'replacement_cost': 14.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'ancient':18 'astound':4 'attract':1 'compos':8 'frisbe':11 'husband':16 'japan':19 'must':13 'newton':2 'panorama':5 'reach':14"}, {'film_id': 46, 'title': 'AUTUMN CROW', 'description': 'A Beautiful Tale of a Dentist And a Mad Cow who must Battle a Moose in The Sahara Desert', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 108, 'replacement_cost': 13.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'autumn':1 'battl':15 'beauti':4 'cow':12 'crow':2 'dentist':8 'desert':21 'mad':11 'moos':17 'must':14 'sahara':20 'tale':5"}, {'film_id': 47, 'title': 'BABY HALL', 'description': 'A Boring Character Study of a A Shark And a Girl who must Outrace a Feminist in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 153, 'replacement_cost': 23.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries'], 'fulltext': "'abandon':21 'babi':1 'bore':4 'charact':5 'feminist':18 'girl':13 'hall':2 'mine':22 'must':15 'outrac':16 'shaft':23 'shark':10 'studi':6"}, {'film_id': 48, 'title': 'BACKLASH UNDEFEATED', 'description': 'A Stunning Character Study of a Mad Scientist And a Mad Cow who must Kill a Car in A Monastery', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 118, 'replacement_cost': 24.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'backlash':1 'car':19 'charact':5 'cow':14 'kill':17 'mad':9,13 'monasteri':22 'must':16 'scientist':10 'studi':6 'stun':4 'undef':2"}, {'film_id': 49, 'title': 'BADMAN DAWN', 'description': 'A Emotional Panorama of a Pioneer And a Composer who must Escape a Mad Scientist in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 162, 'replacement_cost': 22.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Behind the Scenes'], 'fulltext': "'badman':1 'boat':21 'compos':11 'dawn':2 'emot':4 'escap':14 'jet':20 'mad':16 'must':13 'panorama':5 'pioneer':8 'scientist':17"}, {'film_id': 50, 'title': 'BAKED CLEOPATRA', 'description': 'A Stunning Drama of a Forensic Psychologist And a Husband who must Overcome a Waitress in A Monastery', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 182, 'replacement_cost': 20.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'bake':1 'cleopatra':2 'drama':5 'forens':8 'husband':12 'monasteri':20 'must':14 'overcom':15 'psychologist':9 'stun':4 'waitress':17"}, {'film_id': 51, 'title': 'BALLOON HOMEWARD', 'description': 'A Insightful Panorama of a Forensic Psychologist And a Mad Cow who must Build a Mad Scientist in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 75, 'replacement_cost': 10.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'balloon':1 'build':16 'cow':13 'first':22 'forens':8 'homeward':2 'insight':4 'mad':12,18 'man':23 'must':15 'panorama':5 'psychologist':9 'scientist':19 'space':24 'station':25"}, {'film_id': 52, 'title': 'BALLROOM MOCKINGBIRD', 'description': 'A Thrilling Documentary of a Composer And a Monkey who must Find a Feminist in California', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 173, 'replacement_cost': 29.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'ballroom':1 'california':18 'compos':8 'documentari':5 'feminist':16 'find':14 'mockingbird':2 'monkey':11 'must':13 'thrill':4"}, {'film_id': 53, 'title': 'BANG KWAI', 'description': 'A Epic Drama of a Madman And a Cat who must Face a A Shark in An Abandoned Amusement Park', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 87, 'replacement_cost': 25.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':20 'amus':21 'bang':1 'cat':11 'drama':5 'epic':4 'face':14 'kwai':2 'madman':8 'must':13 'park':22 'shark':17"}, {'film_id': 54, 'title': 'BANGER PINOCCHIO', 'description': 'A Awe-Inspiring Drama of a Car And a Pastry Chef who must Chase a Crocodile in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 0.99, 'length': 113, 'replacement_cost': 15.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'awe':5 'awe-inspir':4 'banger':1 'car':10 'chase':17 'chef':14 'crocodil':19 'drama':7 'first':22 'inspir':6 'man':23 'must':16 'pastri':13 'pinocchio':2 'space':24 'station':25"}, {'film_id': 55, 'title': 'BARBARELLA STREETCAR', 'description': 'A Awe-Inspiring Story of a Feminist And a Cat who must Conquer a Dog in A Monastery', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 65, 'replacement_cost': 27.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Behind the Scenes'], 'fulltext': "'awe':5 'awe-inspir':4 'barbarella':1 'cat':13 'conquer':16 'dog':18 'feminist':10 'inspir':6 'monasteri':21 'must':15 'stori':7 'streetcar':2"}, {'film_id': 56, 'title': 'BAREFOOT MANCHURIAN', 'description': 'A Intrepid Story of a Cat And a Student who must Vanquish a Girl in An Abandoned Amusement Park', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 129, 'replacement_cost': 15.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'abandon':19 'amus':20 'barefoot':1 'cat':8 'girl':16 'intrepid':4 'manchurian':2 'must':13 'park':21 'stori':5 'student':11 'vanquish':14"}, {'film_id': 57, 'title': 'BASIC EASY', 'description': 'A Stunning Epistle of a Man And a Husband who must Reach a Mad Scientist in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 90, 'replacement_cost': 18.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'basic':1 'boat':21 'easi':2 'epistl':5 'husband':11 'jet':20 'mad':16 'man':8 'must':13 'reach':14 'scientist':17 'stun':4"}, {'film_id': 58, 'title': 'BEACH HEARTBREAKERS', 'description': 'A Fateful Display of a Womanizer And a Mad Scientist who must Outgun a A Shark in Soviet Georgia', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 122, 'replacement_cost': 16.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'beach':1 'display':5 'fate':4 'georgia':21 'heartbreak':2 'mad':11 'must':14 'outgun':15 'scientist':12 'shark':18 'soviet':20 'woman':8"}, {'film_id': 59, 'title': 'BEAR GRACELAND', 'description': 'A Astounding Saga of a Dog And a Boy who must Kill a Teacher in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 160, 'replacement_cost': 20.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'astound':4 'bear':1 'boy':11 'dog':8 'first':19 'graceland':2 'kill':14 'man':20 'must':13 'saga':5 'space':21 'station':22 'teacher':16"}, {'film_id': 60, 'title': 'BEAST HUNCHBACK', 'description': 'A Awe-Inspiring Epistle of a Student And a Squirrel who must Defeat a Boy in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 89, 'replacement_cost': 22.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'ancient':20 'awe':5 'awe-inspir':4 'beast':1 'boy':18 'china':21 'defeat':16 'epistl':7 'hunchback':2 'inspir':6 'must':15 'squirrel':13 'student':10"}, {'film_id': 61, 'title': 'BEAUTY GREASE', 'description': 'A Fast-Paced Display of a Composer And a Moose who must Sink a Robot in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 175, 'replacement_cost': 28.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'abandon':21 'beauti':1 'compos':10 'display':7 'fast':5 'fast-pac':4 'greas':2 'mine':22 'moos':13 'must':15 'pace':6 'robot':18 'shaft':23 'sink':16"}, {'film_id': 62, 'title': 'BED HIGHBALL', 'description': 'A Astounding Panorama of a Lumberjack And a Dog who must Redeem a Woman in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 106, 'replacement_cost': 23.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'abandon':19 'astound':4 'bed':1 'dog':11 'fun':20 'highbal':2 'hous':21 'lumberjack':8 'must':13 'panorama':5 'redeem':14 'woman':16"}, {'film_id': 63, 'title': 'BEDAZZLED MARRIED', 'description': 'A Astounding Character Study of a Madman And a Robot who must Meet a Mad Scientist in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 73, 'replacement_cost': 21.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':21 'astound':4 'bedazzl':1 'charact':5 'fun':22 'hous':23 'mad':17 'madman':9 'marri':2 'meet':15 'must':14 'robot':12 'scientist':18 'studi':6"}, {'film_id': 64, 'title': 'BEETHOVEN EXORCIST', 'description': 'A Epic Display of a Pioneer And a Student who must Challenge a Butler in The Gulf of Mexico', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 151, 'replacement_cost': 26.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'beethoven':1 'butler':16 'challeng':14 'display':5 'epic':4 'exorcist':2 'gulf':19 'mexico':21 'must':13 'pioneer':8 'student':11"}, {'film_id': 65, 'title': 'BEHAVIOR RUNAWAY', 'description': 'A Unbelieveable Drama of a Student And a Husband who must Outrace a Sumo Wrestler in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 100, 'replacement_cost': 20.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'behavior':1 'berlin':19 'drama':5 'husband':11 'must':13 'outrac':14 'runaway':2 'student':8 'sumo':16 'unbeliev':4 'wrestler':17"}, {'film_id': 66, 'title': 'BENEATH RUSH', 'description': 'A Astounding Panorama of a Man And a Monkey who must Discover a Man in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 0.99, 'length': 53, 'replacement_cost': 27.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'astound':4 'beneath':1 'discov':14 'first':19 'man':8,16,20 'monkey':11 'must':13 'panorama':5 'rush':2 'space':21 'station':22"}, {'film_id': 67, 'title': 'BERETS AGENT', 'description': 'A Taut Saga of a Crocodile And a Boy who must Overcome a Technical Writer in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 77, 'replacement_cost': 24.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'agent':2 'ancient':19 'beret':1 'boy':11 'china':20 'crocodil':8 'must':13 'overcom':14 'saga':5 'taut':4 'technic':16 'writer':17"}, {'film_id': 68, 'title': 'BETRAYED REAR', 'description': 'A Emotional Character Study of a Boat And a Pioneer who must Find a Explorer in A Shark Tank', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 122, 'replacement_cost': 26.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'betray':1 'boat':9 'charact':5 'emot':4 'explor':17 'find':15 'must':14 'pioneer':12 'rear':2 'shark':20 'studi':6 'tank':21"}, {'film_id': 69, 'title': 'BEVERLY OUTLAW', 'description': 'A Fanciful Documentary of a Womanizer And a Boat who must Defeat a Madman in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 2.99, 'length': 85, 'replacement_cost': 21.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'bever':1 'boat':11 'defeat':14 'documentari':5 'fanci':4 'first':19 'madman':16 'man':20 'must':13 'outlaw':2 'space':21 'station':22 'woman':8"}, {'film_id': 70, 'title': 'BIKINI BORROWERS', 'description': 'A Astounding Drama of a Astronaut And a Cat who must Discover a Woman in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 4.99, 'length': 142, 'replacement_cost': 26.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes'], 'fulltext': "'astound':4 'astronaut':8 'bikini':1 'borrow':2 'cat':11 'discov':14 'drama':5 'first':19 'man':20 'must':13 'space':21 'station':22 'woman':16"}, {'film_id': 71, 'title': 'BILKO ANONYMOUS', 'description': 'A Emotional Reflection of a Teacher And a Man who must Meet a Cat in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 100, 'replacement_cost': 25.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'anonym':2 'bilko':1 'cat':16 'emot':4 'first':19 'man':11,20 'meet':14 'must':13 'reflect':5 'space':21 'station':22 'teacher':8"}, {'film_id': 72, 'title': 'BILL OTHERS', 'description': 'A Stunning Saga of a Mad Scientist And a Forensic Psychologist who must Challenge a Squirrel in A MySQL Convention', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 2.99, 'length': 93, 'replacement_cost': 12.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'bill':1 'challeng':16 'convent':22 'forens':12 'mad':8 'must':15 'mysql':21 'other':2 'psychologist':13 'saga':5 'scientist':9 'squirrel':18 'stun':4"}, {'film_id': 73, 'title': 'BINGO TALENTED', 'description': 'A Touching Tale of a Girl And a Crocodile who must Discover a Waitress in Nigeria', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 150, 'replacement_cost': 22.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'bingo':1 'crocodil':11 'discov':14 'girl':8 'must':13 'nigeria':18 'tale':5 'talent':2 'touch':4 'waitress':16"}, {'film_id': 74, 'title': 'BIRCH ANTITRUST', 'description': 'A Fanciful Panorama of a Husband And a Pioneer who must Outgun a Dog in A Baloon', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 4.99, 'length': 162, 'replacement_cost': 18.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'antitrust':2 'baloon':19 'birch':1 'dog':16 'fanci':4 'husband':8 'must':13 'outgun':14 'panorama':5 'pioneer':11"}, {'film_id': 75, 'title': 'BIRD INDEPENDENCE', 'description': 'A Thrilling Documentary of a Car And a Student who must Sink a Hunter in The Canadian Rockies', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 163, 'replacement_cost': 14.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'bird':1 'canadian':19 'car':8 'documentari':5 'hunter':16 'independ':2 'must':13 'rocki':20 'sink':14 'student':11 'thrill':4"}, {'film_id': 76, 'title': 'BIRDCAGE CASPER', 'description': 'A Fast-Paced Saga of a Frisbee And a Astronaut who must Overcome a Feminist in Ancient India', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 0.99, 'length': 103, 'replacement_cost': 23.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'ancient':20 'astronaut':13 'birdcag':1 'casper':2 'fast':5 'fast-pac':4 'feminist':18 'frisbe':10 'india':21 'must':15 'overcom':16 'pace':6 'saga':7"}, {'film_id': 77, 'title': 'BIRDS PERDITION', 'description': 'A Boring Story of a Womanizer And a Pioneer who must Face a Dog in California', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 61, 'replacement_cost': 15.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'bird':1 'bore':4 'california':18 'dog':16 'face':14 'must':13 'perdit':2 'pioneer':11 'stori':5 'woman':8"}, {'film_id': 78, 'title': 'BLACKOUT PRIVATE', 'description': 'A Intrepid Yarn of a Pastry Chef And a Mad Scientist who must Challenge a Secret Agent in Ancient Japan', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 2.99, 'length': 85, 'replacement_cost': 12.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'agent':19 'ancient':21 'blackout':1 'challeng':16 'chef':9 'intrepid':4 'japan':22 'mad':12 'must':15 'pastri':8 'privat':2 'scientist':13 'secret':18 'yarn':5"}, {'film_id': 79, 'title': 'BLADE POLISH', 'description': 'A Thoughtful Character Study of a Frisbee And a Pastry Chef who must Fight a Dentist in The First Manned Space Station', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 0.99, 'length': 114, 'replacement_cost': 10.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'blade':1 'charact':5 'chef':13 'dentist':18 'fight':16 'first':21 'frisbe':9 'man':22 'must':15 'pastri':12 'polish':2 'space':23 'station':24 'studi':6 'thought':4"}, {'film_id': 80, 'title': 'BLANKET BEVERLY', 'description': 'A Emotional Documentary of a Student And a Girl who must Build a Boat in Nigeria', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 2.99, 'length': 148, 'replacement_cost': 21.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'bever':2 'blanket':1 'boat':16 'build':14 'documentari':5 'emot':4 'girl':11 'must':13 'nigeria':18 'student':8"}, {'film_id': 81, 'title': 'BLINDNESS GUN', 'description': 'A Touching Drama of a Robot And a Dentist who must Meet a Hunter in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 103, 'replacement_cost': 29.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Behind the Scenes'], 'fulltext': "'blind':1 'boat':20 'dentist':11 'drama':5 'gun':2 'hunter':16 'jet':19 'meet':14 'must':13 'robot':8 'touch':4"}, {'film_id': 82, 'title': 'BLOOD ARGONAUTS', 'description': 'A Boring Drama of a Explorer And a Man who must Kill a Lumberjack in A Manhattan Penthouse', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 71, 'replacement_cost': 13.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Behind the Scenes'], 'fulltext': "'argonaut':2 'blood':1 'bore':4 'drama':5 'explor':8 'kill':14 'lumberjack':16 'man':11 'manhattan':19 'must':13 'penthous':20"}, {'film_id': 83, 'title': 'BLUES INSTINCT', 'description': 'A Insightful Documentary of a Boat And a Composer who must Meet a Forensic Psychologist in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 2.99, 'length': 50, 'replacement_cost': 18.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':20 'blue':1 'boat':8 'compos':11 'documentari':5 'forens':16 'fun':21 'hous':22 'insight':4 'instinct':2 'meet':14 'must':13 'psychologist':17"}, {'film_id': 84, 'title': 'BOILED DARES', 'description': 'A Awe-Inspiring Story of a Waitress And a Dog who must Discover a Dentist in Ancient Japan', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 4.99, 'length': 102, 'replacement_cost': 13.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'ancient':20 'awe':5 'awe-inspir':4 'boil':1 'dare':2 'dentist':18 'discov':16 'dog':13 'inspir':6 'japan':21 'must':15 'stori':7 'waitress':10"}, {'film_id': 85, 'title': 'BONNIE HOLOCAUST', 'description': 'A Fast-Paced Story of a Crocodile And a Robot who must Find a Moose in Ancient Japan', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 0.99, 'length': 63, 'replacement_cost': 29.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Deleted Scenes'], 'fulltext': "'ancient':20 'bonni':1 'crocodil':10 'fast':5 'fast-pac':4 'find':16 'holocaust':2 'japan':21 'moos':18 'must':15 'pace':6 'robot':13 'stori':7"}, {'film_id': 86, 'title': 'BOOGIE AMELIE', 'description': 'A Lacklusture Character Study of a Husband And a Sumo Wrestler who must Succumb a Technical Writer in The Gulf of Mexico', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 6, 'rental_rate': 4.99, 'length': 121, 'replacement_cost': 11.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Behind the Scenes'], 'fulltext': "'ameli':2 'boogi':1 'charact':5 'gulf':22 'husband':9 'lacklustur':4 'mexico':24 'must':15 'studi':6 'succumb':16 'sumo':12 'technic':18 'wrestler':13 'writer':19"}, {'film_id': 87, 'title': 'BOONDOCK BALLROOM', 'description': 'A Fateful Panorama of a Crocodile And a Boy who must Defeat a Monkey in The Gulf of Mexico', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 0.99, 'length': 76, 'replacement_cost': 14.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Behind the Scenes'], 'fulltext': "'ballroom':2 'boondock':1 'boy':11 'crocodil':8 'defeat':14 'fate':4 'gulf':19 'mexico':21 'monkey':16 'must':13 'panorama':5"}, {'film_id': 88, 'title': 'BORN SPINAL', 'description': 'A Touching Epistle of a Frisbee And a Husband who must Pursue a Student in Nigeria', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 4.99, 'length': 179, 'replacement_cost': 17.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'born':1 'epistl':5 'frisbe':8 'husband':11 'must':13 'nigeria':18 'pursu':14 'spinal':2 'student':16 'touch':4"}, {'film_id': 89, 'title': 'BORROWERS BEDAZZLED', 'description': 'A Brilliant Epistle of a Teacher And a Sumo Wrestler who must Defeat a Man in An Abandoned Fun House', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 0.99, 'length': 63, 'replacement_cost': 22.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Commentaries', 'Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'abandon':20 'bedazzl':2 'borrow':1 'brilliant':4 'defeat':15 'epistl':5 'fun':21 'hous':22 'man':17 'must':14 'sumo':11 'teacher':8 'wrestler':12"}, {'film_id': 1014, 'title': 'Andhadhun', 'description': ' A modern, suspenseful black comedy-thriller.', 'release_year': 2018, 'language_id': 7, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': 139, 'replacement_cost': 19.99, 'rating': 'G', 'last_update': '2025-12-24T09:22:36.245075+05:30', 'special_features': None, 'fulltext': "'andhadhun':1 'black':5 'comedi':7 'comedy-thril':6 'modern':3 'suspens':4 'thriller':8"}, {'film_id': 90, 'title': 'BOULEVARD MOB', 'description': 'A Fateful Epistle of a Moose And a Monkey who must Confront a Lumberjack in Ancient China', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 0.99, 'length': 63, 'replacement_cost': 11.99, 'rating': 'R', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'ancient':18 'boulevard':1 'china':19 'confront':14 'epistl':5 'fate':4 'lumberjack':16 'mob':2 'monkey':11 'moos':8 'must':13"}, {'film_id': 91, 'title': 'BOUND CHEAPER', 'description': 'A Thrilling Panorama of a Database Administrator And a Astronaut who must Challenge a Lumberjack in A Baloon', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 0.99, 'length': 98, 'replacement_cost': 17.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Behind the Scenes'], 'fulltext': "'administr':9 'astronaut':12 'baloon':20 'bound':1 'challeng':15 'cheaper':2 'databas':8 'lumberjack':17 'must':14 'panorama':5 'thrill':4"}, {'film_id': 92, 'title': 'BOWFINGER GABLES', 'description': 'A Fast-Paced Yarn of a Waitress And a Composer who must Outgun a Dentist in California', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 4.99, 'length': 72, 'replacement_cost': 19.99, 'rating': 'NC-17', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'bowfing':1 'california':20 'compos':13 'dentist':18 'fast':5 'fast-pac':4 'gabl':2 'must':15 'outgun':16 'pace':6 'waitress':10 'yarn':7"}, {'film_id': 93, 'title': 'BRANNIGAN SUNRISE', 'description': 'A Amazing Epistle of a Moose And a Crocodile who must Outrace a Dog in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 4.99, 'length': 121, 'replacement_cost': 27.99, 'rating': 'PG', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'amaz':4 'berlin':18 'brannigan':1 'crocodil':11 'dog':16 'epistl':5 'moos':8 'must':13 'outrac':14 'sunris':2"}, {'film_id': 94, 'title': 'BRAVEHEART HUMAN', 'description': 'A Insightful Story of a Dog And a Pastry Chef who must Battle a Girl in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 2.99, 'length': 176, 'replacement_cost': 14.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Deleted Scenes'], 'fulltext': "'battl':15 'berlin':19 'braveheart':1 'chef':12 'dog':8 'girl':17 'human':2 'insight':4 'must':14 'pastri':11 'stori':5"}, {'film_id': 95, 'title': 'BREAKFAST GOLDFINGER', 'description': 'A Beautiful Reflection of a Student And a Student who must Fight a Moose in Berlin', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 4.99, 'length': 123, 'replacement_cost': 18.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Deleted Scenes'], 'fulltext': "'beauti':4 'berlin':18 'breakfast':1 'fight':14 'goldfing':2 'moos':16 'must':13 'reflect':5 'student':8,11"}, {'film_id': 96, 'title': 'BREAKING HOME', 'description': 'A Beautiful Display of a Secret Agent And a Monkey who must Battle a Sumo Wrestler in An Abandoned Mine Shaft', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 2.99, 'length': 169, 'replacement_cost': 21.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries'], 'fulltext': "'abandon':21 'agent':9 'battl':15 'beauti':4 'break':1 'display':5 'home':2 'mine':22 'monkey':12 'must':14 'secret':8 'shaft':23 'sumo':17 'wrestler':18"}, {'film_id': 97, 'title': 'BRIDE INTRIGUE', 'description': 'A Epic Tale of a Robot And a Monkey who must Vanquish a Man in New Orleans', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 7, 'rental_rate': 0.99, 'length': 56, 'replacement_cost': 24.99, 'rating': 'G', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers', 'Commentaries', 'Behind the Scenes'], 'fulltext': "'bride':1 'epic':4 'intrigu':2 'man':16 'monkey':11 'must':13 'new':18 'orlean':19 'robot':8 'tale':5 'vanquish':14"}, {'film_id': 98, 'title': 'BRIGHT ENCOUNTERS', 'description': 'A Fateful Yarn of a Lumberjack And a Feminist who must Conquer a Student in A Jet Boat', 'release_year': 2006, 'language_id': 1, 'original_language_id': None, 'rental_duration': 4, 'rental_rate': 4.99, 'length': 73, 'replacement_cost': 12.99, 'rating': 'PG-13', 'last_update': '2020-09-10T22:16:03.905795+05:30', 'special_features': ['Trailers'], 'fulltext': "'boat':20 'bright':1 'conquer':14 'encount':2 'fate':4 'feminist':11 'jet':19 'lumberjack':8 'must':13 'student':16 'yarn':5"}]</msg>
+<arg>${response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.023416" elapsed="0.005384"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response} is not None</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.029116" elapsed="0.006412"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.035883" level="INFO">Retrieved films successfully</msg>
+<arg>Retrieved films successfully</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.035770" elapsed="0.000151"/>
+</kw>
+<doc>Retrieve all films via GET request</doc>
+<tag>GET</tag>
+<tag>JSON</tag>
+<status status="PASS" start="2025-12-26T13:21:18.011825" elapsed="0.024258"/>
+</test>
+<test id="s1-t4" name="Test GET Single Film" line="105">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.037022" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T13:21:18.036873" elapsed="0.000191"/>
+</kw>
+<kw name="Perform Get Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.041788" level="INFO">GET request to http://127.0.0.1:8000/table/film/1001</msg>
+<msg time="2025-12-26T13:21:18.041843" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:18.041870" level="INFO">Response Time: 0.00381s</msg>
+<arg>${TABLE_ENDPOINT}/1001</arg>
+<doc>Perform GET request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.037229" elapsed="0.004687"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.042246" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:18.042144" elapsed="0.000140"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.042564" level="INFO">${response} = {'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2011, 'language_id': 1, 'original_language_id': None, 'rental_duration'...</msg>
+<var>${response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:18.042442" elapsed="0.000146"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.042897" level="INFO">{'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2011, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 5.99, 'length': 200, 'replacement_cost': 19.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:19:35.958322+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'america':2,8 'captain':1,7 'descript':5 'movi':9 'updat':4"}</msg>
+<arg>${response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.042742" elapsed="0.000373"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.043652" level="INFO">${expected_resonse} = {'film_id': '1001', 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': '2011', 'rental_duration': '5', 'rental_rate': '5.99', 'replacement_c...</msg>
+<var>${expected_resonse}</var>
+<arg>film_id=1001</arg>
+<arg>title=Captain America</arg>
+<arg>description=An updated description for Captain America movie</arg>
+<arg>release_year=2011</arg>
+<arg>rental_duration=5</arg>
+<arg>rental_rate=5.99</arg>
+<arg>replacement_cost=19.99</arg>
+<arg>rating=PG-13</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.043308" elapsed="0.000370"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:18.044064" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:18.044097" level="INFO">Verified 8 fields successfully</msg>
+<arg>${response}</arg>
+<arg>${expected_resonse}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T13:21:18.043896" elapsed="0.000240"/>
+</kw>
+<kw name="Response Json Should Contain Key" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.044402" level="INFO">Response JSON contains key: film_id</msg>
+<arg>film_id</arg>
+<doc>Verify response JSON contains a specific key</doc>
+<status status="PASS" start="2025-12-26T13:21:18.044319" elapsed="0.000124"/>
+</kw>
+<doc>Retrieve a specific film via GET request</doc>
+<tag>GET</tag>
+<tag>JSON</tag>
+<status status="PASS" start="2025-12-26T13:21:18.036495" elapsed="0.008138"/>
+</test>
+<test id="s1-t5" name="Test PUT Update Film with JSON" line="132">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.045628" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T13:21:18.045507" elapsed="0.000168"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.046100" level="INFO">${film_id} = 1001</msg>
+<var>${film_id}</var>
+<arg>1001</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.045943" elapsed="0.000194"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.046494" level="INFO">${update_payload} = {'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': '2011', 'language_id': '1', 'rental_duration': '5', 'rental_rate': '5.99', 'replacement_...</msg>
+<var>${update_payload}</var>
+<arg>title=Captain America</arg>
+<arg>description=An updated description for Captain America movie</arg>
+<arg>release_year=2011</arg>
+<arg>language_id=1</arg>
+<arg>rental_duration=5</arg>
+<arg>rental_rate=5.99</arg>
+<arg>replacement_cost=19.99</arg>
+<arg>rating=PG-13</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.046304" elapsed="0.000213"/>
+</kw>
+<kw name="Perform Put Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.051277" level="INFO">PUT request to http://127.0.0.1:8000/table/film/1001</msg>
+<msg time="2025-12-26T13:21:18.051339" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:18.051365" level="INFO">Response Time: 0.003679s</msg>
+<arg>${TABLE_ENDPOINT}/${film_id}</arg>
+<arg>${update_payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform PUT request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.046682" elapsed="0.004733"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.051826" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:18.051713" elapsed="0.000155"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.052170" level="INFO">${response} = {'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2011, 'language_id': 1, 'original_language_id': None, 'rental_duration'...</msg>
+<var>${response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:18.052035" elapsed="0.000210"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.052573" level="INFO">{'film_id': 1001, 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': 2011, 'language_id': 1, 'original_language_id': None, 'rental_duration': 5, 'rental_rate': 5.99, 'length': 200, 'replacement_cost': 19.99, 'rating': 'PG-13', 'last_update': '2025-12-26T13:21:18.048808+05:30', 'special_features': ['Deleted Scenes', 'Behind the Scenes'], 'fulltext': "'america':2,8 'captain':1,7 'descript':5 'movi':9 'updat':4"}</msg>
+<arg>${response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.052411" elapsed="0.000406"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.053234" level="INFO">${expected_resonse} = {'film_id': '1001', 'title': 'Captain America', 'description': 'An updated description for Captain America movie', 'release_year': '2011', 'language_id': '1', 'rental_duration': '5', 'rental_rate': '5...</msg>
+<var>${expected_resonse}</var>
+<arg>film_id=1001</arg>
+<arg>title=Captain America</arg>
+<arg>description=An updated description for Captain America movie</arg>
+<arg>release_year=2011</arg>
+<arg>language_id=1</arg>
+<arg>rental_duration=5</arg>
+<arg>rental_rate=5.99</arg>
+<arg>replacement_cost=19.99</arg>
+<arg>rating=PG-13</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.053010" elapsed="0.000248"/>
+</kw>
+<kw name="Should Contain Expected Keys" owner="UtilityKeywords">
+<msg time="2025-12-26T13:21:18.053566" level="INFO">All expected keys and values match in actual response</msg>
+<msg time="2025-12-26T13:21:18.053591" level="INFO">Verified 9 fields successfully</msg>
+<arg>${response}</arg>
+<arg>${expected_resonse}</arg>
+<doc>Verify that actual response contains all keys and values from expected response</doc>
+<status status="PASS" start="2025-12-26T13:21:18.053436" elapsed="0.000188"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.092097" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T13:21:18.053929" elapsed="0.038370"/>
+</kw>
+<kw name="Verify Record Change" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.097066" level="INFO">Query executed: SELECT * FROM film WHERE film_id = 1001</msg>
+<msg time="2025-12-26T13:21:18.097204" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:18.097250" level="INFO">Record film_id=1001 updated: title changed from (any) to Captain America</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<arg>title</arg>
+<arg>(any)</arg>
+<arg>Captain America</arg>
+<doc>Verify that a record was changed</doc>
+<status status="PASS" start="2025-12-26T13:21:18.092668" elapsed="0.004642"/>
+</kw>
+<kw name="Table Row Column Value Should Be" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.098071" level="INFO">Query executed: SELECT rental_rate FROM film WHERE film_id = 1001</msg>
+<msg time="2025-12-26T13:21:18.098110" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:18.098136" level="INFO">Column rental_rate = 5.99</msg>
+<arg>film</arg>
+<arg>film_id = ${film_id}</arg>
+<arg>rental_rate</arg>
+<arg>5.99</arg>
+<doc>Verify specific column value in a row</doc>
+<status status="PASS" start="2025-12-26T13:21:18.097603" elapsed="0.000568"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.098519" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T13:21:18.098356" elapsed="0.000210"/>
+</kw>
+<doc>Update an existing film and validate changes in database</doc>
 <tag>Database</tag>
 <tag>JSON</tag>
 <tag>PUT</tag>
-<status status="PASS" start="2025-12-25T11:53:05.108757" elapsed="0.080647"/>
+<status status="PASS" start="2025-12-26T13:21:18.045081" elapsed="0.053638"/>
+</test>
+<test id="s1-t6" name="Test DELETE Film Record" line="179">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.099699" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T13:21:18.099562" elapsed="0.000188"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.100178" level="INFO">${payload} = {'title': 'Jurassic Park', 'description': 'A science fiction adventure film', 'release_year': '1993', 'language_id': '1', 'rental_duration': '3', 'rental_rate': '4.99', 'replacement_cost': '19.99'}</msg>
+<var>${payload}</var>
+<arg>title=Jurassic Park</arg>
+<arg>description=A science fiction adventure film</arg>
+<arg>release_year=1993</arg>
+<arg>language_id=1</arg>
+<arg>rental_duration=3</arg>
+<arg>rental_rate=4.99</arg>
+<arg>replacement_cost=19.99</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.099960" elapsed="0.000247"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.108730" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:18.108825" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:18.108852" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:18.108878" level="INFO">Response Time: 0.007447s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.100383" elapsed="0.008567"/>
+</kw>
+<kw name="Get Response Json Value" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.109522" level="INFO">${film_id} = 1143</msg>
+<var>${film_id}</var>
+<arg>film_id</arg>
+<doc>Get value from response JSON by key</doc>
+<status status="PASS" start="2025-12-26T13:21:18.109318" elapsed="0.000228"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.109873" level="INFO">${response} = {'film_id': 1143, 'title': 'Jurassic Park', 'description': 'A science fiction adventure film', 'release_year': 1993, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate'...</msg>
+<var>${response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:18.109733" elapsed="0.000169"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.110223" level="INFO">Created film to delete: {'film_id': 1143, 'title': 'Jurassic Park', 'description': 'A science fiction adventure film', 'release_year': 1993, 'language_id': 1, 'original_language_id': None, 'rental_duration': 3, 'rental_rate': 4.99, 'length': None, 'replacement_cost': 19.99, 'rating': 'G', 'last_update': '2025-12-26T13:21:18.102821+05:30', 'special_features': None, 'fulltext': "'adventur':6 'fiction':5 'film':7 'jurass':1 'park':2 'scienc':4"}</msg>
+<arg>Created film to delete: ${response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.110063" elapsed="0.000318"/>
+</kw>
+<kw name="Perform Delete Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.114690" level="INFO">DELETE request to http://127.0.0.1:8000/table/film/1143</msg>
+<msg time="2025-12-26T13:21:18.114744" level="INFO">Status Code: 200</msg>
+<msg time="2025-12-26T13:21:18.114774" level="INFO">Response Time: 0.003363s</msg>
+<arg>${TABLE_ENDPOINT}/${film_id}</arg>
+<doc>Perform DELETE request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.110558" elapsed="0.004265"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.115153" level="INFO">Status code 200 matches expected 200</msg>
+<arg>200</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:18.115062" elapsed="0.000125"/>
+</kw>
+<kw name="Get Response Body" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.115473" level="INFO">${Delete_response} = {'status': 'deleted'}</msg>
+<var>${Delete_response}</var>
+<doc>Get the last response body</doc>
+<status status="PASS" start="2025-12-26T13:21:18.115335" elapsed="0.000158"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.115842" level="INFO">Deleted film response: {'status': 'deleted'}</msg>
+<arg>Deleted film response: ${Delete_response}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.115695" elapsed="0.000264"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.151330" level="INFO">Connected to database: greencycles on localhost:5432</msg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<doc>Connect to PostgreSQL database</doc>
+<status status="PASS" start="2025-12-26T13:21:18.116161" elapsed="0.035273"/>
+</kw>
+<kw name="Verify Record Deleted" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.154625" level="INFO">Query executed: SELECT COUNT(*) as count FROM film WHERE film_id = 1143</msg>
+<msg time="2025-12-26T13:21:18.154660" level="INFO">Rows returned: 1</msg>
+<msg time="2025-12-26T13:21:18.154683" level="INFO">Record deleted from film with film_id=1143</msg>
+<arg>film</arg>
+<arg>film_id</arg>
+<arg>${film_id}</arg>
+<doc>Verify that a record was deleted</doc>
+<status status="PASS" start="2025-12-26T13:21:18.151729" elapsed="0.002990"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseKeywords">
+<msg time="2025-12-26T13:21:18.155037" level="INFO">Disconnected from database</msg>
+<doc>Disconnect from database</doc>
+<status status="PASS" start="2025-12-26T13:21:18.154891" elapsed="0.000185"/>
+</kw>
+<doc>Delete a film record and validate deletion in database</doc>
+<tag>Database</tag>
+<tag>DELETE</tag>
+<status status="PASS" start="2025-12-26T13:21:18.099118" elapsed="0.056140"/>
+</test>
+<test id="s1-t7" name="Test POST Film Without Required Field" line="213">
+<kw name="Set Base Url" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.156425" level="INFO">Base URL set to: http://127.0.0.1:8000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Set the base URL for API requests</doc>
+<status status="PASS" start="2025-12-26T13:21:18.156283" elapsed="0.000197"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-26T13:21:18.156934" level="INFO">${invalid_payload} = {'description': 'Test GET All Films', 'release_year': '2020', 'language_id': '1', 'rental_duration': '3'}</msg>
+<var>${invalid_payload}</var>
+<arg>description=Test GET All Films</arg>
+<arg>release_year=2020</arg>
+<arg>language_id=1</arg>
+<arg>rental_duration=3</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-26T13:21:18.156697" elapsed="0.000261"/>
+</kw>
+<kw name="Perform Post Request" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.164325" level="INFO">POST request to http://127.0.0.1:8000/table/film</msg>
+<msg time="2025-12-26T13:21:18.164401" level="INFO">Payload Type: json</msg>
+<msg time="2025-12-26T13:21:18.164425" level="INFO">Status Code: 500</msg>
+<msg time="2025-12-26T13:21:18.164449" level="INFO">Response Time: 0.00616s</msg>
+<arg>${TABLE_ENDPOINT}</arg>
+<arg>${invalid_payload}</arg>
+<arg>payload_type=json</arg>
+<doc>Perform POST request</doc>
+<status status="PASS" start="2025-12-26T13:21:18.157167" elapsed="0.007331"/>
+</kw>
+<kw name="Response Status Code Should Be" owner="APIKeywords">
+<msg time="2025-12-26T13:21:18.164898" level="INFO">Status code 500 matches expected 500</msg>
+<arg>500</arg>
+<doc>Verify response status code</doc>
+<status status="PASS" start="2025-12-26T13:21:18.164772" elapsed="0.000171"/>
+</kw>
+<doc>Verify API validation for required fields</doc>
+<tag>POST</tag>
+<tag>Validation</tag>
+<status status="PASS" start="2025-12-26T13:21:18.155758" elapsed="0.009361"/>
 </test>
 <kw name="Suite Teardown Steps" type="TEARDOWN">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-12-25T11:53:05.190405" level="INFO">Test Suite Completed</msg>
+<msg time="2025-12-26T13:21:18.166113" level="INFO">Test Suite Completed</msg>
 <arg>Test Suite Completed</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-12-25T11:53:05.190405" elapsed="0.000000"/>
+<status status="PASS" start="2025-12-26T13:21:18.166038" elapsed="0.000110"/>
 </kw>
 <doc>Cleanup after test suite</doc>
-<status status="PASS" start="2025-12-25T11:53:05.190405" elapsed="0.000999"/>
+<status status="PASS" start="2025-12-26T13:21:18.165862" elapsed="0.000329"/>
 </kw>
 <doc>API Automation Tests - POST, GET, PUT, DELETE with JSON Payload</doc>
-<status status="PASS" start="2025-12-25T11:53:04.813710" elapsed="0.377694"/>
+<status status="PASS" start="2025-12-26T13:21:17.401285" elapsed="0.764929"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="7" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0" skip="0">Database</stat>
-<stat pass="1" fail="0" skip="0">JSON</stat>
+<stat pass="3" fail="0" skip="0">database</stat>
+<stat pass="1" fail="0" skip="0">DELETE</stat>
+<stat pass="2" fail="0" skip="0">GET</stat>
+<stat pass="4" fail="0" skip="0">json</stat>
+<stat pass="2" fail="0" skip="0">post</stat>
 <stat pass="1" fail="0" skip="0">PUT</stat>
+<stat pass="1" fail="0" skip="0">Validation</stat>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="Api Json Actor Tests">Api Json Actor Tests</stat>
+<stat name="Api Json Film Tests" id="s1" pass="7" fail="0" skip="0">Api Json Film Tests</stat>
 </suite>
 </statistics>
 <errors>

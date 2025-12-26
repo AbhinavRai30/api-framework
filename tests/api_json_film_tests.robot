@@ -5,6 +5,7 @@ Library          ../keywords/DatabaseKeywords.py
 Library          ../keywords/UtilityKeywords.py
 Library          Collections
 Library          OperatingSystem
+Resource         ../keywords/common_keyword.robot
 
 Suite Setup      Suite Setup Steps
 Suite Teardown   Suite Teardown Steps
@@ -19,6 +20,9 @@ ${DB_PASSWORD}        pgadmin
 ${TEST_DATA_FILE}     ${CURDIR}${/}..${/}test_data${/}film_test_data.xlsx
 ${SHEET_NAME}         Films
 ${DB_EXPECTEDSHEET_NAME}    expected_film_db
+${SQL_FILE_PATH}       ${CURDIR}${/}..${/}test_data${/}deletedupquery.sql
+${DupCheckQuery}       ${CURDIR}${/}..${/}test_data${/}duplicatecheckquery.sql 
+
 
 *** Test Cases ***
 Test POST New Film with JSON Payload
@@ -65,7 +69,7 @@ Test POST New Film with JSON Payload
         ${film_id}=    Get Response JSON Value    film_id
 
         # Verify in database - record was created
-        Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
+        DatabaseKeywords.Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
         Verify Record Created    film    film_id    ${film_id}
 
         # Verify expected data with database record
@@ -75,11 +79,13 @@ Test POST New Film with JSON Payload
         # Verify specific data using the matching expected_db_data for this iteration
         Table Row Column Value Should Be    film    film_id = ${film_id}    title    ${expected_db_data}[title]
 
-        Disconnect From Database
+        DatabaseKeywords.Disconnect From Database
 
         Log    Successfully created and validated film with ID: ${film_id}
     END
 
+Delete duplicate records before running other tests
+    Read SQL file and Execute Delete Query          ${SQL_FILE_PATH}
 
 Test GET All Films
     [Documentation]    Retrieve all films via GET request
@@ -163,11 +169,11 @@ Test PUT Update Film with JSON
     Should Contain Expected Keys     ${response}    ${expected_resonse}
 
     # Verify in database - record was updated
-    Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
+    DatabaseKeywords.Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
     Verify Record Change    film    film_id    ${film_id}    title    (any)    Captain America
     Table Row Column Value Should Be    film    film_id = ${film_id}    rental_rate    5.99
 
-    Disconnect From Database
+    DatabaseKeywords.Disconnect From Database
 
 
 Test DELETE Film Record
@@ -198,10 +204,10 @@ Test DELETE Film Record
     Log    Deleted film response: ${Delete_response}    console=True
 
     # Verify in database - record was deleted
-    Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
+    DatabaseKeywords.Connect To Database    ${DB_HOST}    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}
     Verify Record Deleted    film    film_id    ${film_id}
 
-    Disconnect From Database
+    DatabaseKeywords.Disconnect From Database
 
 
 Test POST Film Without Required Field

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-12-26T13:01:18.693541" rpa="false" schemaversion="5">
+<suite id="s1" name="Comman Keyword" source="C:\driver\api-framework\keywords\comman_keyword.robot">
+<test id="s1-t1" name="Testing SQL Execution from File" line="24">
+<kw name="Read SQL file and Execute Delete Query">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-12-26T13:01:18.994455" level="INFO" html="true">Getting file '&lt;a href="file://C:\driver\api-framework\test_data\deletedupquery.sql"&gt;C:\driver\api-framework\test_data\deletedupquery.sql&lt;/a&gt;'.</msg>
+<msg time="2025-12-26T13:01:18.994727" level="INFO">${sql_commands} = DELETE FROM film
+WHERE film_id IN (
+    WITH DuplicateCTE AS (
+        SELECT
+            film_id
+        FROM (
+            SELECT
+                film_id,
+                ROW_NUMBER() OVER (
+       ...</msg>
+<var>${sql_commands}</var>
+<arg>${file_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-12-26T13:01:18.994315" elapsed="0.000441"/>
+</kw>
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-12-26T13:01:18.995105" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-12-26T13:01:18.995169" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-12-26T13:01:18.995291" level="INFO">Connect to DB using : psycopg2.connect(database='greencycles', user='postgres', password=***, host='127.0.0.1', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-12-26T13:01:18.994857" elapsed="0.045635"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:01:19.041092" level="INFO">Database connection established</msg>
+<arg>Database connection established</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:01:19.040817" elapsed="0.000485"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-26T13:01:19.041662" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM film
+WHERE film_id IN (
+    WITH DuplicateCTE AS (
+        SELECT
+            film_id
+        FROM (
+            SELECT
+                film_id,
+                ROW_NUMBER() OVER (
+                    PARTITION BY title -- Columns that define a duplicate
+                    ORDER BY film_id -- Column to decide which one to keep
+                ) AS RowNumber
+            FROM
+                film
+        ) AS s
+        WHERE
+            RowNumber &gt; 1
+    )
+    SELECT film_id FROM DuplicateCTE
+);
+&lt;/code&gt;</msg>
+<msg time="2025-12-26T13:01:19.049589" level="INFO">Commit the transaction</msg>
+<msg time="2025-12-26T13:01:19.049874" level="INFO">${query_result} = None</msg>
+<var>${query_result}</var>
+<arg>${sql_commands}</arg>
+<doc>Executes the ``sql_string`` - as a single SQL command (default) or as separate statements.</doc>
+<status status="PASS" start="2025-12-26T13:01:19.041479" elapsed="0.008434"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:01:19.050318" level="INFO">SQL commands executed successfully and result obtained : None</msg>
+<arg>SQL commands executed successfully and result obtained : ${query_result}</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:01:19.050064" elapsed="0.000418"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-12-26T13:01:19.050607" elapsed="0.000205"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-26T13:01:19.051035" level="INFO">Database connection closed</msg>
+<arg>Database connection closed</arg>
+<arg>console=True</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-26T13:01:19.050915" elapsed="0.000250"/>
+</kw>
+<return>
+<value>${sql_commands}</value>
+<status status="PASS" start="2025-12-26T13:01:19.051241" elapsed="0.000066"/>
+</return>
+<arg>${SQL_FILE_PATH_2}</arg>
+<doc>Read SQL commands from a file and return as a single string.</doc>
+<status status="PASS" start="2025-12-26T13:01:18.993589" elapsed="0.057862"/>
+</kw>
+<doc>Test case to read SQL from file and execute it.</doc>
+<status status="PASS" start="2025-12-26T13:01:18.992743" elapsed="0.058932"/>
+</test>
+<status status="PASS" start="2025-12-26T13:01:18.694777" elapsed="0.357411"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Comman Keyword" id="s1" pass="1" fail="0" skip="0">Comman Keyword</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
