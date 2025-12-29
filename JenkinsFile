@@ -1,34 +1,48 @@
-pipeline{
-        
-    agent any
+pipeline {
 
-        stages{
-            stage("Clean Up"){
-                steps{
+  agent any
+
+        stages {
+            stage("Clean Up") {
+                steps {
                     deleteDir()
+                     }
                 }
-            }
             stage('Setup and Run') {
                 steps {
+                    dir("api-framework") {
+                        sh '''
+                        
+                        # 1. Create the venv
+                        if it doesn 't exist
+                        python3 - m venv venv
+
+                        # 2. Activate the venv
+                            .venv / bin / activate ''
+                        '''
+
+                    }
+                }
+            }
+            stage("Install Dependencies") {
+                steps {
+                    dir("api-framework") {
                     sh '''
-                    # 1. Create the venv if it doesn't exist
-                    python3 -m venv venv
-                    
-                    # 2. Activate the venv
-                    . venv/bin/activate
-                    
-                    # 3. Install dependencies and run scripts
-                    pip install -r requirements.txt
-                    python3 main.py
-                '''
+                                            
+                    # Install dependencies from requirements.txt
+                    pip install - r requirements.txt '''
+                    }
+
                 }
             }
-            stage("Test"){
-                steps{
-                    sh "robot --outputdir reports  tests/api_json_film_tests.robot"
+            stage("Test") {
+                steps {
+                    dir("api-framework") {
+                        sh "robot --outputdir reports  tests/api_json_film_tests.robot"
+                    }
+
                 }
-            }
+           }
         }
-
-
 }
+        
