@@ -114,12 +114,11 @@ Test GET Single Film
 
     ${expected_resonse}=    Create Dictionary
     ...    film_id=1001
-    ...    title=Captain America
-    ...    description=An updated description for Captain America movie
-    ...    release_year=2011
-    ...    rental_duration=5
-    ...    rental_rate=5.99
-    ...    replacement_cost=19.99
+    ...    title=Terminator
+    ...    release_year=1984
+    ...    rental_duration=1
+    ...    rental_rate=2.99
+    ...    replacement_cost=2.99
     ...    rating=PG-13
 
     Should Contain Expected Keys     ${response}    ${expected_resonse}
