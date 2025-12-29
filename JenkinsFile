@@ -29,7 +29,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                    venv/bin/robot tests/
+                    venv/bin/robot --outputdir reports  tests/api_json_film_tests.robot
                 '''
             }
         }
