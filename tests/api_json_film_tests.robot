@@ -11,7 +11,7 @@ Suite Setup      Suite Setup Steps
 Suite Teardown   Suite Teardown Steps
 
 *** Variables ***
-${BASE_URL}           http://127.0.0.1:8000
+${BASE_URL}           http://localhost:8000
 ${TABLE_ENDPOINT}     /table/film
 ${DB_HOST}            localhost
 ${DB_NAME}            greencycles
