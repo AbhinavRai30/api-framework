@@ -47,28 +47,6 @@ pipeline {
                 passThreshold: 100,
                 unstableThreshold: 90
             )
-
-            script {
-                try {
-                    emailext(
-                        subject: "Robot Test Results - ${currentBuild.currentResult}",
-                        body: """
-                        <h3>Robot Framework Test Results</h3>
-                        <p><b>Job:</b> ${env.JOB_NAME}</p>
-                        <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
-                        <p><b>Status:</b> ${currentBuild.currentResult}</p>
-                        <p>
-                        <a href="${env.BUILD_URL}robot/report">Robot Report</a><br/>
-                        <a href="${env.BUILD_URL}robot/log">Robot Log</a>
-                        </p>
-                        """,
-                        to: "abhinav.rai6@gmail.com",
-                        attachmentsPattern: "reports/report.html, reports/log.html",
-                        mimeType: 'text/html'
-                    )
-                } catch (err) {
-                    echo "Email sending failed but build will continue: ${err}"
-                }
-            }
-    }   }
+        }
+       }
 }
