@@ -34,4 +34,36 @@ pipeline {
             }
         }
     }
+        post {
+
+        always {
+
+            // 1️⃣ Publish Robot Framework Results (Plugin)
+            robot(
+                outputPath: 'results',
+                outputFileName: 'output.xml',
+                reportFileName: 'report.html',
+                logFileName: 'log.html',
+                passThreshold: 100,
+                unstableThreshold: 90
+            )
+
+            // 2️⃣ Send Email with Reports Attached
+            emailext(
+                subject: "Robot Test Results - ${currentBuild.currentResult}",
+                body: """
+                <p><b>Build:</b> ${env.JOB_NAME} #${env.BUILD_NUMBER}</p>
+                <p><b>Status:</b> ${currentBuild.currentResult}</p>
+                <p><b>Robot Report:</b></p>
+                <p>
+                  <a href="${env.BUILD_URL}robot/report">View Report</a><br/>
+                  <a href="${env.BUILD_URL}robot/log">View Log</a>
+                </p>
+                """,
+                to: "abhinav.rai6@gmail.com",
+                attachmentsPattern: "results/report.html, results/log.html",
+                mimeType: 'text/html'
+            )
+        }
+    }
 }
