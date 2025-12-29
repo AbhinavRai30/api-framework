@@ -1,0 +1,36 @@
+pipeline {
+    agent {
+        docker {
+            // Use a Robot Framework specific image
+            image 'ppodgorsek/robot-framework:latest'
+            // Mount your local tests directory to the container's tests directory
+            args '-v ${WORKSPACE}/tests:/opt/robotframework/tests -v ${WORKSPACE}/reports:/opt/robotframework/reports'
+        }
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Checkout your source code from the repository
+                git 'https://github.com/AbhinavRai30/api-framework.git'
+            }
+        }
+        stage('Execute Tests') {
+            steps {
+                // Run Robot Framework tests inside the container
+                // The 'robot' command automatically runs tests in /opt/robotframework/tests 
+                // and generates output in /opt/robotframework/reports
+                sh 'robot --outputdir reports /opt/robotframework/tests'
+
+                // Ensure the script returns successfully even if tests fail to let the Jenkins plugin handle the result
+                sh 'robot --nostatusrc /opt/robotframework/tests' // Optional, see documentation for details
+            }
+        }
+        stage('Publish Results') {
+            steps {
+                // Archive the HTML reports
+                // Use the Robot Framework plugin for enhanced result visualization in Jenkins
+                robot outputPath: 'reports', outputFileName: 'output.xml', reportFileName: 'report.html', logFileName: 'log.html'
+            }
+        }
+    }
+}
