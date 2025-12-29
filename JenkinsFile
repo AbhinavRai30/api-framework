@@ -34,11 +34,11 @@ pipeline {
             }
         }
     }
-        post {
+    post {
 
         always {
 
-            // 1️⃣ Publish Robot Framework Results (Plugin)
+            // Publish Robot Framework Results (Plugin)
             robot(
                 outputPath: 'results',
                 outputFileName: 'output.xml',
@@ -48,22 +48,27 @@ pipeline {
                 unstableThreshold: 90
             )
 
-            // 2️⃣ Send Email with Reports Attached
-            emailext(
-                subject: "Robot Test Results - ${currentBuild.currentResult}",
-                body: """
-                <p><b>Build:</b> ${env.JOB_NAME} #${env.BUILD_NUMBER}</p>
-                <p><b>Status:</b> ${currentBuild.currentResult}</p>
-                <p><b>Robot Report:</b></p>
-                <p>
-                  <a href="${env.BUILD_URL}robot/report">View Report</a><br/>
-                  <a href="${env.BUILD_URL}robot/log">View Log</a>
-                </p>
-                """,
-                to: "abhinav.rai6@gmail.com",
-                attachmentsPattern: "results/report.html, results/log.html",
-                mimeType: 'text/html'
-            )
-        }
-    }
+            script {
+                try {
+                    emailext(
+                        subject: "Robot Test Results - ${currentBuild.currentResult}",
+                        body: """
+                        <h3>Robot Framework Test Results</h3>
+                        <p><b>Job:</b> ${env.JOB_NAME}</p>
+                        <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
+                        <p><b>Status:</b> ${currentBuild.currentResult}</p>
+                        <p>
+                        <a href="${env.BUILD_URL}robot/report">Robot Report</a><br/>
+                        <a href="${env.BUILD_URL}robot/log">Robot Log</a>
+                        </p>
+                        """,
+                        to: "abhinav.rai6@gmail.com",
+                        attachmentsPattern: "reports/report.html, reports/log.html",
+                        mimeType: 'text/html'
+                    )
+                } catch (err) {
+                    echo "Email sending failed but build will continue: ${err}"
+                }
+            }
+    }   }
 }
