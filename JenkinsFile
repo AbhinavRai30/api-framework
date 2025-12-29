@@ -1,48 +1,37 @@
 pipeline {
+    agent any
 
-  agent any
-
-        stages {
-            stage("Clean Up") {
-                steps {
-                    deleteDir()
-                     }
-                }
-            stage('Setup and Run') {
-                steps {
-                    dir("api-framework") {
-                        sh '''
-                        
-                        # 1. Create the venv
-                        if it doesn 't exist
-                        python3 - m venv venv
-
-                        # 2. Activate the venv
-                            .venv / bin / activate ''
-                        '''
-
-                    }
-                }
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
             }
-            stage("Install Dependencies") {
-                steps {
-                    dir("api-framework") {
-                    sh '''
-                                            
-                    # Install dependencies from requirements.txt
-                    pip install - r requirements.txt '''
-                    }
-
-                }
-            }
-            stage("Test") {
-                steps {
-                    dir("api-framework") {
-                        sh "robot --outputdir reports  tests/api_json_film_tests.robot"
-                    }
-
-                }
-           }
         }
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Setup & Install Dependencies') {
+            steps {
+                sh '''
+                    pwd
+                    ls -l
+                    python3 -m venv venv
+                    venv/bin/python -m pip install --upgrade pip
+                    venv/bin/python -m pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                    venv/bin/robot tests/
+                '''
+            }
+        }
+    }
 }
-        
