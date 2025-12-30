@@ -1,18 +1,76 @@
-Install postgre DB
-After installation create DB - greencycles (This madotary for below sql to run and add data)
-Righ click on greencycles DB and select - Query Tool - Paste below and run it (It will create tables and data in DB)
-After that open API project and install requirement.txt 
-Run commands as required: 
+API TESTING FRAMEWORK SETUP INSTRUCTIONS
 
-| Action     | Command                                       |
-| ---------- | --------------------------------------------- |
-| Start      | `uvicorn main:app --reload`                   |
-| Stop       | `CTRL + C`                                    |
-| Restart    | `CTRL + C` → start command                    |
-| Debug      | `uvicorn main:app --reload --log-level debug` |
-| Production | `uvicorn main:app`                            |
+The API which this framework tests is available at: https://github.com/AbhinavRai30/API.git
+The API, Database, and Jenkins run on Docker containers.
+    Inside jenkins_container below should be installed from root:
+              apt-get install python3 
+              apt-get install python3-venv
 
-Save the below in .sql file and run from greencycles database
+SETUP STEPS:
+
+1. Setup PostgreSQL Database Container
+   - Repository: https://github.com/AbhinavRai30/api-framework/blob/main/docker-compose.postgres.yml
+   - The docker-compose.postgres.yml file is included in this framework
+   - Command: docker compose -f docker-compose.postgres.yml up -d --build
+
+2. Copy SQL Dump to Container
+   - Command: docker cp pgdump_greencycles.sql pg_container:/querydb.sql
+   - Note: Save the SQL dump provided below in step 2 as pgdump_greencycles.sql
+
+3. Execute SQL Scripts in Container
+   - First, run the database dump:
+     docker exec -it pg_container psql -U postgres -d postgres -f /querydb.sql
+   
+   - Then, insert the data:
+     docker cp pagila-insert-data.sql pg_container:/create_tables.sql
+     docker exec -it pg_container psql -U postgres -d postgres -f /create_tables.sql
+
+4. Setup API Container
+   - Repository: https://github.com/AbhinavRai30/API.git
+   - Contains Dockerfile and docker-compose.api.yml
+   - Command: docker compose -f docker-compose.api.yml up -d --build
+
+5. Connect Jenkins to API Network (Optional)
+   - If you have a Jenkins container running on the same Docker host, connect it to the API network:
+     docker network connect api_backend <jenkins_container_name>
+   - Replace <jenkins_container_name> with your actual Jenkins container name
+
+Pipeline Configuration:
+    Uses agent any - can run on any available Jenkins agent
+    
+    Parameter - 
+    Defines a parameterized build with a dropdown choice parameter named API_METHOD
+    Available choices: POST, GET, PUT, DELETE, CLEANUP, JSON (used as test tags)
+
+    Stage 1 - Clean Workspace:
+    Deletes all files in the workspace directory before starting
+    Ensures a clean slate for each build
+    
+    Stage 2 - Checkout:
+    Checks out source code from the SCM (Source Control Management)
+    Pulls the latest code from the repository
+    
+    Stage 3 - Setup & Install Dependencies:
+    Prints current working directory and lists files
+    Creates a Python virtual environment named venv
+    Upgrades pip to the latest version
+    Installs all dependencies from requirements.txt
+    
+    Stage 4 - Run Tests:
+    Executes Robot Framework tests using the virtual environment
+    Filters tests by the selected API_METHOD tag using --include
+    Runs tests from tests/api_json_film_tests.robot
+    Stores results in the results directory
+    
+    Post-Build Actions:
+    Runs always - executes regardless of build success or failure
+    Publishes Robot Framework test results using the Robot Framework plugin
+    Displays output.xml, report.html, and log.html from the results directory
+    Sets pass threshold to 100% and unstable threshold to 90%
+
+
+Save the below in .sql file for step 2
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *****************************************************************************************************************************************************************
 --
 -- PostgreSQL database dump
