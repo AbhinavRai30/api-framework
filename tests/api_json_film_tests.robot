@@ -27,7 +27,7 @@ ${DupCheckQuery}       ${CURDIR}${/}..${/}test_data${/}duplicatecheckquery.sql
 *** Test Cases ***
 Test POST New Film with JSON Payload
     [Documentation]    Create new film records via POST request and validate in database
-    [Tags]    POST    json    
+    [Tags]    POST    JSON    
 
     # Read all test data rows
     ${test_data_list}=    Read Test Data From Excel    ${TEST_DATA_FILE}    ${SHEET_NAME}
@@ -86,7 +86,7 @@ Test POST New Film with JSON Payload
 
 Delete duplicate records before running other tests
     [Documentation]    Cleanup duplicate records in the database before running tests
-    [Tags]    Database    CLEANUP
+    [Tags]    Database    CLEANUP       JSON
     Read SQL file and Execute Delete Query          ${SQL_FILE_PATH}
 
 Test GET All Films
@@ -180,7 +180,7 @@ Test PUT Update Film with JSON
 
 Test DELETE Film Record
     [Documentation]    Delete a film record and validate deletion in database
-    [Tags]    DELETE
+    [Tags]    DELETE    JSON
 
     Set Base URL    ${BASE_URL}
 
@@ -214,7 +214,7 @@ Test DELETE Film Record
 
 Test POST Film Without Required Field
     [Documentation]    Verify API validation for required fields
-    [Tags]    POST    Validation
+    [Tags]    POST    Validation    JSON
 
     Set Base URL    ${BASE_URL}
 

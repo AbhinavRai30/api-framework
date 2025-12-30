@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
    
-        choice(choices: ['POST', 'GET', 'PUT', 'DELETE', 'CLEANUP'], description: 'Select Tag', name: 'API_METHOD')
+        choice(choices: ['POST', 'GET', 'PUT', 'DELETE', 'CLEANUP', 'JSON'], description: 'Select Tag', name: 'API_METHOD')
     }
     stages {
         stage('Clean Workspace') {
