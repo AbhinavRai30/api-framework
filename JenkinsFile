@@ -50,6 +50,23 @@ pipeline {
                 passThreshold: 100,
                 unstableThreshold: 90
             )
+            
+            // Send Email Notification with Results
+            emailext(
+                subject: "Robot Framework Test Results - Build #${BUILD_NUMBER} - ${currentBuild.result}",
+                body: """
+                    Latest Robot Results:
+                    \tTotal\tFailed\tPassed\tSkipped\tPass %
+                    All tests\t${ROBOT_TOTAL}\t${ROBOT_FAILED}\t${ROBOT_PASSED}\t0\t${ROBOT_PASSPERCENTAGE}
+                    
+                    Build URL: ${BUILD_URL}
+                    
+                    Please check the attached reports for detailed test results.
+                """,
+                attachmentsPattern: 'results/*.html, results/*.xml',
+                to: 'abhinav.rai6@gmail.com',
+                mimeType: 'text/html'
+            )
         }
        }
 }
