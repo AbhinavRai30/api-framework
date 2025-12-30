@@ -27,7 +27,7 @@ ${DupCheckQuery}       ${CURDIR}${/}..${/}test_data${/}duplicatecheckquery.sql
 *** Test Cases ***
 Test POST New Film with JSON Payload
     [Documentation]    Create new film records via POST request and validate in database
-    [Tags]    post    json    database
+    [Tags]    POST    json    database
 
     # Read all test data rows
     ${test_data_list}=    Read Test Data From Excel    ${TEST_DATA_FILE}    ${SHEET_NAME}
