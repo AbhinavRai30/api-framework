@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    parameters {
+        string(defaultValue:'', description:"TAGS", name: "API_TAGS")
+        choices(choices: ['POST', 'GET', 'PUT', 'DELETE'], description: 'Select Tag', name: 'API_METHOD')
+    }
     stages {
         stage('Clean Workspace') {
             steps {
@@ -29,7 +32,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                    venv/bin/robot --outputdir results  tests/api_json_film_tests.robot
+                    venv/bin/robot -i ${API_TAGS} -d results tests/api_json_film_tests.robot
                 '''
             }
         }
