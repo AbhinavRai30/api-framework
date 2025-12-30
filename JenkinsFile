@@ -58,7 +58,7 @@ pipeline {
                 def passed = total[1] as Integer
                 def failed = total[2] as Integer
                 def totalTests = passed + failed
-                def passPercentage = totalTests > 0 ? ((passed / totalTests) * 100).round(1) : 0
+                def passPercentage = totalTests > 0 ? String.format("%.1f", (passed / totalTests) * 100) : "0.0"
                 
                 emailext(
                     subject: "Robot Framework Test Results - Build #${BUILD_NUMBER} - ${currentBuild.result}",
