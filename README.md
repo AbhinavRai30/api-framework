@@ -1,4 +1,4 @@
-# API Framework - Quick Start Guide
+# API Framework - Quick Start Guide - Check START_HERE.txt first
 
 ## Overview
 API automation framework with robotframework with taking payloads from Excel and sending as JSON or XML
